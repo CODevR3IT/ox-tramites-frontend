@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+$primary: #6a1c32;
+$secondary: #b17a45;
+.bg-main{
+    background-color: $primary !important;
+}
+.bg-accent {
+    background-color: $secondary !important;
+}
+//@import "../node_modules/@tabler/src/scss/functions";
+//@import "../node_modules/@tabler/src/scss/variables";
+//@import "../node_modules/@tabler/src/scss/mixins";
