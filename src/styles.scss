@@ -1,13 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import "../node_modules/@tabler/core/src/scss/core";
 $primary: #6a1c32;
-$secondary: #b17a45;
-@import "../node_modules/@tabler/core/src/scss/tabler.scss";
-@import "../node_modules/@tabler/core/src/scss/variables";
+$tertiary: #b17a45;
 
-$theme-colors: map-merge($theme-colors, (
-  "primary": $primary
-));
+$custom-colors: (
+  "primary": $primary,
+  "tertiary": $tertiary
+);
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import "../node_modules/@tabler/core/src/scss/tabler.scss";
+
+
+
 
 
 
