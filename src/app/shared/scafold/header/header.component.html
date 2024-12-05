@@ -33,7 +33,7 @@
             (click)="toggleTheme()"
             class="nav-link px-0"
             title="Enable dark mode"
-            [ngbTooltip]="'Activar modo ' + theme"
+            [ngbTooltip]="theme == 'light' ? 'Activar modo obscuro' : 'Activar modo claro'"
           >
             <i
               class="ti icon menu-icon"
