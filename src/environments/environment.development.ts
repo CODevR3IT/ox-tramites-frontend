@@ -1,1 +1,7 @@
-export const environment = {};
+export const environment = {
+    api: '',
+    ssoApi: '',
+    clientKey: '',
+    appUuid: '',
+    loginUrl: '',
+};

@@ -1,8 +1,10 @@
 import { Routes } from '@angular/router';
 import { MainComponent } from './shared/scafold/main/main.component';
 import { LandingComponent } from './pages/landing/landing.component';
+import { AuthComponent } from './shared/auth/auth.component';
 
 export const routes: Routes = [
+  { path: 'auth', component: AuthComponent },
   {
     path: '',
     component: MainComponent,

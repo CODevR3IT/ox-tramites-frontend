@@ -1,18 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/@tabler/core/src/scss/core";
-$primary: #6a1c32;
-$tertiary: #b17a45;
-
-$custom-colors: (
+//$primary: #6a1c32;
+//$tertiary: #b17a45;
+$link-color: $primary;
+$link-hover-color: $primary;
+$input-focus-border-color: $primary;
+/*$custom-colors: (
   "primary": $primary,
   "tertiary": $tertiary
 );
-$theme-colors: map-merge($theme-colors, $custom-colors);
+$theme-colors: map-merge($theme-colors, $custom-colors);*/
 
 @import "../node_modules/@tabler/core/src/scss/tabler.scss";
+@import "../node_modules/@tabler/icons-webfont/dist/tabler-icons.scss";
 
+@import 'ngx-toastr/toastr-bs5-alert';
 
+.menu-icon {
+  color: $secondary;
+  margin: 0 5px 0 5px;
+}
+.img-shadow{
+  -webkit-filter: drop-shadow(1px 1px 1px #222);
+  filter: drop-shadow(1px 1px 1px #222);
+}
 
-
+.text-stroke{
+  -webkit-text-stroke: 4px black;
+  paint-order: stroke fill;
+}
 
 
