@@ -4,6 +4,7 @@
   <div class="page-wrapper">
     <div class="page-header d-print-none">
       <div class="container-xl">
+        <app-breadcrumbs></app-breadcrumbs>
         <div class="row g-2 align-items-center"></div>
         <div class="row g-2 align-items-center">
           <div class="col">
@@ -12,13 +13,11 @@
         </div>
       </div>
     </div>
-
     <div class="page-body">
       <div class="container-xl">
         <router-outlet></router-outlet>
       </div>
     </div>
-
     <footer class="footer footer-transparent d-print-none">
       <app-footer></app-footer>
     </footer>

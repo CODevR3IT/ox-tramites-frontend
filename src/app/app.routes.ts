@@ -8,6 +8,6 @@ export const routes: Routes = [
   {
     path: '',
     component: MainComponent,
-    children: [{ path: '', component: LandingComponent }],
+    children: [{ path: '', component: LandingComponent, data: {breadcrumb: 'Inicio'} }],
   },
 ];
