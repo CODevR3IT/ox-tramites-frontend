@@ -2,6 +2,9 @@
   <ol class="breadcrumb">
     @for (breadcrumb of (breadcrumbs$ | async); track breadcrumb.url) {
     <li class="breadcrumb-item" [routerLinkActive]="['active']">
+      @if (breadcrumb.url === '/') {
+        <i class="icon me-1 ti ti-home"></i>
+      }
       <a [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</a>
     </li>
     }
