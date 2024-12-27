@@ -1,3 +1,4 @@
+
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/@tabler/core/src/scss/core";
 //$primary: #6a1c32;
@@ -13,8 +14,6 @@ $theme-colors: map-merge($theme-colors, $custom-colors);*/
 
 @import "../node_modules/@tabler/core/src/scss/tabler.scss";
 @import "../node_modules/@tabler/icons-webfont/dist/tabler-icons.scss";
-
-@import 'ngx-toastr/toastr-bs5-alert';
 
 .menu-icon {
   color: $secondary;
