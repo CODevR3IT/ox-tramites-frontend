@@ -1,16 +1,17 @@
-
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/@tabler/core/src/scss/core";
-//$primary: #6a1c32;
-//$tertiary: #b17a45;
+$primary: #6a1c32;
+$tertiary: #b17a45;
 $link-color: $primary;
 $link-hover-color: $primary;
+$form-select-focus-border-color: $primary;
 $input-focus-border-color: $primary;
-/*$custom-colors: (
+
+$custom-colors: (
   "primary": $primary,
   "tertiary": $tertiary
 );
-$theme-colors: map-merge($theme-colors, $custom-colors);*/
+$theme-colors: map-merge($theme-colors, $custom-colors);
 
 @import "../node_modules/@tabler/core/src/scss/tabler.scss";
 @import "../node_modules/@tabler/icons-webfont/dist/tabler-icons.scss";
@@ -29,4 +30,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);*/
   paint-order: stroke fill;
 }
 
+.table-responsive .dropdown,.table-responsive .btn-group,.table-responsive .btn-group-vertical {
+  position: static;
+}
 
