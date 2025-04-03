@@ -1,11 +1,188 @@
 <div class="card" [@fadeInLeft]="fadeInLeft">
   <div class="card-status-top bg-primary"></div>
   <div class="card-body">
-    <h3 class="card-title">Card with top status</h3>
-    <p class="text-secondary">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam deleniti
-      fugit incidunt, iste, itaque minima neque pariatur perferendis sed
-      suscipit velit vitae voluptatem.
-    </p>
+    <h3 class="titulo-pagina card-title text-center primary">Registro ciudadano</h3>
+    <div class="steps steps-counter">
+      <a href="prueba1" class="step-item active">
+        Paso 1
+      </a>
+      <a href="prueba2" class="step-item">
+        Paso 2
+      </a>
+      <span href="prueba3" class="step-item">
+        Paso 3
+      </span>
+    </div>
+
+    <div class="row" style="margin-top: 40px;">
+
+      <!-- ++++++ -->
+      <!-- Paso 1 -->
+      <!-- ++++++ -->
+      <div class="offset-1 col-10" id="prueba1">
+        
+        <h4 class="subtitulo-pagina">Registro de datos de usuario</h4>
+        
+        <div class="row">
+
+          <div class="col-4 mb-3">
+            <label class="form-label">CURP</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
+          </div>
+
+          <div class="col-4 offset-4">
+            ¿Eres persona extranjera sin CURP?
+          </div>
+
+        </div>
+        
+
+        <div class="row">
+
+          <div class="col-4 mb-3">
+            <label class="form-label">Nombre(s)</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
+          </div>
+  
+          <div class="col-4 mb-3">
+            <label class="form-label">Primer apellido</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
+          </div>
+  
+          <div class="col-4 mb-3">
+            <label class="form-label">Segundo apellido</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
+          </div>
+  
+          <div class="col-4 mb-3">
+            <label class="form-label">Sexo</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
+          </div>
+  
+          <div class="col-4 mb-3">
+            <label class="form-label">Fecha de nacimiento</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
+          </div>
+
+        </div>
+
+        <!-- CP -->
+        <div class="row">
+
+          <div class="col-4 mb-3">
+            <label class="form-label">Código postal</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu código postal"/>
+          </div>
+
+        </div>
+
+        <!-- Estado, municipio y colonia -->
+        <div class="row">
+
+          <div class="col-4 mb-3">
+            <label class="form-label">Estado</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder=""/>
+          </div>
+
+          <div class="col-4 mb-3">
+            <label class="form-label">Municipio</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu municipio"/>
+          </div>
+
+          <div class="col-4 mb-3">
+            <label class="form-label">Colonia</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu colonia"/>
+          </div>
+
+        </div>
+
+        <div class="row" style="margin-top: 20px;">
+          <div class="col-2 offset-8 text-end"><a href="#" class="btn boton-cancelar-regresar" role="button">Cancelar</a></div>
+          <div class="col-2 text-end"><a href="#" class="btn boton-siguiente-finalizar" role="button">Siguiente</a></div>
+        </div>
+        
+      </div>
+  
+
+      <!-- ++++++ -->
+      <!-- Paso 2 -->
+      <!-- ++++++ -->
+      <div class="offset-1 col-10" id="prueba2">
+        
+        <h4 class="subtitulo-pagina">Medios de contacto</h4>
+      
+        <!-- Correo electrónico -->
+        <div class="row">
+
+          <div class="col-6 mb-3">
+            <label class="form-label">Correo electrónico</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu correo electrónico"/>
+          </div>
+
+          <div class="col-6 mb-3">
+            <label class="form-label">Confirma tu correo electrónico</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Confirma tu correo electrónico"/>
+          </div>
+
+        </div>
+      
+        <!-- Número de celular -->
+        <div class="row">
+
+          <div class="col-6 mb-3">
+            <label class="form-label">Número celular</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu número celular"/>
+          </div>
+
+          <div class="col-6 mb-3">
+            <label class="form-label">Confirma tu número celular</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Confirma tu número celular"/>
+          </div>
+
+        </div>
+
+        <div class="row" style="margin-top: 20px;">
+          <div class="col-2 offset-8 text-end"><a href="#" class="btn boton-cancelar-regresar" role="button">Regresar</a></div>
+          <div class="col-2 text-end"><a href="#" class="btn boton-siguiente-finalizar" role="button">Siguiente</a></div>
+        </div>
+
+      </div>
+  
+
+      <!-- ++++++ -->
+      <!-- Paso 3 -->
+      <!-- ++++++ -->
+      <div class="offset-1 col-10" id="prueba3">
+        
+        <h4 class="subtitulo-pagina">Creación de contraseña</h4>
+
+        <div class="row">
+
+          <div class="col-4 mb-3">
+            <label class="form-label">Contraseña</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Crea una contraseña"/>
+          </div>
+
+          <div class="col-4 mb-3">
+            <label class="form-label">Confirmar contraseña</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Confirma tu contraseña"/>
+          </div>
+
+          <div class="col-4 mb-3">
+            <label class="form-label">Mostrar contraseña</label>
+          </div>
+
+        </div>
+
+        <div class="row" style="margin-top: 20px;">
+          <div class="col-2 offset-8 text-end"><a href="#" class="btn boton-cancelar-regresar" role="button">Regresar</a></div>
+          <div class="col-2 text-end"><a href="#" class="btn boton-siguiente-finalizar" role="button">Finalizar</a></div>
+        </div>
+
+      </div>
+
+    </div>
+    
+
   </div>
 </div>
