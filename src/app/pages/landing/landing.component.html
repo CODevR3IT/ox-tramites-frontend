@@ -1,188 +1,252 @@
+<style>
+  .steps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.step-item {
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.step-marker {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ccc;
+  color: #fff;
+  font-weight: bold;
+  margin: 0 auto;
+  transition: background-color 0.3s;
+}
+
+.step-content {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+/* Estilo cuando el paso está activo */
+.step-item.active .step-marker {
+  background-color: #007bff;
+}
+
+/* Estilo cuando el paso ya fue completado */
+.step-item.completed .step-marker {
+  background-color: #28a745;
+}
+
+</style>
 <div class="card" [@fadeInLeft]="fadeInLeft">
   <div class="card-status-top bg-primary"></div>
   <div class="card-body">
     <h3 class="titulo-pagina card-title text-center primary">Registro ciudadano</h3>
-    <div class="steps steps-counter">
-      <a href="prueba1" class="step-item active">
-        Paso 1
-      </a>
-      <a href="prueba2" class="step-item">
-        Paso 2
-      </a>
-      <span href="prueba3" class="step-item">
-        Paso 3
-      </span>
-    </div>
-
-    <div class="row" style="margin-top: 40px;">
-
-      <!-- ++++++ -->
-      <!-- Paso 1 -->
-      <!-- ++++++ -->
-      <div class="offset-1 col-10" id="prueba1">
-        
-        <h4 class="subtitulo-pagina">Registro de datos de usuario</h4>
-        
-        <div class="row">
-
-          <div class="col-4 mb-3">
-            <label class="form-label">CURP</label>
-            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
-          </div>
-
-          <div class="col-4 offset-4">
-            ¿Eres persona extranjera sin CURP?
-          </div>
-
+    
+    <div class="container mt-5">
+      <div class="steps d-flex">
+        <div *ngFor="let step of steps; let i = index" 
+             class="step-item"
+             [ngClass]="{'active': i === currentStep, 'completed': i < currentStep}">
+          <div class="step-marker">{{ i + 1 }}</div>
+          <div class="step-content">{{ step }}</div>
         </div>
-        
-
-        <div class="row">
-
-          <div class="col-4 mb-3">
-            <label class="form-label">Nombre(s)</label>
-            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
-          </div>
-  
-          <div class="col-4 mb-3">
-            <label class="form-label">Primer apellido</label>
-            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
-          </div>
-  
-          <div class="col-4 mb-3">
-            <label class="form-label">Segundo apellido</label>
-            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
-          </div>
-  
-          <div class="col-4 mb-3">
-            <label class="form-label">Sexo</label>
-            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
-          </div>
-  
-          <div class="col-4 mb-3">
-            <label class="form-label">Fecha de nacimiento</label>
-            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
-          </div>
-
-        </div>
-
-        <!-- CP -->
-        <div class="row">
-
-          <div class="col-4 mb-3">
-            <label class="form-label">Código postal</label>
-            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu código postal"/>
-          </div>
-
-        </div>
-
-        <!-- Estado, municipio y colonia -->
-        <div class="row">
-
-          <div class="col-4 mb-3">
-            <label class="form-label">Estado</label>
-            <input type="text" class="form-control" name="example-text-input" placeholder=""/>
-          </div>
-
-          <div class="col-4 mb-3">
-            <label class="form-label">Municipio</label>
-            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu municipio"/>
-          </div>
-
-          <div class="col-4 mb-3">
-            <label class="form-label">Colonia</label>
-            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu colonia"/>
-          </div>
-
-        </div>
-
-        <div class="row" style="margin-top: 20px;">
-          <div class="col-2 offset-8 text-end"><a href="#" class="btn boton-cancelar-regresar" role="button">Cancelar</a></div>
-          <div class="col-2 text-end"><a href="#" class="btn boton-siguiente-finalizar" role="button">Siguiente</a></div>
-        </div>
-        
       </div>
-  
-
-      <!-- ++++++ -->
-      <!-- Paso 2 -->
-      <!-- ++++++ -->
-      <div class="offset-1 col-10" id="prueba2">
+    
+      <div class="mt-4">
+        <!-- Contenido dinámico de cada paso -->
+        <!-- ++++++ -->
+        <!-- Paso 1 -->
+        <!-- ++++++ -->
+        <div *ngIf="currentStep === 0">
+          <label>Nombre:</label>
+          <input class="form-control" [(ngModel)]="formData.nombre" />
+          <div class="offset-1 col-10" id="prueba1">
         
-        <h4 class="subtitulo-pagina">Medios de contacto</h4>
+            <h4 class="subtitulo-pagina">Registro de datos de usuario</h4>
+            
+            <div class="row">
+    
+              <div class="col-4 mb-3">
+                <label class="form-label">CURP</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
+              </div>
+    
+              <div class="col-4 offset-4">
+                ¿Eres persona extranjera sin CURP?
+              </div>
+    
+            </div>
+            
+    
+            <div class="row">
+    
+              <div class="col-4 mb-3">
+                <label class="form-label">Nombre(s)</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
+              </div>
       
-        <!-- Correo electrónico -->
-        <div class="row">
-
-          <div class="col-6 mb-3">
-            <label class="form-label">Correo electrónico</label>
-            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu correo electrónico"/>
-          </div>
-
-          <div class="col-6 mb-3">
-            <label class="form-label">Confirma tu correo electrónico</label>
-            <input type="text" class="form-control" name="example-text-input" placeholder="Confirma tu correo electrónico"/>
-          </div>
-
-        </div>
+              <div class="col-4 mb-3">
+                <label class="form-label">Primer apellido</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
+              </div>
       
-        <!-- Número de celular -->
-        <div class="row">
-
-          <div class="col-6 mb-3">
-            <label class="form-label">Número celular</label>
-            <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu número celular"/>
+              <div class="col-4 mb-3">
+                <label class="form-label">Segundo apellido</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
+              </div>
+      
+              <div class="col-4 mb-3">
+                <label class="form-label">Sexo</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
+              </div>
+      
+              <div class="col-4 mb-3">
+                <label class="form-label">Fecha de nacimiento</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
+              </div>
+    
+            </div>
+    
+            <!-- CP -->
+            <div class="row">
+    
+              <div class="col-4 mb-3">
+                <label class="form-label">Código postal</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu código postal"/>
+              </div>
+    
+            </div>
+    
+            <!-- Estado, municipio y colonia -->
+            <div class="row">
+    
+              <div class="col-4 mb-3">
+                <label class="form-label">Estado</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder=""/>
+              </div>
+    
+              <div class="col-4 mb-3">
+                <label class="form-label">Municipio</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu municipio"/>
+              </div>
+    
+              <div class="col-4 mb-3">
+                <label class="form-label">Colonia</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu colonia"/>
+              </div>
+    
+            </div>
+    
+            <!-- <div class="row" style="margin-top: 20px;">
+              <div class="col-2 offset-8 text-end"><a href="#" class="btn boton-cancelar-regresar" role="button">Cancelar</a></div>
+              <div class="col-2 text-end"><a href="#" class="btn boton-siguiente-finalizar" role="button">Siguiente</a></div>
+            </div> -->
+            
           </div>
-
-          <div class="col-6 mb-3">
-            <label class="form-label">Confirma tu número celular</label>
-            <input type="text" class="form-control" name="example-text-input" placeholder="Confirma tu número celular"/>
-          </div>
-
         </div>
 
-        <div class="row" style="margin-top: 20px;">
-          <div class="col-2 offset-8 text-end"><a href="#" class="btn boton-cancelar-regresar" role="button">Regresar</a></div>
-          <div class="col-2 text-end"><a href="#" class="btn boton-siguiente-finalizar" role="button">Siguiente</a></div>
-        </div>
-
-      </div>
-  
-
-      <!-- ++++++ -->
-      <!-- Paso 3 -->
-      <!-- ++++++ -->
-      <div class="offset-1 col-10" id="prueba3">
+        <!-- ++++++ -->
+        <!-- Paso 2 -->
+        <!-- ++++++ -->
+        <div *ngIf="currentStep === 1">
+          <label>Detalles:</label>
+          <input class="form-control" [(ngModel)]="formData.detalles" />
+          <div class="offset-1 col-10" id="prueba2">
         
-        <h4 class="subtitulo-pagina">Creación de contraseña</h4>
-
-        <div class="row">
-
-          <div class="col-4 mb-3">
-            <label class="form-label">Contraseña</label>
-            <input type="text" class="form-control" name="example-text-input" placeholder="Crea una contraseña"/>
+            <h4 class="subtitulo-pagina">Medios de contacto</h4>
+          
+            <!-- Correo electrónico -->
+            <div class="row">
+    
+              <div class="col-6 mb-3">
+                <label class="form-label">Correo electrónico</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu correo electrónico"/>
+              </div>
+    
+              <div class="col-6 mb-3">
+                <label class="form-label">Confirma tu correo electrónico</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Confirma tu correo electrónico"/>
+              </div>
+    
+            </div>
+          
+            <!-- Número de celular -->
+            <div class="row">
+    
+              <div class="col-6 mb-3">
+                <label class="form-label">Número celular</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu número celular"/>
+              </div>
+    
+              <div class="col-6 mb-3">
+                <label class="form-label">Confirma tu número celular</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Confirma tu número celular"/>
+              </div>
+    
+            </div>
           </div>
-
-          <div class="col-4 mb-3">
-            <label class="form-label">Confirmar contraseña</label>
-            <input type="text" class="form-control" name="example-text-input" placeholder="Confirma tu contraseña"/>
-          </div>
-
-          <div class="col-4 mb-3">
-            <label class="form-label">Mostrar contraseña</label>
-          </div>
-
         </div>
-
-        <div class="row" style="margin-top: 20px;">
-          <div class="col-2 offset-8 text-end"><a href="#" class="btn boton-cancelar-regresar" role="button">Regresar</a></div>
-          <div class="col-2 text-end"><a href="#" class="btn boton-siguiente-finalizar" role="button">Finalizar</a></div>
+    
+        <!-- ++++++ -->
+        <!-- Paso 3 -->
+        <!-- ++++++ -->
+        <div *ngIf="currentStep === 2">
+          <label>
+            <input type="checkbox" [(ngModel)]="formData.confirmado" />
+            Confirmo que mis datos son correctos
+          </label>
+          <div class="offset-1 col-10" id="prueba3">
+        
+            <h4 class="subtitulo-pagina">Creación de contraseña</h4>
+    
+            <div class="row">
+    
+              <div class="col-4 mb-3">
+                <label class="form-label">Contraseña</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Crea una contraseña"/>
+              </div>
+    
+              <div class="col-4 mb-3">
+                <label class="form-label">Confirmar contraseña</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Confirma tu contraseña"/>
+              </div>
+    
+              <div class="col-4 mb-3">
+                <label class="form-label">Mostrar contraseña</label>
+              </div>
+    
+            </div>
+    
+          </div>
+    
         </div>
-
+    
+        <div *ngIf="currentStep === 3">
+          <h3 class="text-success">✅ ¡Registro Completo!</h3>
+          <table class="table table-bordered">
+            <tr><th>Campo</th><th>Valor</th></tr>
+            <tr><td><strong>Nombre</strong></td><td>{{ formData.nombre }}</td></tr>
+            <tr><td><strong>Detalles</strong></td><td>{{ formData.detalles }}</td></tr>
+            <tr><td><strong>Confirmación</strong></td><td>{{ formData.confirmado ? 'Sí' : 'No' }}</td></tr>
+          </table>
+          <button class="btn btn-warning mt-3" (click)="resetForm()">🔄 Reiniciar</button>
+        </div>
+    
+        <!-- Botones de navegación -->
+        <div class="mt-4">
+          <button class="btn btn-secondary me-2" (click)="prevStep()" [disabled]="currentStep === 0">
+            Anterior
+          </button>
+          <button class="btn btn-primary" (click)="nextStep()" [disabled]="currentStep === steps.length - 1">
+            Siguiente
+          </button>
+        </div>
       </div>
-
     </div>
     
-
   </div>
 </div>
