@@ -1,6 +1,6 @@
 export const environment = {
-    api: '',
-    ssoApi: '',
+    api: 'http://localhost:8000',
+    ssoApi: 'http://localhost:8000',
     clientKey: '',
     appUuid: '',
     loginUrl: '',

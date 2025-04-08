@@ -62,8 +62,6 @@
         <!-- Paso 1 -->
         <!-- ++++++ -->
         <div *ngIf="currentStep === 0">
-          <label>Nombre:</label>
-          <input class="form-control" [(ngModel)]="formData.nombre" />
           <div class="offset-1 col-10" id="prueba1">
         
             <h4 class="subtitulo-pagina">Registro de datos de usuario</h4>
@@ -72,10 +70,20 @@
     
               <div class="col-4 mb-3">
                 <label class="form-label">CURP</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP" [(ngModel)]="payload.curp"/>
               </div>
-    
+              <div class="col-4 mb-3">
+                <button class="btn btn-primary" (click)="getCURP()">Obtener</button>
+              </div>
+            </div>
+            <div class="row">
               <div class="col-4 offset-4">
+                <div>
+                  <label class="form-check">
+                    <input class="form-check-input" type="checkbox" (click)="muestraCURP($event)" />
+                    <span class="form-check-label">Checkbox input</span>
+                  </label>
+                </div>
                 ¿Eres persona extranjera sin CURP?
               </div>
     
@@ -86,27 +94,32 @@
     
               <div class="col-4 mb-3">
                 <label class="form-label">Nombre(s)</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu nombre" [(ngModel)]="formData.nombre"/>
               </div>
       
               <div class="col-4 mb-3">
-                <label class="form-label">Primer apellido</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
+                <label class="form-label">Apellido paterno</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu apellido paterno" [(ngModel)]="formData.apPaterno"/>
               </div>
       
               <div class="col-4 mb-3">
-                <label class="form-label">Segundo apellido</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
+                <label class="form-label">Apellido materno</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu apellido materno" [(ngModel)]="formData.apMaterno"/>
               </div>
       
               <div class="col-4 mb-3">
                 <label class="form-label">Sexo</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
+                <select class="form-select" name="opcion" id="exampleFormControlInput9"
+                    [(ngModel)]="formData.sexo" required #sexo="ngModel"
+                    [class.is-invalid]="sexo.invalid && (sexo.dirty || sexo.touched)">
+                    <option value="1">Femenino</option>
+                    <option value="2">Masculino</option>
+                </select>
               </div>
       
               <div class="col-4 mb-3">
                 <label class="form-label">Fecha de nacimiento</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP"/>
+                <input type="date" class="form-control" name="example-text-input" placeholder="Ingresa tu fecha de nacimiento" [(ngModel)]="formData.fecha"/>
               </div>
     
             </div>
@@ -116,29 +129,36 @@
     
               <div class="col-4 mb-3">
                 <label class="form-label">Código postal</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu código postal"/>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu código postal" [(ngModel)]="payload.cp" />
               </div>
-    
+              <div class="col-4 mb-3">
+                <button class="btn btn-primary" (click)="getCP()">Obtener</button>
+              </div>
             </div>
     
             <!-- Estado, municipio y colonia -->
             <div class="row">
-    
+              <div class="col-4 mb-3">
+                <label class="form-label">Colonia</label>
+                <select class="form-select" name="opcion" id="exampleFormControlInput9"
+                  [(ngModel)]="formData.colonia" required #colonia="ngModel" 
+                  [class.is-invalid]="colonia.invalid && (colonia.dirty || colonia.touched)"
+                  (change)="verData()">
+                    @for (direccion of arregloCP; track $index) {
+                      <option [ngValue]="direccion">{{direccion.colonia}}</option>
+                    }
+                </select>
+              </div>
+
               <div class="col-4 mb-3">
                 <label class="form-label">Estado</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder=""/>
+                <input type="text" class="form-control" name="example-text-input" placeholder="" [(ngModel)]="formData.estado"/>
               </div>
     
               <div class="col-4 mb-3">
                 <label class="form-label">Municipio</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu municipio"/>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu municipio" [(ngModel)]="formData.municipio"/>
               </div>
-    
-              <div class="col-4 mb-3">
-                <label class="form-label">Colonia</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu colonia"/>
-              </div>
-    
             </div>
     
             <!-- <div class="row" style="margin-top: 20px;">
