@@ -65,7 +65,7 @@
           <div class="offset-1 col-10" id="prueba1">
         
             <h4 class="subtitulo-pagina">Registro de datos de usuario</h4>
-            
+            @if(existeCURP){
             <div class="row">
     
               <div class="col-4 mb-3">
@@ -76,6 +76,7 @@
                 <button class="btn btn-primary" (click)="getCURP()">Obtener</button>
               </div>
             </div>
+            }
             <div class="row">
               <div class="col-4 offset-4">
                 <div>
@@ -94,12 +95,12 @@
     
               <div class="col-4 mb-3">
                 <label class="form-label">Nombre(s)</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu nombre" [(ngModel)]="formData.nombre"/>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu nombre" [(ngModel)]="formData.nombre" #nombreInput/>
               </div>
       
               <div class="col-4 mb-3">
                 <label class="form-label">Apellido paterno</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu apellido paterno" [(ngModel)]="formData.apPaterno"/>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu apellido paterno" [(ngModel)]="formData.apPaterno" #appatInput/>
               </div>
       
               <div class="col-4 mb-3">
@@ -110,7 +111,7 @@
               <div class="col-4 mb-3">
                 <label class="form-label">Sexo</label>
                 <select class="form-select" name="opcion" id="exampleFormControlInput9"
-                    [(ngModel)]="formData.sexo" required #sexo="ngModel"
+                    [(ngModel)]="formData.sexo" required #sexo="ngModel" #sexoInput
                     [class.is-invalid]="sexo.invalid && (sexo.dirty || sexo.touched)">
                     <option value="1">Femenino</option>
                     <option value="2">Masculino</option>
@@ -119,7 +120,7 @@
       
               <div class="col-4 mb-3">
                 <label class="form-label">Fecha de nacimiento</label>
-                <input type="date" class="form-control" name="example-text-input" placeholder="Ingresa tu fecha de nacimiento" [(ngModel)]="formData.fecha"/>
+                <input type="date" class="form-control" name="example-text-input" placeholder="Ingresa tu fecha de nacimiento" [(ngModel)]="formData.fecha" #fechaInput/>
               </div>
     
             </div>
@@ -129,7 +130,7 @@
     
               <div class="col-4 mb-3">
                 <label class="form-label">Código postal</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu código postal" [(ngModel)]="payload.cp" />
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu código postal" [(ngModel)]="payload.cp" #cpInput/>
               </div>
               <div class="col-4 mb-3">
                 <button class="btn btn-primary" (click)="getCP()">Obtener</button>
@@ -141,7 +142,7 @@
               <div class="col-4 mb-3">
                 <label class="form-label">Colonia</label>
                 <select class="form-select" name="opcion" id="exampleFormControlInput9"
-                  [(ngModel)]="formData.colonia" required #colonia="ngModel" 
+                  [(ngModel)]="formData.colonia" required #colonia="ngModel" #coloniaInput
                   [class.is-invalid]="colonia.invalid && (colonia.dirty || colonia.touched)"
                   (change)="verData()">
                     @for (direccion of arregloCP; track $index) {
@@ -152,12 +153,12 @@
 
               <div class="col-4 mb-3">
                 <label class="form-label">Estado</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="" [(ngModel)]="formData.estado"/>
+                <input type="text" class="form-control" name="example-text-input" placeholder="" [(ngModel)]="formData.estado" #estadoInput/>
               </div>
     
               <div class="col-4 mb-3">
                 <label class="form-label">Municipio</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu municipio" [(ngModel)]="formData.municipio"/>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu municipio" [(ngModel)]="formData.municipio" #municipioInput/>
               </div>
             </div>
     
@@ -173,8 +174,6 @@
         <!-- Paso 2 -->
         <!-- ++++++ -->
         <div *ngIf="currentStep === 1">
-          <label>Detalles:</label>
-          <input class="form-control" [(ngModel)]="formData.detalles" />
           <div class="offset-1 col-10" id="prueba2">
         
             <h4 class="subtitulo-pagina">Medios de contacto</h4>
@@ -184,12 +183,12 @@
     
               <div class="col-6 mb-3">
                 <label class="form-label">Correo electrónico</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu correo electrónico"/>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu correo electrónico" [(ngModel)]="formData.correo" #correoInput/>
               </div>
     
               <div class="col-6 mb-3">
                 <label class="form-label">Confirma tu correo electrónico</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Confirma tu correo electrónico"/>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Confirma tu correo electrónico" [(ngModel)]="payload.correo" #correoInput/>
               </div>
     
             </div>
@@ -199,12 +198,12 @@
     
               <div class="col-6 mb-3">
                 <label class="form-label">Número celular</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu número celular"/>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu número celular" [(ngModel)]="formData.telefono" #telefonoInput/>
               </div>
     
               <div class="col-6 mb-3">
                 <label class="form-label">Confirma tu número celular</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Confirma tu número celular"/>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Confirma tu número celular" [(ngModel)]="payload.telefono" #telefonoInput/>
               </div>
     
             </div>
@@ -227,12 +226,12 @@
     
               <div class="col-4 mb-3">
                 <label class="form-label">Contraseña</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Crea una contraseña"/>
+                <input type="password" class="form-control" name="example-text-input" placeholder="Crea una contraseña" [(ngModel)]="formData.password" #passwordInput/>
               </div>
     
               <div class="col-4 mb-3">
                 <label class="form-label">Confirmar contraseña</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Confirma tu contraseña"/>
+                <input type="password" class="form-control" name="example-text-input" placeholder="Confirma tu contraseña" [(ngModel)]="payload.password" #passwordInput/>
               </div>
     
               <div class="col-4 mb-3">
@@ -253,7 +252,7 @@
             <tr><td><strong>Detalles</strong></td><td>{{ formData.detalles }}</td></tr>
             <tr><td><strong>Confirmación</strong></td><td>{{ formData.confirmado ? 'Sí' : 'No' }}</td></tr>
           </table>
-          <button class="btn btn-warning mt-3" (click)="resetForm()">🔄 Reiniciar</button>
+          <button class="btn btn-warning mt-3" (click)="confirmReset()">🔄 Reiniciar</button>
         </div>
     
         <!-- Botones de navegación -->
@@ -261,8 +260,11 @@
           <button class="btn btn-secondary me-2" (click)="prevStep()" [disabled]="currentStep === 0">
             Anterior
           </button>
-          <button class="btn btn-primary" (click)="nextStep()" [disabled]="currentStep === steps.length - 1">
+          <button class="btn btn-primary" (click)="nextStep()" [disabled]="currentStep === steps.length - 1 && currentStep <= 3">
             Siguiente
+          </button>
+          <button class="btn btn-primary" (click)="guardar()" *ngIf="currentStep >= 3">
+            Guardar
           </button>
         </div>
       </div>

@@ -56,4 +56,8 @@ export class RegistroService {
     getCURP(curp: any){
         return this.getQuery(`datosCURP/${ curp }`);
     }
+
+    guardar(payload: any){
+        return this.postQuery(`datosCiudadano/guardaCiudadano`, payload);
+    }
 }
