@@ -51,6 +51,8 @@ export class LandingComponent {
     confirmado: false,
   };
 event: any;
+password: string = '';
+showPassword: boolean = false;
   constructor(
     private registroService: RegistroService,
     private spinner: NgxSpinnerService,
@@ -252,4 +254,9 @@ event: any;
       }
     );
   }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
 }

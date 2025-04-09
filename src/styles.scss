@@ -38,14 +38,14 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   color: $primary;
   font-size: 3vh;
   font-weight: 600;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 .subtitulo-pagina{
   color: $primary;
   font-size: 2vh;
   font-weight: 400;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
 }
 
 .boton-cancelar-regresar{
@@ -56,5 +56,9 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 .boton-siguiente-finalizar{
   background-color: $primary;
   color: white;
+}
+
+.text-success{
+  color: $tertiary!important;
 }
 
