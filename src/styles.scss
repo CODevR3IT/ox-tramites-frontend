@@ -16,6 +16,10 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import "../node_modules/@tabler/core/src/scss/tabler.scss";
 @import "../node_modules/@tabler/icons-webfont/dist/tabler-icons.scss";
 
+.header-color{
+  border-bottom: 4px solid $primary;
+}
+
 .menu-icon {
   color: $secondary;
   margin: 0 5px 0 5px;
@@ -79,4 +83,60 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 
 .custom-file-upload label:hover {
   background-color: $primary;
+}
+
+
+.custom-show-pass {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: $primary;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+
+// Steps
+
+.steps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.step-item {
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.step-marker {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ccc;
+  color: #fff;
+  font-weight: bold;
+  margin: 0 auto;
+  transition: background-color 0.3s;
+}
+
+.step-content {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+/* Estilo cuando el paso está activo */
+.step-item.active .step-marker {
+  background-color: #6a1c32;
+}
+
+/* Estilo cuando el paso ya fue completado */
+.step-item.completed .step-marker {
+  background-color: #b17a45;
 }
