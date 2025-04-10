@@ -122,8 +122,11 @@
                 <select class="form-select" name="opcion" id="exampleFormControlInput9"
                     [(ngModel)]="formData.sexo" required #sexo="ngModel" #sexoInput
                     [class.is-invalid]="sexo.invalid && (sexo.dirty || sexo.touched)">
-                    <option value="1">Femenino</option>
-                    <option value="2">Masculino</option>
+                    <!-- @for (direccion of arregloCP; track $index) {
+                      <option [ngValue]="direccion">{{direccion.colonia}}</option>
+                    } -->
+                    <option value="MUJER">Femenino</option>
+                    <option value="HOMBRE">Masculino</option>
                 </select>
               </div>
       
@@ -131,7 +134,7 @@
                 <label class="form-label">Fecha de nacimiento</label>
                 <input type="date" class="form-control" name="example-text-input" placeholder="Ingresa tu fecha de nacimiento" [(ngModel)]="formData.fecha" #fechaInput/>
               </div>
-    
+
             </div>
     
             <!-- CP -->
@@ -163,7 +166,7 @@
 
               <div class="col-4 mb-3">
                 <label class="form-label">Estado</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="" [(ngModel)]="formData.estado" #estadoInput/>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu estado" placeholder="" [(ngModel)]="formData.estado" #estadoInput/>
               </div>
     
               <div class="col-4 mb-3">
