@@ -116,17 +116,16 @@
                 <label class="form-label">Apellido materno</label>
                 <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu apellido materno" [(ngModel)]="formData.apMaterno"/>
               </div>
-      
               <div class="col-4 mb-3">
                 <label class="form-label">Sexo</label>
                 <select class="form-select" name="opcion" id="exampleFormControlInput9"
-                    [(ngModel)]="formData.sexo" required #sexo="ngModel" #sexoInput
-                    [class.is-invalid]="sexo.invalid && (sexo.dirty || sexo.touched)">
-                    <!-- @for (direccion of arregloCP; track $index) {
-                      <option [ngValue]="direccion">{{direccion.colonia}}</option>
-                    } -->
-                    <option value="MUJER">Femenino</option>
-                    <option value="HOMBRE">Masculino</option>
+                  [(ngModel)]="formData.sexo" required #sexo="ngModel" #sexoInput
+                  [class.is-invalid]="sexo.invalid && (sexo.dirty || sexo.touched)">
+                    @for (sexo of catSexo; track $index) {
+                      <option [ngValue]="sexo.sexo">{{sexo.sexo}}</option>
+                    }
+                    <!-- <option value="MUJER">Femenino</option>
+                    <option value="HOMBRE">Masculino</option> -->
                 </select>
               </div>
       
@@ -185,11 +184,10 @@
               <div class="col-4">
                 <label class="form-label">Nacionalidad</label>
                 <select class="form-select" name="opcion" id="exampleFormControlInput9"
-                  [(ngModel)]="formData.colonia" required #colonia="ngModel" #coloniaInput
-                  [class.is-invalid]="colonia.invalid && (colonia.dirty || colonia.touched)"
-                  (change)="verData()">
-                    @for (direccion of arregloCP; track $index) {
-                      <option [ngValue]="direccion">{{direccion.colonia}}</option>
+                  [(ngModel)]="formData.nacionalidad" required #nacionalidad="ngModel" #nacionalidadInput
+                  [class.is-invalid]="nacionalidad.invalid && (nacionalidad.dirty || nacionalidad.touched)">
+                    @for (pais of catPais; track $index) {
+                      <option [ngValue]="pais.id">{{pais.pais}}</option>
                     }
                 </select>
               </div>
@@ -197,11 +195,10 @@
               <div class="col-4">
                 <label class="form-label">Identificación</label>
                 <select class="form-select" name="opcion" id="exampleFormControlInput9"
-                  [(ngModel)]="formData.colonia" required #colonia="ngModel" #coloniaInput
-                  [class.is-invalid]="colonia.invalid && (colonia.dirty || colonia.touched)"
-                  (change)="verData()">
-                    @for (direccion of arregloCP; track $index) {
-                      <option [ngValue]="direccion">{{direccion.colonia}}</option>
+                  [(ngModel)]="formData.identifica" required #identifica="ngModel" #identificaInput
+                  [class.is-invalid]="identifica.invalid && (identifica.dirty || identifica.touched)">
+                    @for (identificacion of catIde; track $index) {
+                      <option [ngValue]="identificacion.id">{{identificacion.identificacion}}</option>
                     }
                 </select>
               </div>

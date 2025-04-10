@@ -49,6 +49,18 @@ export class RegistroService {
         return this.postQuery(`adeudos/vigentes`, payload);
     }
 
+    getCatSexo(){
+        return this.getQuery(`datosCatalogo/sexo`);
+    }
+
+    getCatPais(){
+        return this.getQuery(`datosCatalogo/pais`);
+    }
+
+    getCatIde(){
+        return this.getQuery(`datosCatalogo/identificacion`);
+    }
+
     getCP(cp: any){
         return this.getQuery(`datosCp/${ cp }`);
     }

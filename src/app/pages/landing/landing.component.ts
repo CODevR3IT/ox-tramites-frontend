@@ -34,6 +34,9 @@ export class LandingComponent {
   @ViewChild('telefonoInput') telefonoInput!: ElementRef
   @ViewChild('passwordInput') passwordInput!: ElementRef
   payload:any = {};
+  catSexo: any;
+  catPais: any;
+  catIde: any;
   query:any = {};
   datosCURP: any = {}
   fadeInLeft: any;
@@ -65,7 +68,74 @@ showPassword: boolean = false;
   }
 
   ngOnInit(){
+    this.spinner.show();
+    this.getCatSexo();
+  }
 
+  getCatSexo(){
+    this.registroService.getCatSexo().subscribe(
+      {
+        next: (res:any)=>{
+          console.log(res);
+          this.catSexo = res;
+          this.getCatPais();
+        },
+        error: (err)=>  {
+          this.spinner.hide();
+          Swal.fire({
+            title: '¡Atención!',
+            text: err.error.message,
+            icon: 'error',
+            confirmButtonColor: '#6a1c32',
+            confirmButtonText: 'Aceptar',
+          });
+        },
+      }
+    );
+  }
+
+  getCatPais(){
+    this.registroService.getCatPais().subscribe(
+      {
+        next: (res:any)=>{
+          console.log(res);
+          this.catPais = res;
+          this.getCatIde();
+        },
+        error: (err)=>  {
+          this.spinner.hide();
+          Swal.fire({
+            title: '¡Atención!',
+            text: err.error.message,
+            icon: 'error',
+            confirmButtonColor: '#6a1c32',
+            confirmButtonText: 'Aceptar',
+          });
+        },
+      }
+    );
+  }
+
+  getCatIde(){
+    this.registroService.getCatIde().subscribe(
+      {
+        next: (res:any)=>{
+          console.log(res);
+          this.catIde = res;
+          this.spinner.hide();
+        },
+        error: (err)=>  {
+          this.spinner.hide();
+          Swal.fire({
+            title: '¡Atención!',
+            text: err.error.message,
+            icon: 'error',
+            confirmButtonColor: '#6a1c32',
+            confirmButtonText: 'Aceptar',
+          });
+        },
+      }
+    );
   }
 
   getCURP(){
@@ -77,6 +147,7 @@ showPassword: boolean = false;
           this.formData.nombre = this.datosCURP.nombres;
           this.formData.apPaterno = this.datosCURP.primer_apellido;
           this.formData.apMaterno = this.datosCURP.segundo_apellido;
+          this.formData.sexo = this.datosCURP.sexo;
           this.fechaN = this.datosCURP.fecha_nacimiento;
           let fechaDate: Date = parse(this.fechaN, 'dd/MM/yyyy', new Date());
           this.formData.fecha = format(fechaDate, 'yyyy-MM-dd');
