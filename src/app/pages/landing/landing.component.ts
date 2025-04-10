@@ -1,5 +1,5 @@
 import { transition, trigger, useAnimation } from '@angular/animations';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, HostListener } from '@angular/core';
 import { fadeInLeft } from 'ng-animate';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -71,17 +71,24 @@ export class LandingComponent {
 event: any;
 password: string = '';
 showPassword: boolean = false;
+isSmallScreen: boolean = false;
+
   constructor(
     private registroService: RegistroService,
     private spinner: NgxSpinnerService,
 
   ){
-
+    this.checkScreenSize();
   }
 
   ngOnInit(){
     this.spinner.show();
     this.getCatSexo();
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.checkScreenSize();
   }
 
   getCatSexo(){
@@ -459,6 +466,10 @@ showPassword: boolean = false;
   onFileSelected(event: any) {
     const file = event.target.files[0];
     console.log('Archivo seleccionado:', file);
+  }
+
+  private checkScreenSize() {
+    this.isSmallScreen = window.innerWidth < 768; // <768px se considera pantalla chica
   }
 
 }

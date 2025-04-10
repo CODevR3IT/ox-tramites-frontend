@@ -142,3 +142,8 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 .step-item.completed .step-marker {
   background-color: #b17a45;
 }
+
+.boton-celular{
+  width: 90%!important;
+  margin: 3px 0px 3px 0px;
+}
