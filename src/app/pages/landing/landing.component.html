@@ -179,6 +179,48 @@
               <div class="col-2 offset-8 text-end"><a href="#" class="btn boton-cancelar-regresar" role="button">Cancelar</a></div>
               <div class="col-2 text-end"><a href="#" class="btn boton-siguiente-finalizar" role="button">Siguiente</a></div>
             </div> -->
+
+            <div class="row">
+              
+              <div class="col-4">
+                <label class="form-label">Nacionalidad</label>
+                <select class="form-select" name="opcion" id="exampleFormControlInput9"
+                  [(ngModel)]="formData.colonia" required #colonia="ngModel" #coloniaInput
+                  [class.is-invalid]="colonia.invalid && (colonia.dirty || colonia.touched)"
+                  (change)="verData()">
+                    @for (direccion of arregloCP; track $index) {
+                      <option [ngValue]="direccion">{{direccion.colonia}}</option>
+                    }
+                </select>
+              </div>
+
+              <div class="col-4">
+                <label class="form-label">Identificación</label>
+                <select class="form-select" name="opcion" id="exampleFormControlInput9"
+                  [(ngModel)]="formData.colonia" required #colonia="ngModel" #coloniaInput
+                  [class.is-invalid]="colonia.invalid && (colonia.dirty || colonia.touched)"
+                  (change)="verData()">
+                    @for (direccion of arregloCP; track $index) {
+                      <option [ngValue]="direccion">{{direccion.colonia}}</option>
+                    }
+                </select>
+              </div>
+
+              <div class="col-4">
+                <!-- <label class="form-label" style="color: transparent;">.</label> -->
+                <!-- <div class="fallback">
+                  <input name="file" type="file" />
+                </div> -->
+                <div class="custom-file-upload text-center" style="padding-top: 10px;">
+                  <label for="fileInput">📁 Subir archivo</label>
+                  <input id="fileInput" name="file" type="file" (change)="onFileSelected($event)" />
+                </div>
+                <div class="dz-message text-center">
+                  <span class="dropzone-msg-desc" style="font-size: 10px; color: gray; font-weight: 500;">Peso no mayor a 5 MB, sólo formato PDF</span>
+                </div>
+              </div>
+              
+            </div>
             
           </div>
         </div>

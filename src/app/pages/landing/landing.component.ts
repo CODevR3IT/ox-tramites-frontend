@@ -314,4 +314,9 @@ showPassword: boolean = false;
     this.showPassword = !this.showPassword;
   }
 
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    console.log('Archivo seleccionado:', file);
+  }
+
 }
