@@ -43,6 +43,7 @@ export class LandingComponent {
   steps: string[] = ["Inicio", "Detalles", "Confirmación", "Finalizado"];
   currentStep: number = 0;
   existeCURP: boolean = true;
+  existeConfirma: boolean = false;
   arregloCP: any;
   fechaN:string = '';
   mensanjeValida:string = '';
@@ -54,6 +55,9 @@ export class LandingComponent {
     sexo: '',
     fecha: '',
     colonia: '',
+    correo: '',
+    password: '',
+    telefono: '',
     confirmado: false,
   };
 event: any;
@@ -193,6 +197,7 @@ showPassword: boolean = false;
   nextStep() {
     console.log(this.validateStep());
     console.log(this.formData.colonia);
+    this.mensanjeValida = '';
     if (this.validateStep() == 'z') {
       this.currentStep++;
     } else if(this.validateStep() !== 'z') {
@@ -220,6 +225,18 @@ showPassword: boolean = false;
         case 'f':
           setTimeout(() => this.coloniaInput.nativeElement.focus(), 0);
           this.mensanjeValida = 'Por favor completa la colonia antes de continuar.'
+          break;
+        case 'g':
+          setTimeout(() => this.correoInput.nativeElement.focus(), 0);
+          this.mensanjeValida = 'Por favor completa el correo y verifique que los correos coincidan antes de continuar.'
+          break;
+        case 'h':
+          setTimeout(() => this.telefonoInput.nativeElement.focus(), 0);
+          this.mensanjeValida = 'Por favor completa el teléfono y verifique que el número coincida antes de continuar.'
+          break;
+        case 'i':
+          setTimeout(() => this.passwordInput.nativeElement.focus(), 0);
+          this.mensanjeValida = 'Por favor completa la contraseña y verifique que las contraseñas coincidan antes de continuar.'
           break;
       }
       
@@ -265,13 +282,18 @@ showPassword: boolean = false;
         
         return case0;
       case 1:
-        let case1: number = 0;
-        return (this.formData.correo.trim() == this.payload.correo.trim() ? this.formData.telefono.trim() !== '' && this.payload.telefono.trim() !== '': false);
+        let case1: string = 'z';
+        if((this.formData.correo !== this.payload.correo) || (this.formData.correo.trim() === '') || (this.payload.correo === undefined)){ case1 = 'g';}
+        else if((this.formData.telefono !== this.payload.telefono) || (this.formData.telefono.trim() === '') || (this.payload.telefono === undefined)){ case1 = 'h';}
+        
+        return case1;
       case 2:
-        let case2: number = 0;
-        return (this.formData.password.trim() == this.payload.password.trim() ? this.formData.confirmado === true: false);
+        let case2: string = 'z';
+        if((this.formData.password !== this.payload.password) || (this.formData.password.trim() === '') || (this.payload.password === undefined)){ case2 = 'g';}
+        
+        return case2;
       default:
-        return true;
+        return 'z';
     }
   }
 
@@ -316,6 +338,10 @@ showPassword: boolean = false;
     }else{
       this.existeCURP = true;
     }
+  }
+
+  confirma(e: any){
+      this.existeConfirma = (e.target.checked ? false:true);
   }
 
   verData(){
