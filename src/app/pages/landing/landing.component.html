@@ -243,6 +243,7 @@
               <div class="col-4 mb-3">
                 <label class="form-label" style="color: transparent;">.</label>
                 <button class="custom-show-pass" type="button" (click)="togglePasswordVisibility()">
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye-off"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" /><path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" /><path d="M3 3l18 18" /></svg>
                   {{ showPassword ? 'Ocultar' : 'Mostrar contraseña' }}
                 </button>
               </div>
@@ -264,7 +265,7 @@
             </table>
             <!-- <button class="btn btn-warning mt-3" (click)="confirmReset()">🔄 Reiniciar</button> -->
           </div>
-          <div class="col-12">
+          <div class="col-10 offset-1">
             <label>
               <input class="form-check-input" type="checkbox" [(ngModel)]="formData.confirmado" (click)="confirma($event)"/>
               Confirmo que mis datos son correctos
@@ -288,13 +289,15 @@
           </div>
           
           <div class="col-2 text-end">
-            <button class="btn btn-primary" (click)="confirmReset()" *ngIf="currentStep >= 3">
-              🔄 Reiniciar
+            <button class="btn btn-primary" style="background-color: #10312B!important;" (click)="confirmReset()" *ngIf="currentStep >= 3">
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-refresh"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></svg>
+              Reiniciar
             </button>
           </div>
           
           <div class="col-2 text-end">
-            <button class="btn btn-primary" [disabled]="existeConfirma" (click)="guardar()" *ngIf="currentStep >= 3">
+            <button class="btn btn-primary" style="background-color: #b17a45!important;" [disabled]="existeConfirma" (click)="guardar()" *ngIf="currentStep >= 3">
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg>
               Guardar
             </button>
           </div>
