@@ -27,7 +27,7 @@
               @if(existeCURP){
               <div class="col-4 mb-3">
                 <label class="form-label">CURP</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu CURP" [(ngModel)]="payload.curp"/>
+                <input type="text" class="form-control" name="example-text-input" maxlength="18" placeholder="Ingresa tu CURP" [(ngModel)]="payload.curp"/>
               </div>
               <div class="col-4 mb-3">
                 <label class="form-label" style="color: transparent;">.</label>
@@ -193,11 +193,13 @@
               <div class="col-6 mb-3">
                 <label class="form-label">Correo electrónico</label>
                 <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu correo electrónico" [(ngModel)]="formData.correo" #correoInput/>
+                <small *ngIf="correoError" class="text-danger">{{ correoError }}</small>
               </div>
     
               <div class="col-6 mb-3">
                 <label class="form-label">Confirma tu correo electrónico</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Confirma tu correo electrónico" [(ngModel)]="payload.correo" #correoInput/>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Confirma tu correo electrónico" [(ngModel)]="formData.correoB" #correoBInput/>
+                <small *ngIf="correoError" class="text-danger">{{ correoError }}</small>
               </div>
     
             </div>
@@ -207,12 +209,16 @@
     
               <div class="col-6 mb-3">
                 <label class="form-label">Número celular</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu número celular" [(ngModel)]="formData.telefono" #telefonoInput/>
+                <input type="tel" pattern="[0-9]*" inputmode="numeric" class="form-control" name="example-text-input" maxlength="10" placeholder="Ingresa tu número celular" 
+                  [(ngModel)]="formData.telefono" #telefonoInput (keypress)="permitirSoloNumeros($event)"/>
+                <small *ngIf="telefonoError" class="text-danger">{{ telefonoError }}</small>
               </div>
     
               <div class="col-6 mb-3">
                 <label class="form-label">Confirma tu número celular</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Confirma tu número celular" [(ngModel)]="payload.telefono" #telefonoInput/>
+                <input type="tel" pattern="[0-9]*" inputmode="numeric" class="form-control" name="example-text-input" maxlength="10" placeholder="Confirma tu número celular" 
+                  [(ngModel)]="formData.telefonoB" #telefonoBInput (keypress)="permitirSoloNumeros($event)"/>
+                <small *ngIf="telefonoError" class="text-danger">{{ telefonoError }}</small>
               </div>
     
             </div>
@@ -237,13 +243,13 @@
     
               <div class="col-4 mb-3">
                 <label class="form-label">Confirmar contraseña</label>
-                <input [type]="showPassword ? 'text' : 'password'" class="form-control" name="example-text-input" placeholder="Confirma tu contraseña" [(ngModel)]="payload.password" #passwordInput/>
+                <input [type]="showPassword ? 'text' : 'password'" class="form-control" name="example-text-input" placeholder="Confirma tu contraseña" [(ngModel)]="formData.passwordB" #passwordBInput/>
               </div>
     
               <div class="col-4 mb-3">
                 <label class="form-label" style="color: transparent;">.</label>
                 <button class="custom-show-pass" type="button" (click)="togglePasswordVisibility()">
-                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye-off"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" /><path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" /><path d="M3 3l18 18" /></svg>
+                  <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye-off"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" /><path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" /><path d="M3 3l18 18" /></svg>
                   {{ showPassword ? 'Ocultar' : 'Mostrar contraseña' }}
                 </button>
               </div>
@@ -256,12 +262,15 @@
     
         <div *ngIf="currentStep === 3" class="row">
           <div class="col-10 offset-1">
-            <h3 class="text-success">✅ ¡Registro Completo!</h3>
+            <h3 class="text-success">¡Registro Completo!</h3>
             <table class="table table-bordered">
               <tr><th>Campo</th><th>Valor</th></tr>
-              <tr><td><strong>Nombre</strong></td><td>{{ formData.nombre }}</td></tr>
-              <tr><td><strong>Detalles</strong></td><td>{{ formData.detalles }}</td></tr>
-              <tr><td><strong>Confirmación</strong></td><td>{{ formData.confirmado ? 'Sí' : 'No' }}</td></tr>
+              <tr><td><strong>Nombre</strong></td><td>{{ formData.nombre }} {{ formData.apPaterno }} {{ formData.apMaterno }}</td></tr>
+              <tr><td><strong>Sexo</strong></td><td>{{ formData.sexo }}</td></tr>
+              <tr><td><strong>Fecha de nacimiento</strong></td><td>{{ fechaN }}</td></tr>
+              <tr><td><strong>Dirección</strong></td><td>{{ formData.coloniaB }} {{ formData.municipio }} {{ formData.estado }}, C.P. {{ this.payload.cp }}</td></tr>
+              <tr><td><strong>Correo</strong></td><td>{{ formData.correo }}</td></tr>
+              <tr><td><strong>Teléfono</strong></td><td>{{ formData.telefono }}</td></tr>
             </table>
             <!-- <button class="btn btn-warning mt-3" (click)="confirmReset()">🔄 Reiniciar</button> -->
           </div>
@@ -290,14 +299,14 @@
           
           <div class="col-2 text-end">
             <button class="btn btn-primary" style="background-color: #10312B!important;" (click)="confirmReset()" *ngIf="currentStep >= 3">
-              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-refresh"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></svg>
+              <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-refresh"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></svg>
               Reiniciar
             </button>
           </div>
           
           <div class="col-2 text-end">
             <button class="btn btn-primary" style="background-color: #b17a45!important;" [disabled]="existeConfirma" (click)="guardar()" *ngIf="currentStep >= 3">
-              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg>
+              <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg>
               Guardar
             </button>
           </div>

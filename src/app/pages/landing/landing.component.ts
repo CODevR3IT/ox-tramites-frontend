@@ -31,8 +31,11 @@ export class LandingComponent {
   @ViewChild('estadoInput') estadoInput!: ElementRef
   @ViewChild('municipioInput') municipioInput!: ElementRef
   @ViewChild('correoInput') correoInput!: ElementRef
+  @ViewChild('correoBInput') correoBInput!: ElementRef
   @ViewChild('telefonoInput') telefonoInput!: ElementRef
   @ViewChild('passwordInput') passwordInput!: ElementRef
+  @ViewChild('telefonoBInput') telefonoBInput!: ElementRef
+  @ViewChild('passwordBInput') passwordBInput!: ElementRef
   payload:any = {};
   catSexo: any;
   catPais: any;
@@ -43,10 +46,12 @@ export class LandingComponent {
   steps: string[] = ["Inicio", "Detalles", "Confirmación", "Finalizado"];
   currentStep: number = 0;
   existeCURP: boolean = true;
-  existeConfirma: boolean = false;
+  existeConfirma: boolean = true;
   arregloCP: any;
   fechaN:string = '';
   mensanjeValida:string = '';
+  correoError: string = '';
+  telefonoError: string = '';
   formData: any = {
     curp: '',
     nombre: '',
@@ -58,6 +63,9 @@ export class LandingComponent {
     correo: '',
     password: '',
     telefono: '',
+    correoB: '',
+    passwordB: '',
+    telefonoB: '',
     confirmado: false,
   };
 event: any;
@@ -198,6 +206,8 @@ showPassword: boolean = false;
     console.log(this.validateStep());
     console.log(this.formData.colonia);
     this.mensanjeValida = '';
+    this.correoError = '';
+    this.telefonoError = '';
     if (this.validateStep() == 'z') {
       this.currentStep++;
     } else if(this.validateStep() !== 'z') {
@@ -230,12 +240,26 @@ showPassword: boolean = false;
           setTimeout(() => this.correoInput.nativeElement.focus(), 0);
           this.mensanjeValida = 'Por favor completa el correo y verifique que los correos coincidan antes de continuar.'
           break;
+        case 'g1':
+          setTimeout(() => this.correoInput.nativeElement.focus(), 0);
+          setTimeout(() => this.correoBInput.nativeElement.focus(), 0);
+          this.mensanjeValida = 'Por favor ingresa un correo válido.'
+          this.correoError = 'Correo inválido. Usa el formato: nombre@dominio.com';
+          break;
         case 'h':
           setTimeout(() => this.telefonoInput.nativeElement.focus(), 0);
           this.mensanjeValida = 'Por favor completa el teléfono y verifique que el número coincida antes de continuar.'
+          this.telefonoError = 'El número debe contener solo dígitos (0-9)';
+          break;
+        case 'h1':
+          setTimeout(() => this.telefonoInput.nativeElement.focus(), 0);
+          setTimeout(() => this.telefonoBInput.nativeElement.focus(), 0);
+          this.mensanjeValida = 'Por favor ingresa un número válido a 10 digítos.'
+          this.telefonoError = 'El número debe contener solo dígitos (0-9)';
           break;
         case 'i':
           setTimeout(() => this.passwordInput.nativeElement.focus(), 0);
+          setTimeout(() => this.passwordBInput.nativeElement.focus(), 0);
           this.mensanjeValida = 'Por favor completa la contraseña y verifique que las contraseñas coincidan antes de continuar.'
           break;
       }
@@ -262,6 +286,11 @@ showPassword: boolean = false;
   //       return this.formData.nombre.trim() !== '' && this.formData.apPaterno.trim() !== '' && this.formData.sexo.trim() !== '' && this.formData.fecha.trim() !== '';
   //     case 1:
   //       return (this.formData.correo.trim() == this.payload.correo.trim() ? this.formData.telefono.trim() !== '' && this.payload.telefono.trim() !== '': false);
+  // if (!this.isValidEmail(this.formData.email)) {
+  //   setTimeout(() => this.emailInput.nativeElement.focus(), 0);
+  //   alert('Por favor ingresa un correo válido.');
+  //   return false;
+  // }
   //     case 2:
   //       return (this.formData.password.trim() == this.payload.password.trim() ? this.formData.confirmado === true: false);
   //     default:
@@ -283,17 +312,36 @@ showPassword: boolean = false;
         return case0;
       case 1:
         let case1: string = 'z';
-        if((this.formData.correo !== this.payload.correo) || (this.formData.correo.trim() === '') || (this.payload.correo === undefined)){ case1 = 'g';}
-        else if((this.formData.telefono !== this.payload.telefono) || (this.formData.telefono.trim() === '') || (this.payload.telefono === undefined)){ case1 = 'h';}
+        if((this.formData.correo !== this.formData.correoB) || (this.formData.correo.trim() === '') || (this.formData.correoB.trim() === '')){ case1 = 'g';}
+        else if((this.formData.telefono !== this.formData.telefonoB) || (this.formData.telefono.trim() === '') || (this.formData.telefonoB === '')){ case1 = 'h';}
         
+        if (!this.isValidEmail(this.formData.correo) || !this.isValidEmail(this.formData.correoB)) { case1 = 'g1';}
+        if (!this.isValidPhone(this.formData.telefono) || !this.isValidPhone(this.formData.telefonoB)) { case1 = 'h1';}
         return case1;
       case 2:
         let case2: string = 'z';
-        if((this.formData.password !== this.payload.password) || (this.formData.password.trim() === '') || (this.payload.password === undefined)){ case2 = 'g';}
+        if((this.formData.password !== this.formData.passwordB) || (this.formData.password.trim() === '') || (this.formData.passwordB.trim() === undefined)){ case2 = 'i';}
         
         return case2;
       default:
         return 'z';
+    }
+  }
+
+  isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email.trim());
+  }
+
+  isValidPhone(phone: string): boolean {
+    const phoneRegex = /^\d{10}$/;
+    return phoneRegex.test(phone.trim());
+  }
+
+  permitirSoloNumeros(event: KeyboardEvent) {
+    const tecla = event.key;
+    if (!/^[0-9]$/.test(tecla)) {
+      event.preventDefault();
     }
   }
 
@@ -332,20 +380,16 @@ showPassword: boolean = false;
   }
 
   muestraCURP(e: any){
-    console.log(e.target.checked);
-    if(e.target.checked){
-      this.existeCURP = false;
-    }else{
-      this.existeCURP = true;
-    }
+    this.existeCURP = (e.target.checked ? false:true);
   }
 
   confirma(e: any){
-      this.existeConfirma = (e.target.checked ? false:true);
+    this.existeConfirma = (e.target.checked ? false:true);
   }
 
   verData(){
     console.log(JSON.stringify(this.formData.colonia));
+    this.formData.coloniaB = this.formData.colonia.colonia; 
     this.formData.estado = this.formData.colonia.estado;
     this.formData.municipio = this.formData.colonia.municipio;
   }
@@ -368,7 +412,8 @@ showPassword: boolean = false;
       "primer_apellido": this.formData.apPaterno,
       "segundo_apellido": this.formData.apMaterno,
       "cp_id": this.payload.cp,
-      "fecha_nacimiento":  fechaNacimiento
+      "fecha_nacimiento":  fechaNacimiento,
+      "sexo": this.formData.sexo,
     }
     console.log(JSON.stringify(this.query));
     //return;
