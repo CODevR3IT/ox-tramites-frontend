@@ -117,60 +117,58 @@
               </div>
             </div>
     
-            <!-- <div class="row" style="margin-top: 20px;">
-              <div class="col-2 offset-8 text-end"><a href="#" class="btn boton-cancelar-regresar" role="button">Cancelar</a></div>
-              <div class="col-2 text-end"><a href="#" class="btn boton-siguiente-finalizar" role="button">Siguiente</a></div>
-            </div> -->
+            @if(!existeCURP){
+              <div class="row">
+                
+                <div class="col-lg-4 col-12 mb-3">
+                  <label class="form-label">Nacionalidad</label>
+                  <select class="form-select" name="opcion" id="exampleFormControlInput9"
+                    [(ngModel)]="formData.nacionalidad" required #nacionalidad="ngModel" #nacionalidadInput
+                    [class.is-invalid]="nacionalidad.invalid && (nacionalidad.dirty || nacionalidad.touched)">
+                      @for (pais of catPais; track $index) {
+                        <option [ngValue]="pais.id">{{pais.pais}}</option>
+                      }
+                  </select>
+                </div>
 
-            <div class="row">
-              
-              <div class="col-lg-4 col-12 mb-3">
-                <label class="form-label">Nacionalidad</label>
-                <select class="form-select" name="opcion" id="exampleFormControlInput9"
-                  [(ngModel)]="formData.nacionalidad" required #nacionalidad="ngModel" #nacionalidadInput
-                  [class.is-invalid]="nacionalidad.invalid && (nacionalidad.dirty || nacionalidad.touched)">
-                    @for (pais of catPais; track $index) {
-                      <option [ngValue]="pais.id">{{pais.pais}}</option>
-                    }
-                </select>
-              </div>
+                <div class="col-lg-4 col-12 mb-3">
+                  <label class="form-label">Identificación</label>
+                  <select class="form-select" name="opcion" id="exampleFormControlInput9"
+                    [(ngModel)]="formData.identifica" required #identifica="ngModel" #identificaInput
+                    [class.is-invalid]="identifica.invalid && (identifica.dirty || identifica.touched)">
+                      @for (identificacion of catIde; track $index) {
+                        <option [ngValue]="identificacion.id">{{identificacion.identificacion}}</option>
+                      }
+                  </select>
+                </div>
 
-              <div class="col-lg-4 col-12 mb-3">
-                <label class="form-label">Identificación</label>
-                <select class="form-select" name="opcion" id="exampleFormControlInput9"
-                  [(ngModel)]="formData.identifica" required #identifica="ngModel" #identificaInput
-                  [class.is-invalid]="identifica.invalid && (identifica.dirty || identifica.touched)">
-                    @for (identificacion of catIde; track $index) {
-                      <option [ngValue]="identificacion.id">{{identificacion.identificacion}}</option>
-                    }
-                </select>
-              </div>
-
-              <div class="col-lg-4 col-12 mb-3">
+                <div class="col-lg-4 col-12 mb-3">
+                  
+                </div>
                 
               </div>
               
-            </div>
-            
-            <div class="row">
-              <div class="col-lg-4 col-12 mb-3">
-                <div class="custom-file-upload text-center" style="padding-top: 10px;">
-                  <label for="fileInput">📁 Subir archivo</label>
-                  <input id="fileInput" name="file" type="file" accept=".pdf" (change)="convertirArchivoBase64($event)" />
+              <div class="row">
+                <div class="col-lg-4 col-12 mb-3">
+                  <div class="custom-file-upload text-center" style="padding-top: 10px;">
+                    <label for="fileInput">📁 Subir archivo</label>
+                    <input id="fileInput" name="file" type="file" accept=".pdf" (change)="convertirArchivoBase64($event)" />
+                    <small *ngIf="formData.archivo" class="text-success">Archivo listo</small>
+                  </div>
+                  <div class="dz-message text-center">
+                    <span class="dropzone-msg-desc" style="font-size: 10px; color: gray; font-weight: 500;">Peso no mayor a 5 MB, sólo formato PDF</span>
+                  </div>
                 </div>
-                <div class="dz-message text-center">
-                  <span class="dropzone-msg-desc" style="font-size: 10px; color: gray; font-weight: 500;">Peso no mayor a 5 MB, sólo formato PDF</span>
+                <div class="col-lg-4 col-12 mb-3">
+                  <label class="form-label">Especifique el documento adjuntado</label>
+                  <input type="text" class="form-control" name="example-text-input" placeholder="Especifique el documento" [(ngModel)]="formData.especifique" #especifiqueInput />
+                </div>
+                <div class="col-lg-4 col-12 mb-3">
+                  <label class="form-label">Observación del documento</label>
+                  <textarea type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu observación" [(ngModel)]="formData.observacion" #observacionInput></textarea>
                 </div>
               </div>
-              <div class="col-lg-4 col-12 mb-3">
-                <label class="form-label">Especifique el documento adjuntado</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Especifique el documento" [(ngModel)]="formData.especifique" #especifiqueInput />
-              </div>
-              <div class="col-lg-4 col-12 mb-3">
-                <label class="form-label">Observación del documento</label>
-                <textarea type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu observación" [(ngModel)]="formData.observacion" #observacionInput></textarea>
-              </div>
-            </div>
+            }
           </div>
         </div>
 
