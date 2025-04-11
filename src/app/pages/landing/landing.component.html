@@ -175,12 +175,16 @@
                       frameborder="0"
                     ></iframe>
                   </div> -->
-                  <button class="btn btn-primary mt-2" (click)="abrirArchivoEnNuevaPestana()" [disabled]="!formData.archivoV">
-                    Abrir archivo en nueva pestaña
+                  <div class="col-lg-4 col-12 mb-3 pt-1" [ngClass]="{'text-center': isSmallScreen, 'text-start': !isSmallScreen}">
+                    <button class="btn btn-tertiary mt-2" (click)="abrirArchivoEnNuevaPestana()" [disabled]="!formData.archivoV">
+                      <svg width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-folder-open"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 19l2.757 -7.351a1 1 0 0 1 .936 -.649h12.307a1 1 0 0 1 .986 1.164l-.996 5.211a2 2 0 0 1 -1.964 1.625h-14.026a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v2" /></svg>
+                      Ver archivo
                   </button>
-                <div class="col-lg-4 col-12 mb-3">
+                  </div>
+                  
+                <div class="col-lg-8 col-12 mb-3">
                   <label class="form-label">Observación del documento</label>
-                  <textarea type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu observación" [(ngModel)]="formData.observacion" #observacionInput></textarea>
+                  <textarea type="text" rows="5" class="form-control" name="example-text-input" placeholder="Ingresa tu observación" [(ngModel)]="formData.observacion" #observacionInput></textarea>
                 </div>
               </div>
             }
@@ -294,32 +298,32 @@
         <div class="row mt-5">
 
           <div class="col-lg-2 col-6" [ngClass]="{'text-center': isSmallScreen, 'text-end': !isSmallScreen, 'offset-lg-3': !isSmallScreen && currentStep >= 3, 'offset-lg-7': !isSmallScreen && currentStep < 3}">
-            <button class="btn btn-secondary" [ngClass]="{'boton-celular': isSmallScreen}" (click)="prevStep()" [disabled]="currentStep === 0">
+            <button class="btn btn-secondary boton-celular" (click)="prevStep()" [disabled]="currentStep === 0">
               Anterior
             </button>
           </div>
           
           <div class="col-lg-2 col-6" [ngClass]="isSmallScreen ? 'text-center' : 'text-end'">
-            <button class="btn btn-primary" [ngClass]="{'boton-celular': isSmallScreen}" (click)="nextStep()" [disabled]="currentStep === steps.length - 1 && currentStep <= 3">
+            <button class="btn btn-primary boton-celular" (click)="nextStep()" [disabled]="currentStep === steps.length - 1 && currentStep <= 3">
               Siguiente
             </button>
           </div>
           
           <div class="col-lg-2 col-6" [ngClass]="isSmallScreen ? 'text-center' : 'text-end'">
-            <button class="btn btn-primary" [ngClass]="{'boton-celular': isSmallScreen}" style="background-color: #10312B!important;" (click)="confirmReset()" *ngIf="currentStep >= 3">
+            <button class="btn btn-primary boton-celular" style="background-color: #10312B!important;" (click)="confirmReset()" *ngIf="currentStep >= 3">
               <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-refresh"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></svg>
               Reiniciar
             </button>
           </div>
           
           <div class="col-lg-2 col-6" *ngIf="existeCURP" [ngClass]="isSmallScreen ? 'text-center' : 'text-end'">
-            <button class="btn btn-primary" [ngClass]="{'boton-celular': isSmallScreen}" style="background-color: #b17a45!important;" [disabled]="existeConfirma" (click)="guardar()" *ngIf="currentStep >= 3">
+            <button class="btn btn-primary boton-celular" style="background-color: #b17a45!important;" [disabled]="existeConfirma" (click)="guardar()" *ngIf="currentStep >= 3">
               <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg>
               Guardar
             </button>
           </div>
           <div class="col-lg-2 col-6" *ngIf="!existeCURP" [ngClass]="isSmallScreen ? 'text-center' : 'text-end'">
-            <button class="btn btn-primary" [ngClass]="{'boton-celular': isSmallScreen}" style="background-color: #b17a45!important;" [disabled]="existeConfirma" (click)="guardarExtranjero()" *ngIf="currentStep >= 3">
+            <button class="btn btn-primary boton-celular" style="background-color: #b17a45!important;" [disabled]="existeConfirma" (click)="guardarExtranjero()" *ngIf="currentStep >= 3">
               <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg>
               Guardar
             </button>

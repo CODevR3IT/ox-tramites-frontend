@@ -70,6 +70,13 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   display: none;
 }
 
+.custom-file-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* mantiene todo centrado */
+  gap: 8px; /* espacio entre elementos */
+}
+
 .custom-file-upload label {
   display: inline-block;
   padding: 10px 20px;
