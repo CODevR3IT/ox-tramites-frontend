@@ -72,4 +72,8 @@ export class RegistroService {
     guardar(payload: any){
         return this.postQuery(`datosCiudadano/guardaCiudadano`, payload);
     }
+
+    guardarExtranjero(payload: any){
+        return this.postQuery(`datosExtranjero/guardaExtranjero`, payload);
+    }
 }

@@ -52,6 +52,8 @@ export class LandingComponent {
   mensanjeValida:string = '';
   correoError: string = '';
   telefonoError: string = '';
+  file: any;
+  activaUpload = true;
   formData: any = {
     curp: '',
     nombre: '',
@@ -68,10 +70,11 @@ export class LandingComponent {
     telefonoB: '',
     confirmado: false,
   };
-event: any;
-password: string = '';
-showPassword: boolean = false;
-isSmallScreen: boolean = false;
+  event: any;
+  password: string = '';
+  showPassword: boolean = false;
+  isSmallScreen: boolean = false;
+  archivoBase64: string | null = null;
 
   constructor(
     private registroService: RegistroService,
@@ -352,6 +355,46 @@ isSmallScreen: boolean = false;
     }
   }
 
+  convertirArchivoBase64(event: any): void {
+    const archivo: File = event.target.files[0];
+    console.log("archivo");
+    console.log(archivo);
+    if (!archivo) return;
+    
+    if(archivo.size < 5200123 && archivo.type === 'application/pdf'){
+      const lector = new FileReader();
+    
+      lector.onload = () => {
+        const base64 = lector.result as string;
+        const cadena64: any = base64.split(";base64,"); 
+        this.formData.archivo = cadena64[1];
+        console.log('Archivo en base64 guardado en formData:', this.formData.archivo);
+        console.log(cadena64);
+      };
+      
+      lector.onerror = (error) => {
+        console.error('Error al leer el archivo:', error);
+        Swal.fire({
+          title: '¡Atención!',
+          text: 'Error al leer el archivo.',
+          icon: 'error',
+          confirmButtonColor: '#6a1c32',
+          confirmButtonText: 'Aceptar',
+        });
+      };
+    
+      lector.readAsDataURL(archivo);
+    }else{
+      Swal.fire({
+        title: '¡Atención!',
+        text: 'El archivo debe ser menor a 5MB y formato PDF.',
+        icon: 'error',
+        confirmButtonColor: '#6a1c32',
+        confirmButtonText: 'Aceptar',
+      });
+    }
+  }
+  
   confirmReset() {
     // if (confirm('¿Estás seguro de que quieres reiniciar el formulario?')) {
     //   this.resetForm();
@@ -376,9 +419,10 @@ isSmallScreen: boolean = false;
       }
     })
   }
-
+  
   resetForm() {
-    this.formData = { nombre: '', detalles: '', curp: '', apPaterno: '', sexo: '', fecha: '', colonia: null, confirmado: false };
+    this.formData = { nombre: '', detalles: '', curp: '', apPaterno: '', sexo: '', fecha: '', colonia: null, correo: '', password: '',
+                      telefono: '', correoB: '', passwordB: '', telefonoB: '',confirmado: false };
     this.payload = {};
     this.arregloCP = '';
     this.currentStep = 0;
@@ -399,6 +443,18 @@ isSmallScreen: boolean = false;
     this.formData.coloniaB = this.formData.colonia.colonia; 
     this.formData.estado = this.formData.colonia.estado;
     this.formData.municipio = this.formData.colonia.municipio;
+  }
+
+  /**
+   * Permite adjuntar un archivo para cargar en el sistema
+   * @param event La información del archivo que se va a cargar
+   * @returns 
+   */
+  adjuntarArchivo(event: any){
+    this.file = '';
+    this.file = event.target.files[0];
+    this.activaUpload = (this.file !== undefined) ?  false : true;
+    console.log(this.file);
   }
 
   guardar(){
@@ -459,13 +515,70 @@ isSmallScreen: boolean = false;
     );
   }
 
-  togglePasswordVisibility() {
-    this.showPassword = !this.showPassword;
+  guardarExtranjero(){
+    console.log("this.formData");
+    console.log(this.formData);
+    
+    const fechaN = parse(this.formData.fecha, 'yyyy-MM-dd', new Date()); // Esto evita que el constructor de Date aplique la conversión por zona horaria, más seguro
+
+    const fechaNacimiento = format(fechaN, 'dd/MM/yyyy'); // Formato deseado
+    console.log(fechaNacimiento); // "29/06/1990" le quitaba un dia por la zona horaria.
+    this.fechaN = fechaNacimiento;
+    this.query = {
+      "email": this.formData.correo,
+      "password": this.formData.password,
+      "telefono": this.formData.telefono,
+      "nombre": this.formData.nombre,
+      "primer_apellido": this.formData.apPaterno,
+      "segundo_apellido": this.formData.apMaterno,
+      "sexo_id": "1",
+      "fecha_nacimiento":  fechaNacimiento,
+      "pais_id": this.formData.nacionalidad,
+      "identificacion_id": this.formData.identifica,
+      "documento_especifico": this.formData.especifique,
+      "observacion_documento": this.formData.observacion,
+      "documento": this.formData.archivo,
+    }
+      
+    console.log(JSON.stringify(this.query));
+    //return;
+    this.registroService.guardarExtranjero(this.query).subscribe(
+      {
+        next: (res:any)=>{
+          console.log("GUARDADO");
+          console.log(res);
+          Swal.fire({
+            title: '¡ATENCIÓN!',
+            text: res.msg,
+            icon: 'success',
+            confirmButtonColor: '#9f2241',
+            confirmButtonText: 'Aceptar',
+            customClass: {
+              actions: 'my-actions',
+              confirmButton: 'order-2',
+            }
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.resetForm();
+            }
+          })
+        },
+        error: (err)=>  {
+          this.spinner.hide();
+          Swal.fire({
+            title: '¡Atención!',
+            text: err.error.message,
+            icon: 'error',
+            confirmButtonColor: '#6a1c32',
+            confirmButtonText: 'Aceptar',
+          });
+        },
+      }
+    );
   }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    console.log('Archivo seleccionado:', file);
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
   private checkScreenSize() {
