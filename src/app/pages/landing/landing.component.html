@@ -47,76 +47,79 @@
     
               <div class="col-lg-4 col-12 mb-3">
                 <label class="form-label">Nombre(s)</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu nombre" [(ngModel)]="formData.nombre" #nombreInput/>
+                <input type="text" class="form-control" name="example-text-input" [disabled]="existeCURP" placeholder="Ingresa tu nombre" [(ngModel)]="formData.nombre" #nombreInput/>
               </div>
       
               <div class="col-lg-4 col-12 mb-3">
                 <label class="form-label">Apellido paterno</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu apellido paterno" [(ngModel)]="formData.apPaterno" #appatInput/>
+                <input type="text" class="form-control" name="example-text-input" [disabled]="existeCURP" placeholder="Ingresa tu apellido paterno" [(ngModel)]="formData.apPaterno" #appatInput/>
               </div>
       
               <div class="col-lg-4 col-12 mb-3">
                 <label class="form-label">Apellido materno</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu apellido materno" [(ngModel)]="formData.apMaterno"/>
+                <input type="text" class="form-control" name="example-text-input" [disabled]="existeCURP" placeholder="Ingresa tu apellido materno" [(ngModel)]="formData.apMaterno"/>
               </div>
-              <div class="col-lg-4 col-6 mb-3">
+              <div *ngIf="existeCURP" class="col-lg-4 col-12 mb-3">
+                <label class="form-label">Sexo</label>
+                <input type="text" class="form-control" name="example-text-input" [disabled]="existeCURP" placeholder="Ingresa el sexo" [(ngModel)]="formData.sexo"/>
+              </div>
+              <div *ngIf="!existeCURP" class="col-lg-4 col-6 mb-3">
                 <label class="form-label">Sexo</label>
                 <select class="form-select" name="opcion" id="exampleFormControlInput9"
                   [(ngModel)]="formData.sexo" required #sexo="ngModel" #sexoInput
                   [class.is-invalid]="sexo.invalid && (sexo.dirty || sexo.touched)">
                     @for (sexo of catSexo; track $index) {
-                      <option [ngValue]="sexo.sexo">{{sexo.sexo}}</option>
+                      <option [ngValue]="sexo">{{sexo.sexo}}</option>
                     }
-                    <!-- <option value="MUJER">Femenino</option>
-                    <option value="HOMBRE">Masculino</option> -->
                 </select>
               </div>
       
               <div class="col-lg-4 col-6 mb-3">
                 <label class="form-label">Fecha de nacimiento</label>
-                <input type="date" class="form-control" name="example-text-input" placeholder="Ingresa tu fecha de nacimiento" [(ngModel)]="formData.fecha" #fechaInput/>
+                <input type="date" class="form-control" name="example-text-input" [disabled]="existeCURP" placeholder="Ingresa tu fecha de nacimiento"
+                  [(ngModel)]="formData.fecha" #fechaInput (change)="setDate()"/>
               </div>
 
             </div>
-    
-            <!-- CP -->
-            <div class="row">
-    
-              <div class="col-lg-4 col-8 mb-3">
-                <label class="form-label">Código postal</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu código postal" [(ngModel)]="payload.cp" #cpInput/>
+            
+            @if(existeCURP){
+              <!-- CP -->
+              <div class="row">
+                <div class="col-lg-4 col-8 mb-3">
+                  <label class="form-label">Código postal</label>
+                  <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu código postal" [(ngModel)]="payload.cp" #cpInput/>
+                </div>
+                <div class="col-lg-4 col-4 mb-3">
+                  <label class="form-label" style="color: transparent;">.</label>
+                  <button class="btn btn-primary" (click)="getCP()">Obtener</button>
+                </div>
               </div>
-              <div class="col-lg-4 col-4 mb-3">
-                <label class="form-label" style="color: transparent;">.</label>
-                <button class="btn btn-primary" (click)="getCP()">Obtener</button>
-              </div>
-            </div>
-    
-            <!-- Estado, municipio y colonia -->
-            <div class="row">
-              <div class="col-lg-4 col-12 mb-3">
-                <label class="form-label">Colonia</label>
-                <select class="form-select" name="opcion" id="exampleFormControlInput9"
-                  [(ngModel)]="formData.colonia" required #colonia="ngModel" #coloniaInput
-                  [class.is-invalid]="colonia.invalid && (colonia.dirty || colonia.touched)"
-                  (change)="verData()">
-                    @for (direccion of arregloCP; track $index) {
-                      <option [ngValue]="direccion">{{direccion.colonia}}</option>
-                    }
-                </select>
-              </div>
+            
+              <!-- Estado, municipio y colonia -->
+              <div class="row">
+                <div class="col-lg-4 col-12 mb-3">
+                  <label class="form-label">Colonia</label>
+                  <select class="form-select" name="opcion" id="exampleFormControlInput9"
+                    [(ngModel)]="formData.colonia" required #colonia="ngModel" #coloniaInput
+                    [class.is-invalid]="colonia.invalid && (colonia.dirty || colonia.touched)"
+                    (change)="verData()">
+                      @for (direccion of arregloCP; track $index) {
+                        <option [ngValue]="direccion">{{direccion.colonia}}</option>
+                      }
+                  </select>
+                </div>
 
-              <div class="col-lg-4 col-12 mb-3">
-                <label class="form-label">Estado</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu estado" placeholder="" [(ngModel)]="formData.estado" #estadoInput/>
+                <div class="col-lg-4 col-12 mb-3">
+                  <label class="form-label">Estado</label>
+                  <input type="text" class="form-control" name="example-text-input" [disabled]="true" placeholder="Ingresa tu estado" placeholder="" [(ngModel)]="formData.estado" #estadoInput/>
+                </div>
+      
+                <div class="col-lg-4 col-12 mb-3">
+                  <label class="form-label">Municipio</label>
+                  <input type="text" class="form-control" name="example-text-input" [disabled]="true" placeholder="Ingresa tu municipio" [(ngModel)]="formData.municipio" #municipioInput/>
+                </div>
               </div>
-    
-              <div class="col-lg-4 col-12 mb-3">
-                <label class="form-label">Municipio</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu municipio" [(ngModel)]="formData.municipio" #municipioInput/>
-              </div>
-            </div>
-    
+            }
             @if(!existeCURP){
               <div class="row">
                 
@@ -135,7 +138,8 @@
                   <label class="form-label">Identificación</label>
                   <select class="form-select" name="opcion" id="exampleFormControlInput9"
                     [(ngModel)]="formData.identifica" required #identifica="ngModel" #identificaInput
-                    [class.is-invalid]="identifica.invalid && (identifica.dirty || identifica.touched)">
+                    [class.is-invalid]="identifica.invalid && (identifica.dirty || identifica.touched)"
+                    (change)="campoOtro()">
                       @for (identificacion of catIde; track $index) {
                         <option [ngValue]="identificacion.id">{{identificacion.identificacion}}</option>
                       }
@@ -143,7 +147,10 @@
                 </div>
 
                 <div class="col-lg-4 col-12 mb-3">
-                  
+                  @if(existeOtro){
+                    <label class="form-label">Especifique el documento adjuntado</label>
+                    <input type="text" class="form-control" name="example-text-input" placeholder="Especifique el documento" [(ngModel)]="formData.especifique" #especifiqueInput />
+                  }
                 </div>
                 
               </div>
@@ -159,10 +166,18 @@
                     <span class="dropzone-msg-desc" style="font-size: 10px; color: gray; font-weight: 500;">Peso no mayor a 5 MB, sólo formato PDF</span>
                   </div>
                 </div>
-                <div class="col-lg-4 col-12 mb-3">
-                  <label class="form-label">Especifique el documento adjuntado</label>
-                  <input type="text" class="form-control" name="example-text-input" placeholder="Especifique el documento" [(ngModel)]="formData.especifique" #especifiqueInput />
-                </div>
+                  <!-- Vista previa PDF -->
+                  <!-- <div *ngIf="archivoSeguro">
+                    <p class="mt-2 mb-1">Vista previa PDF:</p>
+                    <iframe
+                      [src]="archivoSeguro"
+                      style="width: 100%; max-width: 600px; height: 400px;"
+                      frameborder="0"
+                    ></iframe>
+                  </div> -->
+                  <button class="btn btn-primary mt-2" (click)="abrirArchivoEnNuevaPestana()" [disabled]="!formData.archivoV">
+                    Abrir archivo en nueva pestaña
+                  </button>
                 <div class="col-lg-4 col-12 mb-3">
                   <label class="form-label">Observación del documento</label>
                   <textarea type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu observación" [(ngModel)]="formData.observacion" #observacionInput></textarea>
@@ -259,9 +274,9 @@
             <table class="table table-bordered">
               <tr><th>Campo</th><th>Valor</th></tr>
               <tr><td><strong>Nombre</strong></td><td>{{ formData.nombre }} {{ formData.apPaterno }} {{ formData.apMaterno }}</td></tr>
-              <tr><td><strong>Sexo</strong></td><td>{{ formData.sexo }}</td></tr>
+              <tr><td><strong>Sexo</strong></td><td>@if(existeCURP){ {{ formData.sexo }} }@else{ {{ formData.sexo.sexo }} }</td></tr>
               <tr><td><strong>Fecha de nacimiento</strong></td><td>{{ fechaN }}</td></tr>
-              <tr><td><strong>Dirección</strong></td><td>{{ formData.coloniaB }} {{ formData.municipio }} {{ formData.estado }}, C.P. {{ this.payload.cp }}</td></tr>
+              @if(existeCURP){<tr><td><strong>Dirección</strong></td><td>{{ formData.coloniaB }} {{ formData.municipio }} {{ formData.estado }}, C.P. {{ this.payload.cp }}</td></tr>}
               <tr><td><strong>Correo</strong></td><td>{{ formData.correo }}</td></tr>
               <tr><td><strong>Teléfono</strong></td><td>{{ formData.telefono }}</td></tr>
             </table>

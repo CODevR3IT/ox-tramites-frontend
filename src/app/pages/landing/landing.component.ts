@@ -3,6 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild, HostListener } from '@angular
 import { fadeInLeft } from 'ng-animate';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RegistroService } from '../../shared/services/registro.service';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -36,6 +37,10 @@ export class LandingComponent {
   @ViewChild('passwordInput') passwordInput!: ElementRef
   @ViewChild('telefonoBInput') telefonoBInput!: ElementRef
   @ViewChild('passwordBInput') passwordBInput!: ElementRef
+  @ViewChild('nacionalidadInput') nacionalidadInput!: ElementRef
+  @ViewChild('identificaInput') identificaInput!: ElementRef
+  
+
   payload:any = {};
   catSexo: any;
   catPais: any;
@@ -47,6 +52,7 @@ export class LandingComponent {
   currentStep: number = 0;
   existeCURP: boolean = true;
   existeConfirma: boolean = true;
+  existeOtro: boolean = false;
   arregloCP: any;
   fechaN:string = '';
   mensanjeValida:string = '';
@@ -69,17 +75,23 @@ export class LandingComponent {
     passwordB: '',
     telefonoB: '',
     confirmado: false,
+    nacionalidad: '',
+    identifica: '',
+    especifique: '',
+    archivo: '',
+    observacion: '',
   };
   event: any;
   password: string = '';
   showPassword: boolean = false;
   isSmallScreen: boolean = false;
   archivoBase64: string | null = null;
+  archivoSeguro: SafeResourceUrl | null = null;
 
   constructor(
     private registroService: RegistroService,
     private spinner: NgxSpinnerService,
-
+    private sanitizer: DomSanitizer
   ){
     this.checkScreenSize();
   }
@@ -212,9 +224,14 @@ export class LandingComponent {
     );
   }
 
+  setDate(){
+    const fecha = parse(this.formData.fecha, 'yyyy-MM-dd', new Date()); // Esto evita que el constructor de Date aplique la conversión por zona horaria, más seguro
+    const fechaNacimiento = format(fecha, 'dd/MM/yyyy'); // Formato deseado
+    console.log(fechaNacimiento); // "29/06/1990" le quitaba un dia por la zona horaria.
+    this.fechaN = fechaNacimiento;
+  }
   nextStep() {
     console.log(this.validateStep());
-    console.log(this.formData.colonia);
     this.mensanjeValida = '';
     this.correoError = '';
     this.telefonoError = '';
@@ -272,6 +289,20 @@ export class LandingComponent {
           setTimeout(() => this.passwordBInput.nativeElement.focus(), 0);
           this.mensanjeValida = 'Por favor completa la contraseña y verifique que las contraseñas coincidan antes de continuar.'
           break;
+        case 'ext1':
+          setTimeout(() => this.nacionalidadInput.nativeElement.focus(), 0);
+          this.mensanjeValida = 'Por favor seleccione la nacionalidad antes de continuar.'
+          break;
+        case 'ext2':
+          setTimeout(() => this.identificaInput.nativeElement.focus(), 0);
+          this.mensanjeValida = 'Por favor seleccione la identificación antes de continuar.'
+          break;
+        case 'ext3':
+          this.mensanjeValida = 'Por favor adjunte el documento antes de continuar.'
+          break;
+        default:
+          this.mensanjeValida = 'Ocurrio un error, intente más tarde'
+          break;
       }
       
       Swal.fire({
@@ -309,16 +340,24 @@ export class LandingComponent {
   // }
 
   validateStep(): any {
+    console.log(this.formData);
     switch (this.currentStep) {
       case 0:
         let case0: string = 'z';
         if(this.formData.nombre.trim() === ''){ case0 = 'a';}
         else if(this.formData.apPaterno.trim() === ''){ case0 = 'b';}
-        else if(this.formData.sexo.trim() === ''){ case0 = 'c';}
+        else if(this.formData.sexo === ''){ case0 = 'c';}
         else if(this.formData.fecha.trim() === ''){ case0 = 'd';}
-        else if(this.payload.cp === undefined){ case0 = 'e';}
-        else if(this.formData.colonia === ''){ case0 = 'f';}
-        
+        if(this.existeCURP){
+          if(this.payload.cp === undefined){ case0 = 'e';}
+          else if(this.formData.colonia === ''){ case0 = 'f';}
+          console.log("ACA EL SI EXISTE");
+        }else if(!this.existeCURP){
+          console.log("ACA EL NO EXISTE");
+          if(this.formData.nacionalidad === ''){ case0 = 'ext1';}
+          else if(this.formData.identifica === ''){ case0 = 'ext2';}
+          else if(this.formData.archivo === ''){ case0 = 'ext3';}
+        }
         return case0;
       case 1:
         let case1: string = 'z';
@@ -368,8 +407,10 @@ export class LandingComponent {
         const base64 = lector.result as string;
         const cadena64: any = base64.split(";base64,"); 
         this.formData.archivo = cadena64[1];
+        this.formData.archivoV = base64;
+        this.archivoSeguro = this.sanitizer.bypassSecurityTrustResourceUrl(base64);
         console.log('Archivo en base64 guardado en formData:', this.formData.archivo);
-        console.log(cadena64);
+        console.log(this.formData.archivoV);
       };
       
       lector.onerror = (error) => {
@@ -395,6 +436,47 @@ export class LandingComponent {
     }
   }
   
+  abrirArchivoEnNuevaPestana(): void {
+    const base64 = this.formData.archivoV;
+    //Verificamos que exista, que sea texto, y que contenga un PDF en base64
+    if (!base64 || typeof base64 !== 'string' || !base64.includes('data:application/pdf;base64,')) {
+      Swal.fire({
+        title: '¡Atención!',
+        text: 'El archivo no es un PDF válido.',
+        icon: 'error',
+        confirmButtonColor: '#6a1c32',
+        confirmButtonText: 'Aceptar',
+      });
+      return;
+    }
+
+    const base64Data = base64.split(',')[1]; // Separar el encabezado "data:application/pdf;base64," del contenido base64 real
+    const byteCharacters = atob(base64Data); // Convertimos la cadena base64 a caracteres binarios, atob = ASCII to Binary
+
+    const byteNumbers = new Array(byteCharacters.length); // Creamos un arreglo de números para cada carácter binario (valores entre 0 y 255)
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers); // Creamos un Uint8Array, que es lo que necesita el Blob para representar los datos binarios
+    const blob = new Blob([byteArray], { type: 'application/pdf' }); // Creamos el archivo "simulado" (Blob) con tipo PDF
+  
+    const blobUrl = URL.createObjectURL(blob); // Creamos una URL temporal (blob URL) que el navegador puede entender como un archivo
+  
+    const nuevaPestana = window.open(blobUrl, '_blank'); // Abrimos esa URL en una nueva pestaña
+
+    if (!nuevaPestana) {
+      //Verificamos si el navegador bloqueó la ventana (por configuraciones de seguridad)
+      Swal.fire({
+        title: '¡Atención!',
+        text: 'Tu navegador bloqueó la nueva pestaña. Revisa los permisos de ventanas emergentes.',
+        icon: 'error',
+        confirmButtonColor: '#6a1c32',
+        confirmButtonText: 'Aceptar',
+      });
+    }
+  }
+
   confirmReset() {
     // if (confirm('¿Estás seguro de que quieres reiniciar el formulario?')) {
     //   this.resetForm();
@@ -421,17 +503,22 @@ export class LandingComponent {
   }
   
   resetForm() {
-    this.formData = { nombre: '', detalles: '', curp: '', apPaterno: '', sexo: '', fecha: '', colonia: null, correo: '', password: '',
-                      telefono: '', correoB: '', passwordB: '', telefonoB: '',confirmado: false };
+    this.formData = {
+      curp: '', nombre: '', detalles: '', apPaterno: '', apMaterno: '', sexo: '', fecha: '', colonia: '', correo: '', password: '', telefono: '',
+      correoB: '', passwordB: '', telefonoB: '', confirmado: false, nacionalidad: '', identifica: '', archivo: '', especifique: '', observacion: ''
+    };
     this.payload = {};
     this.arregloCP = '';
     this.currentStep = 0;
+    this.existeConfirma = true;
+    this.existeOtro = false;
     console.log(this.formData);
     console.log(this.payload);
   }
 
   muestraCURP(e: any){
     this.existeCURP = (e.target.checked ? false:true);
+    this.resetForm();
   }
 
   confirma(e: any){
@@ -443,6 +530,11 @@ export class LandingComponent {
     this.formData.coloniaB = this.formData.colonia.colonia; 
     this.formData.estado = this.formData.colonia.estado;
     this.formData.municipio = this.formData.colonia.municipio;
+  }
+
+  campoOtro(){
+    this.existeOtro = (this.formData.identifica === 13 ? true:false);
+    console.log(this.formData.identifica);
   }
 
   /**
@@ -476,7 +568,7 @@ export class LandingComponent {
       "segundo_apellido": this.formData.apMaterno,
       "cp_id": this.payload.cp,
       "fecha_nacimiento":  fechaNacimiento,
-      "sexo": this.formData.sexo,
+      "sexo": this.formData.sexo.sexo,
     }
     console.log(JSON.stringify(this.query));
     //return;
@@ -518,12 +610,6 @@ export class LandingComponent {
   guardarExtranjero(){
     console.log("this.formData");
     console.log(this.formData);
-    
-    const fechaN = parse(this.formData.fecha, 'yyyy-MM-dd', new Date()); // Esto evita que el constructor de Date aplique la conversión por zona horaria, más seguro
-
-    const fechaNacimiento = format(fechaN, 'dd/MM/yyyy'); // Formato deseado
-    console.log(fechaNacimiento); // "29/06/1990" le quitaba un dia por la zona horaria.
-    this.fechaN = fechaNacimiento;
     this.query = {
       "email": this.formData.correo,
       "password": this.formData.password,
@@ -531,8 +617,8 @@ export class LandingComponent {
       "nombre": this.formData.nombre,
       "primer_apellido": this.formData.apPaterno,
       "segundo_apellido": this.formData.apMaterno,
-      "sexo_id": "1",
-      "fecha_nacimiento":  fechaNacimiento,
+      "sexo_id": this.formData.sexo.id,
+      "fecha_nacimiento":  this.fechaN,
       "pais_id": this.formData.nacionalidad,
       "identificacion_id": this.formData.identifica,
       "documento_especifico": this.formData.especifique,
