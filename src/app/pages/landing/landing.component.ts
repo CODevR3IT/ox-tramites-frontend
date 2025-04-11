@@ -497,6 +497,7 @@ export class LandingComponent {
       }
     }).then((result) => {
       if (result.isConfirmed) {
+        this.existeCURP = true;
         this.resetForm();
       }
     })
@@ -552,7 +553,7 @@ export class LandingComponent {
   guardar(){
     console.log("this.formData");
     console.log(this.formData);
-    
+    this.spinner.show();
     const fechaN = parse(this.formData.fecha, 'yyyy-MM-dd', new Date()); // Esto evita que el constructor de Date aplique la conversión por zona horaria, más seguro
 
     const fechaNacimiento = format(fechaN, 'dd/MM/yyyy'); // Formato deseado
@@ -575,6 +576,7 @@ export class LandingComponent {
     this.registroService.guardar(this.query).subscribe(
       {
         next: (res:any)=>{
+          this.spinner.hide();
           console.log("GUARDADO");
           console.log(res);
           Swal.fire({
@@ -589,6 +591,7 @@ export class LandingComponent {
             }
           }).then((result) => {
             if (result.isConfirmed) {
+              this.existeCURP = true;
               this.resetForm();
             }
           })
@@ -608,8 +611,10 @@ export class LandingComponent {
   }
 
   guardarExtranjero(){
+    this.spinner.show();
     console.log("this.formData");
     console.log(this.formData);
+    let sexoId: string = String(this.formData.sexo.id);
     this.query = {
       "email": this.formData.correo,
       "password": this.formData.password,
@@ -617,7 +622,7 @@ export class LandingComponent {
       "nombre": this.formData.nombre,
       "primer_apellido": this.formData.apPaterno,
       "segundo_apellido": this.formData.apMaterno,
-      "sexo_id": this.formData.sexo.id,
+      "sexo_id": sexoId,
       "fecha_nacimiento":  this.fechaN,
       "pais_id": this.formData.nacionalidad,
       "identificacion_id": this.formData.identifica,
@@ -625,12 +630,13 @@ export class LandingComponent {
       "observacion_documento": this.formData.observacion,
       "documento": this.formData.archivo,
     }
-      
+
     console.log(JSON.stringify(this.query));
     //return;
     this.registroService.guardarExtranjero(this.query).subscribe(
       {
         next: (res:any)=>{
+          this.spinner.hide();
           console.log("GUARDADO");
           console.log(res);
           Swal.fire({
@@ -645,6 +651,7 @@ export class LandingComponent {
             }
           }).then((result) => {
             if (result.isConfirmed) {
+              this.existeCURP = true;
               this.resetForm();
             }
           })
