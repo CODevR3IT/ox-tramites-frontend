@@ -570,7 +570,7 @@ export class LandingComponent {
       "segundo_apellido": this.formData.apMaterno,
       "cp_id": this.payload.cp,
       "fecha_nacimiento":  fechaNacimiento,
-      "sexo": this.formData.sexo.sexo,
+      "sexo": this.formData.sexo,
     }
     console.log(JSON.stringify(this.query));
     //return;
