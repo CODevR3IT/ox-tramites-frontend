@@ -401,6 +401,7 @@ export class LandingComponent {
     if (!archivo) return;
     
     if(archivo.size < 5200123 && archivo.type === 'application/pdf'){
+      this.payload.nombreOriginal = archivo.name;
       const lector = new FileReader();
     
       lector.onload = () => {
@@ -615,6 +616,7 @@ export class LandingComponent {
     console.log("this.formData");
     console.log(this.formData);
     let sexoId: string = String(this.formData.sexo.id);
+    let identId: string = String(this.formData.identifica);
     this.query = {
       "email": this.formData.correo,
       "password": this.formData.password,
@@ -625,10 +627,11 @@ export class LandingComponent {
       "sexo_id": sexoId,
       "fecha_nacimiento":  this.fechaN,
       "pais_id": this.formData.nacionalidad,
-      "identificacion_id": this.formData.identifica,
+      "identificacion_id": identId,
       "documento_especifico": this.formData.especifique,
       "observacion_documento": this.formData.observacion,
       "documento": this.formData.archivo,
+      "nombre_original": this.payload.nombreOriginal,
     }
 
     console.log(JSON.stringify(this.query));
