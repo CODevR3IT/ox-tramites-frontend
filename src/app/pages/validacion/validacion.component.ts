@@ -204,10 +204,10 @@ export class ValidacionComponent {
     console.log(this.validaFormPass());
     const query = {
         "email":this.payload.correo,
-        "password":this.payload.password,
-        "codigo":this.payload.codigo
+        "password":this.payload.cambiaPassword,
+        "password_confirmation": this.payload.cambiaPasswordB,
     }
-    this.registroService.validaCodigo(query).subscribe(
+    this.registroService.cambiarPass(query).subscribe(
       {
         next: (res:any)=>{
           console.log(res);

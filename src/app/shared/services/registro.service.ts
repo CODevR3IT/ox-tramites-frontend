@@ -84,4 +84,8 @@ export class RegistroService {
     validaCodigo(payload: any){
         return this.postQuery(`datosUser/validaCodigo`, payload);
     }
+
+    cambiarPass(payload: any){
+        return this.postQuery(`datosUser/olvidePassword`, payload);
+    }
 }
