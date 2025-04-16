@@ -76,4 +76,12 @@ export class RegistroService {
     guardarExtranjero(payload: any){
         return this.postQuery(`datosExtranjero/guardaExtranjero`, payload);
     }
+
+    solicitarCodigo(payload: any){
+        return this.postQuery(`datosUser/obtenercodigo`, payload);
+    }
+
+    validaCodigo(payload: any){
+        return this.postQuery(`datosUser/validaCodigo`, payload);
+    }
 }
