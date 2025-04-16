@@ -21,6 +21,8 @@ export class ValidacionComponent {
     correo: '',
     password: '',
     codigo: '',
+    cambiaPassword: '',
+    cambiaPasswordB: '',
   };
   fadeInLeft: any;
   isSmallScreen: boolean = false;
@@ -169,5 +171,71 @@ export class ValidacionComponent {
 
   olvidePass(numero: number){
     this.cambioPassword = (numero === 0 ? false : true);
+  }
+
+  validaFormPass(): any{
+    if (!this.isValidEmail(this.payload.correo)) { 
+      this.correoError = 'Correo inválido. Usa el formato: nombre@dominio.com';
+      return false
+    }
+    if((this.payload.cambiaPassword !== this.payload.cambiaPasswordB) 
+        || (this.payload.cambiaPassword.trim() === '') 
+        || (this.payload.cambiaPasswordB.trim() === undefined)){ 
+          return false;
+        }else{
+          return true;
+        }
+  }
+  
+  cambiarPass(){
+    this.existeCodigo = true;
+    if(!this.validaFormPass()){
+      Swal.fire({
+        title: '¡Atención!',
+        text: 'Ingrese los campos solicitados.',
+        icon: 'error',
+        confirmButtonColor: '#6a1c32',
+        confirmButtonText: 'Aceptar',
+      });
+      console.log("aca entreval");
+      return;
+    }
+    console.log("this.validaFormPass()");
+    console.log(this.validaFormPass());
+    const query = {
+        "email":this.payload.correo,
+        "password":this.payload.password,
+        "codigo":this.payload.codigo
+    }
+    this.registroService.validaCodigo(query).subscribe(
+      {
+        next: (res:any)=>{
+          console.log(res);
+          Swal.fire({
+            title: '¡Atención!',
+            text: res.msg,
+            icon: 'success',
+            confirmButtonColor: '#6a1c32',
+            confirmButtonText: 'Aceptar',
+          });
+          this.correoError = '';
+          this.payload = {
+            correo: '',
+            password: '',
+            codigo: '',
+          };
+        },
+        error: (err)=>  {
+          this.spinner.hide();
+          Swal.fire({
+            title: '¡Atención!',
+            text: err.error.message,
+            icon: 'error',
+            confirmButtonColor: '#6a1c32',
+            confirmButtonText: 'Aceptar',
+          });
+        },
+      }
+    );
   }
 }

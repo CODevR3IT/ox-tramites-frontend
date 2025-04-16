@@ -56,12 +56,12 @@
             <div class="row">
                 <div class="col-lg-4 col-12 mb-3">
                   <label class="form-label">Contraseña</label>
-                  <input [type]="showPassword ? 'text' : 'password'" class="form-control" name="example-text-input" placeholder="Crea una contraseña" [(ngModel)]="payload.cambioPassword" #cambiaPassword/>
+                  <input [type]="showPassword ? 'text' : 'password'" class="form-control" name="example-text-input" placeholder="Crea una contraseña" [(ngModel)]="payload.cambiaPassword" #cambiaPassword/>
                 </div>
       
                 <div class="col-lg-4 col-12 mb-3">
                   <label class="form-label">Confirmar contraseña</label>
-                  <input [type]="showPassword ? 'text' : 'password'" class="form-control" name="example-text-input" placeholder="Confirma tu contraseña" [(ngModel)]="payload.cambioPasswordB" #cambiaPassword/>
+                  <input [type]="showPassword ? 'text' : 'password'" class="form-control" name="example-text-input" placeholder="Confirma tu contraseña" [(ngModel)]="payload.cambiaPasswordB" #cambiaPassword/>
                 </div>
       
                 <div class="col-lg-4 col-12 mb-3">
@@ -80,7 +80,7 @@
                     </button>
                 </div>
                 <div class="col-lg-2 col-6" [ngClass]="isSmallScreen ? 'text-center' : 'text-end'">
-                    <button class="btn btn-primary boton-celular" style="background-color: #b17a45!important;" (click)="validaCodigo()" >
+                    <button class="btn btn-primary boton-celular" style="background-color: #b17a45!important;" (click)="cambiarPass()" >
                     <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg>
                     Cambia
                     </button>
