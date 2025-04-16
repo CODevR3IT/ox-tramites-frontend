@@ -28,6 +28,7 @@ export class ValidacionComponent {
   existeCodigo: boolean = true;
   valida: boolean = false;
   correoError: string = '';
+  cambioPassword: boolean = true;
 
   constructor(
     private registroService: RegistroService,
@@ -164,5 +165,9 @@ export class ValidacionComponent {
 
   private checkScreenSize() {
     this.isSmallScreen = window.innerWidth < 768; // <768px se considera pantalla chica
+  }
+
+  olvidePass(numero: number){
+    this.cambioPassword = (numero === 0 ? false : true);
   }
 }
