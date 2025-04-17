@@ -43,7 +43,7 @@ export class AuthService {
   logout() {
     this.storageService.clearData();
     this.isAuthenticated = false;
-    window.location.href = `${environment.loginUrl}/login/${environment.appUuid}`;
+    //window.location.href = `${environment.loginUrl}/login/${environment.appUuid}`;
   }
 
   isLoggedIn() {

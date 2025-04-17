@@ -1,7 +1,6 @@
 export const environment = {
     api: '',
-    ssoApi: '',
+    ssoApi: 'http://74.208.46.147/sso-services/api',
     clientKey: '',
-    appUuid: '',
-    loginUrl: '',
+    appUuid: '807815e3-332f-4227-889b-2cc560e0b9e6',
 };

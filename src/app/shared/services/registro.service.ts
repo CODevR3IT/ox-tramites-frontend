@@ -9,8 +9,8 @@ import { AppPublic } from '../interfaces/app-public.interface';
 })
 export class RegistroService {
     baseUrl = environment.api;
-    //appUUID = environment.appUUID;
-    //sso = environment.ssoApi+'/apps/public/'+this.appUUID;
+    appUUID = environment.appUuid;
+    sso = environment.ssoApi+'/apps/public/'+this.appUUID;
     private api = environment.ssoApi;
     private idApp = environment.appUuid;
     private app = {} as AppPublic;
@@ -33,7 +33,7 @@ export class RegistroService {
     }
 
     getApp(id: string = ''){
-        return this.http.get<AppPublic>(`${this.api}/apps/public/${id}`)
+        return this.http.get<AppPublic>(`${this.api}/apps/public/${this.appUUID}`)
     }
     setApp(app: AppPublic){
         this.app = app;
@@ -88,4 +88,5 @@ export class RegistroService {
     cambiarPass(payload: any){
         return this.postQuery(`datosUser/olvidePassword`, payload);
     }
+
 }
