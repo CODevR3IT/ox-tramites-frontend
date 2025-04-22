@@ -119,6 +119,18 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   transition: background-color 0.3s;
 }
 
+.custom-botones-recuperacion {
+  display: inline-block;
+  // padding: 5px 10px;
+  background-color: transparent;
+  border-radius: 6px;
+  border: 0px transparent!important;
+  cursor: pointer;
+  font-size: 12px;
+  text-decoration: underline;
+  transition: background-color 0.3s;
+}
+
 
 // Steps
 
