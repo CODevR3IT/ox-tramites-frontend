@@ -4,6 +4,7 @@ import { LandingComponent } from './pages/landing/landing.component';
 import { AuthComponent } from './shared/auth/auth.component';
 import { ValidacionComponent } from './pages/validacion/validacion.component';
 import { LoginComponent } from './pages/login/login.component';
+import { InicioComponent } from './pages/inicio/inicio.component';
 
 export const routes: Routes = [
   { path: 'auth', component: AuthComponent },
@@ -19,6 +20,9 @@ export const routes: Routes = [
       },
       { 
         path: 'login', component: LoginComponent, data: {breadcrumb: ''},
+      },
+      { 
+        path: 'inicio', component: InicioComponent, data: {breadcrumb: ''},
       }
     ],
   },
