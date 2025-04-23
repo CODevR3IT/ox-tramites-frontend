@@ -14,7 +14,7 @@ export class AuthComponent {
   ngOnInit(){
     this.route.queryParams.subscribe((params) => {
       if(!params['t']) this.authService.logout();
-      this.authService.login(params['t']).subscribe();
+      //this.authService.login(params['t']).subscribe();
     });
   }
 }

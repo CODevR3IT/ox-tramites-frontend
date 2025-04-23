@@ -49,7 +49,8 @@ export class HeaderComponent {
   
 
   logout(){
-    this.authService.logout();
+    console.log("loooo");
+    this.authService.logout().subscribe();
   }
   toggleTheme(){
     this.themeService.toggleDarkMode();

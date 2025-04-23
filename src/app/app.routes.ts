@@ -13,16 +13,16 @@ export const routes: Routes = [
     component: MainComponent,
     children: [
       { 
-        path: '', component: LandingComponent, data: {breadcrumb: 'Inicio'},
+        path: '', component: LandingComponent, data: {breadcrumb: 'Registro'},
       },
       { 
         path: 'validacion', component: ValidacionComponent, data: {breadcrumb: ''},
       },
       { 
-        path: 'login', component: LoginComponent, data: {breadcrumb: ''},
+        path: 'login', component: LoginComponent, data: {breadcrumb: 'login'},
       },
       { 
-        path: 'inicio', component: InicioComponent, data: {breadcrumb: ''},
+        path: 'inicio', component: InicioComponent, data: {breadcrumb: 'Inicio'},
       }
     ],
   },

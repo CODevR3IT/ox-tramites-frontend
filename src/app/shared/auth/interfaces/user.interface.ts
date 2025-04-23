@@ -5,6 +5,7 @@ export interface User {
     role: string;
     rolekey: string;
     access_token: string;
+    token: string;
 }
 
 export interface ProfileImg {
