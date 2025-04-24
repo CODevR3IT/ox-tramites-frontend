@@ -179,3 +179,27 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   width: 90%!important;
   margin: 3px 0px 3px 0px;
 }
+
+
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  flex: 1;
+  padding-right: 40px; /* espacio para el botón */
+}
+
+.toggle-btn {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}

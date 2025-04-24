@@ -7,6 +7,7 @@ import { ThemeService } from '../../services/theme.service';
 import { CommonModule } from '@angular/common';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { RegistroService } from '../../services/registro.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -24,6 +25,7 @@ export class HeaderComponent {
     private readonly ssoService: SsoService,
     private readonly themeService: ThemeService,
     private pagosService: RegistroService,
+    private router: Router
   ){
     this.theme = this.themeService.getTheme(); 
     //this.user = authService.getUser();
@@ -32,6 +34,8 @@ export class HeaderComponent {
     });
     this.ssoService.getApp(this.ssoService.getUuidApp()).subscribe((res)=> this.app = res);*/
   }
+
+  
 
   ngOnInit(){
     this.pagosService.getApp().subscribe(
@@ -46,12 +50,20 @@ export class HeaderComponent {
       }
       )
   }
+
+  
   
 
   logout(){
     console.log("loooo");
     this.authService.logout().subscribe();
   }
+
+  cambiarPass(){
+    console.log("change pass activated");
+    this.router.navigate(['/olvide-password']);
+  }
+
   toggleTheme(){
     this.themeService.toggleDarkMode();
     this.theme = this.themeService.getTheme(); 
