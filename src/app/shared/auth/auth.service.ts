@@ -62,16 +62,17 @@ export class AuthService {
     return this.http
       .post<User>(`${this.apiUrl}/login/logout`, {}, this.httpOptions)
       .pipe(
-        tap((user) => {
-          console.log("user");
-          console.log(user);
-          if (user) {
-            //this.setSession(user);
+        tap((res:any) => {
+          console.log("res");
+          console.log(res);
+          if (res.message === "Sesión cerrada exitosamente") {
+            this.payload = {};
+            this.router.navigate(['/login']);
           }
         })
       );
     //window.location.href = `${environment.loginUrl}/login/${environment.appUuid}`;
-    this.router.navigate(['/login']);
+    
   }
 
   isLoggedIn() {
@@ -118,7 +119,7 @@ export class AuthService {
     return this.http.post<ResponseMessage>(`${this.apiUrl}/auth/forgot-password`, {email}).pipe(tap((res) => this.responseSuccess(res).then(() =>  this.router.navigate(['/login']))));
   }
   restorePassword(body: RestorePasswordDto){
-    return this.http.post<ResponseMessage>(`${this.apiUrl}/auth/restore-password`, body).pipe(tap((res) => this.responseSuccess(res).then(() =>  this.router.navigate(['/login']))));
+    return this.http.post<ResponseMessage>(`${this.apiUrl}/datosUser/cambiaPassword`, body).pipe(tap((res) => this.responseSuccess(res).then(() =>  this.router.navigate(['/login']))));
   }
   changePassword(body: ChangePasswordDto){
     return this.http.patch<ResponseMessage>(`${this.apiUrl}/auth/reset-password`, body).pipe(tap((res) => this.responseSuccess(res).then(() =>  this.router.navigate(['/login']))));
