@@ -47,7 +47,18 @@ export class LoginComponent {
     private readonly router: Router,
     private readonly authService: AuthService,
     private spinner: NgxSpinnerService,
-  ){}
+  ){
+    this.checkScreenSize();
+  }
+
+  ngOnInit(){
+    this.spinner.show();
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.checkScreenSize();
+  }
 
   get emailErrors() {
     return isValidControl(this.loginForm.get('email'));

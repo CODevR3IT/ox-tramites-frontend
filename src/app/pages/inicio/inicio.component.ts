@@ -22,6 +22,21 @@ export class InicioComponent {
 
   constructor(
     private spinner: NgxSpinnerService,
-  ){}
+  ){
+    this.checkScreenSize();
+  }
+
+  ngOnInit(){
+    this.spinner.show();
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.checkScreenSize();
+  }
+
+  private checkScreenSize() {
+    this.isSmallScreen = window.innerWidth < 768; // <768px se considera pantalla chica
+  }
 
 }

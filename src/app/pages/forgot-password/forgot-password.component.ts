@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, HostListener } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import {
@@ -11,6 +11,7 @@ import { AuthService } from '../../shared/auth/auth.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RegistroService } from '../../shared/services/registro.service';
 import Swal from 'sweetalert2';
+import { ThemeService } from '../../shared/services/theme.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -57,8 +58,28 @@ export class ForgotPasswordComponent {
   
   constructor(private readonly authService: AuthService,
     private spinner: NgxSpinnerService,
-    private registroService: RegistroService
-  ) { }
+    private registroService: RegistroService,
+    private themeService: ThemeService
+  ) { 
+    this.checkScreenSize();
+  }
+
+  ngOnInit(){
+    this.spinner.show();
+  }
+
+  @HostListener('window:resize')
+    onResize() {
+      this.checkScreenSize();
+    }
+  
+    private checkScreenSize() {
+      this.isSmallScreen = window.innerWidth < 768; // <768px se considera pantalla chica
+    }
+
+  get isDarkMode(): boolean {
+    return this.themeService.getTheme() === 'dark';
+  }
 
   get tokenErrors() {
     return isValidControl(this.restorePasswordForm.get('token'));
