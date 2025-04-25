@@ -9,6 +9,8 @@ import {
 import { AuthService } from '../../shared/auth/auth.service';
 import { RestorePasswordDto } from '../../shared/interfaces/restore-password.dto';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { RegistroService } from '../../shared/services/registro.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-restore-password',
@@ -21,6 +23,7 @@ export class RestorePasswordComponent {
   private formBuilder = inject(FormBuilder);
   query: any = {};
   showPassword = false;
+  isSmallScreen: boolean = false;
   repeatShowPassword = false;
   restorePasswordForm = this.formBuilder.group({
     token: ['', []],
@@ -58,7 +61,8 @@ export class RestorePasswordComponent {
     private readonly authService: AuthService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-  ) {}
+    private registroService: RegistroService
+  ) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe((params: Params) => {
@@ -83,7 +87,7 @@ export class RestorePasswordComponent {
   get emailErrors() {
     return isValidControl(this.restorePasswordForm.get('email'));
   }
-  get emailMessageError(){
+  get emailMessageError() {
     return getMessageError(this.restorePasswordForm.get('email')?.errors, 'correo electrónico');
   }
   get passwordErrors() {
@@ -114,6 +118,44 @@ export class RestorePasswordComponent {
       this.restorePasswordForm.get('new_password_confirmation')?.errors,
       'contraseña',
       'La contraseña debe de tener mínimo 8 y máximo 12 caracteres con una letra mayúscula, minúscula, un simbolo y un número.'
+    );
+  }
+
+  private checkScreenSize() {
+    this.isSmallScreen = window.innerWidth < 768; // <768px se considera pantalla chica
+  }
+
+  pedirCambioPassword() {
+    const { email } = this.restorePasswordForm.value
+    const query = {
+      "email": email,
+      "motivo": "cambio",
+    }
+    this.registroService.pedirCambioPassword(query).subscribe(
+      {
+        next: (res: any) => {
+          console.log(res);
+          this.spinner.hide();
+          Swal.fire({
+            title: '¡Atención!',
+            text: res.msg,
+            icon: 'success',
+            confirmButtonColor: '#6a1c32',
+            confirmButtonText: 'Aceptar',
+          });
+
+        },
+        error: (err: { error: { message: any; }; }) => {
+          this.spinner.hide();
+          Swal.fire({
+            title: '¡Atención!',
+            text: err.error.message,
+            icon: 'error',
+            confirmButtonColor: '#6a1c32',
+            confirmButtonText: 'Aceptar',
+          });
+        },
+      }
     );
   }
 }

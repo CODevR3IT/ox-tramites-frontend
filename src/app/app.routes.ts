@@ -15,10 +15,13 @@ export const routes: Routes = [
     component: MainComponent,
     children: [
       { 
-        path: '', component: LandingComponent, data: {breadcrumb: 'Registro'},
+        path: 'registro', component: LandingComponent, data: {breadcrumb: 'Registro'},
       },
       { 
         path: 'validacion', component: ValidacionComponent, data: {breadcrumb: ''},
+      },
+      { 
+        path: '', component: LoginComponent, data: {breadcrumb: 'login'},
       },
       { 
         path: 'login', component: LoginComponent, data: {breadcrumb: 'login'},

@@ -9,6 +9,7 @@ import { RestorePasswordDto } from '../interfaces/restore-password.dto';
 import { ResponseMessage } from '../interfaces/response-message.interface';
 import { responseSuccess } from '../helpers/response.helper';
 import { ChangePasswordDto } from '../interfaces/change-password.dto';
+import { ForgotPasswordDto } from '../interfaces/forgot-password.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -103,8 +104,10 @@ export class AuthService {
     return user;
   }
   private setSession(user: User) {
+    //this.storageService.saveData('usuario', { nombre: 'Carlos', token: '123' });
     this.storageService.saveData(this.TOKEN_KEY, user.token);
     this.storageService.saveData(this.USER_DATA_KEY, JSON.stringify(user));
+    const usuario = this.storageService.getData('usuario');
     console.log("this.storageService");
     console.log(this.storageService);
     this.payload.token = user.token;
@@ -115,8 +118,8 @@ export class AuthService {
     return this.http.get<ProfileImg>(`${this.apiUrl}/auth/profile-img`);
   }
 
-  forgotPassword(email: string){
-    return this.http.post<ResponseMessage>(`${this.apiUrl}/auth/forgot-password`, {email}).pipe(tap((res) => this.responseSuccess(res).then(() =>  this.router.navigate(['/login']))));
+  forgotPassword(body: ForgotPasswordDto){
+    return this.http.post<ResponseMessage>(`${this.apiUrl}/datosUser/olvidePasswordT`, body).pipe(tap((res) => this.responseSuccess(res).then(() =>  this.router.navigate(['/login']))));
   }
   restorePassword(body: RestorePasswordDto){
     return this.http.post<ResponseMessage>(`${this.apiUrl}/datosUser/cambiaPassword`, body).pipe(tap((res) => this.responseSuccess(res).then(() =>  this.router.navigate(['/login']))));

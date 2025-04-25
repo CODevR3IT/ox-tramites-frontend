@@ -2,36 +2,46 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { SsoService } from '../../shared/services/sso.service';
 import {
   getMessageError,
   isValidControl,
 } from '../../shared/forms/input-validator';
+import { ForgotPasswordDto } from '../../shared/interfaces/forgot-password.dto';
 import { AuthService } from '../../shared/auth/auth.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { RegistroService } from '../../shared/services/registro.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
   imports: [ReactiveFormsModule, RouterModule, CommonModule, FormsModule],
   templateUrl: './forgot-password.component.html',
-  
+
 })
 export class ForgotPasswordComponent {
   private formBuilder = inject(FormBuilder);
-  payload:any = {
-    correo: '',
-    password: '',
-    confirma_password:'',
-    codigo: ''
-  };
-  loginForm = this.formBuilder.group({
+  showPassword = false;
+  repeatShowPassword = false;
+  payload: any = {};
+  restorePasswordForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
+    token: ['', [Validators.required]],
     password: [
       '',
       [
         Validators.required,
         Validators.pattern(
-          /(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/
+          /^(?=.*\d)(?=.*\W)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).{8,12}$/
+        ),
+      ],
+    ],
+    password_confirmation: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(
+          /^(?=.*\d)(?=.*\W)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).{8,12}$/
         ),
       ],
     ],
@@ -44,11 +54,21 @@ export class ForgotPasswordComponent {
     this.hidePassword = !this.hidePassword;
   }
 
-  restorePasswordForm = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
-  });
-  constructor(private readonly authService: AuthService) {}
+  
+  constructor(private readonly authService: AuthService,
+    private spinner: NgxSpinnerService,
+    private registroService: RegistroService
+  ) { }
 
+  get tokenErrors() {
+    return isValidControl(this.restorePasswordForm.get('token'));
+  }
+  get tokenMessageError() {
+    return getMessageError(
+      this.restorePasswordForm.get('token')?.errors,
+      'Ingrese el código enviado al correo.'
+    );
+  }
   get emailErrors() {
     return isValidControl(this.restorePasswordForm.get('email'));
   }
@@ -58,10 +78,65 @@ export class ForgotPasswordComponent {
       'correo electrónico'
     );
   }
+  get passwordErrors() {
+    return isValidControl(this.restorePasswordForm.get('password'));
+  }
+  get passwordMessageError() {
+    return getMessageError(
+      this.restorePasswordForm.get('password')?.errors,
+      'contraseña',
+      'La contraseña debe de tener mínimo 8 y máximo 12 caracteres con una letra mayúscula, minúscula, un simbolo y un número.'
+    );
+  }
+  get password_confirmationErrors() {
+    return isValidControl(this.restorePasswordForm.get('password_confirmation'));
+  }
+  get password_confirmationMessageError() {
+    return getMessageError(
+      this.restorePasswordForm.get('password_confirmation')?.errors,
+      'contraseña',
+      'La contraseña debe de tener mínimo 8 y máximo 12 caracteres con una letra mayúscula, minúscula, un simbolo y un número.'
+    );
+  }
+
+  pedirCambioPassword() {
+    const { email } = this.restorePasswordForm.value
+    const query = {
+      "email": email,
+      "motivo": "olvido",
+    }
+    this.registroService.pedirCambioPassword(query).subscribe(
+      {
+        next: (res: any) => {
+          console.log(res);
+          this.spinner.hide();
+          Swal.fire({
+            title: '¡Atención!',
+            text: res.msg,
+            icon: 'success',
+            confirmButtonColor: '#6a1c32',
+            confirmButtonText: 'Aceptar',
+          });
+
+        },
+        error: (err: { error: { message: any; }; }) => {
+          this.spinner.hide();
+          Swal.fire({
+            title: '¡Atención!',
+            text: err.error.message,
+            icon: 'error',
+            confirmButtonColor: '#6a1c32',
+            confirmButtonText: 'Aceptar',
+          });
+        },
+      }
+    );
+  }
+
   onSubmit() {
     if (this.restorePasswordForm.valid) {
-      const { email } = this.restorePasswordForm.value;
-      this.authService.forgotPassword(email!).subscribe();
+      const body = this.restorePasswordForm.value as ForgotPasswordDto;
+      this.authService.forgotPassword(body).subscribe();
     }
   }
 }

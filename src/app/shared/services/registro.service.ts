@@ -89,4 +89,8 @@ export class RegistroService {
         return this.postQuery(`datosUser/olvidePassword`, payload);
     }
 
+    pedirCambioPassword(payload: any){
+        return this.postQuery(`datosUser/pedirCambioPassword`, payload);
+    }
+
 }

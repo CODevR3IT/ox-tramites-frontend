@@ -7,12 +7,12 @@ import { ThemeService } from '../../services/theme.service';
 import { CommonModule } from '@angular/common';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { RegistroService } from '../../services/registro.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, NgbTooltipModule],
+  imports: [CommonModule, NgbTooltipModule, RouterModule],
   templateUrl: './header.component.html',
   styles: ``
 })

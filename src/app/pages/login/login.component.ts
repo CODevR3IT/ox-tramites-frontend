@@ -71,7 +71,6 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    console.log("aca3521")
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
 
