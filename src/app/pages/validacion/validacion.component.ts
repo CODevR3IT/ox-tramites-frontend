@@ -6,6 +6,7 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule } 
 import { RegistroService } from '../../shared/services/registro.service';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ThemeService } from '../../shared/services/theme.service';
 
 @Component({
   selector: 'app-validacion',
@@ -35,7 +36,23 @@ export class ValidacionComponent {
   constructor(
     private registroService: RegistroService,
     private spinner: NgxSpinnerService,
-  ){}
+    private themeService: ThemeService
+  ){
+    this.checkScreenSize();
+  }
+
+  ngOnInit(){
+    this.spinner.show();
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.checkScreenSize();
+  }
+
+  get isDarkMode(): boolean {
+    return this.themeService.getTheme() === 'dark';
+  }
 
   validaForm(): any{
     console.log("aca valdoo");

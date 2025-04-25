@@ -106,6 +106,15 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   transition: background-color 0.3s;
 }
 
+.color-SP{
+  color: $primary!important
+}
+
+.color-SP-modo-oscuro{
+ color: #FFF!important;
+}
+
+
 
 
 .custom-botones-recuperacion {

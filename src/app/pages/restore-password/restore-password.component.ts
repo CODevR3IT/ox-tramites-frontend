@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, HostListener } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, RouterModule } from '@angular/router';
 import {
@@ -11,6 +11,7 @@ import { RestorePasswordDto } from '../../shared/interfaces/restore-password.dto
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RegistroService } from '../../shared/services/registro.service';
 import Swal from 'sweetalert2';
+import { ThemeService } from '../../shared/services/theme.service';
 
 @Component({
   selector: 'app-restore-password',
@@ -61,8 +62,11 @@ export class RestorePasswordComponent {
     private readonly authService: AuthService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private registroService: RegistroService
-  ) { }
+    private registroService: RegistroService,
+    private themeService: ThemeService
+  ) {
+    this.checkScreenSize();
+   }
 
   ngOnInit() {
     this.route.queryParams.subscribe((params: Params) => {
@@ -70,6 +74,20 @@ export class RestorePasswordComponent {
     });
 
   }
+
+  @HostListener('window:resize')
+    onResize() {
+      this.checkScreenSize();
+    }
+  
+    private checkScreenSize() {
+      this.isSmallScreen = window.innerWidth < 768; // <768px se considera pantalla chica
+    }
+
+  get isDarkMode(): boolean {
+    return this.themeService.getTheme() === 'dark';
+  }
+
   onSubmit() {
     const body = this.restorePasswordForm.value as RestorePasswordDto;
     console.log(body);
@@ -121,9 +139,6 @@ export class RestorePasswordComponent {
     );
   }
 
-  private checkScreenSize() {
-    this.isSmallScreen = window.innerWidth < 768; // <768px se considera pantalla chica
-  }
 
   pedirCambioPassword() {
     const { email } = this.restorePasswordForm.value

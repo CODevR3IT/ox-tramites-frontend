@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { format, parse  } from "date-fns";
 import moment from 'moment';
+import { ThemeService } from '../../shared/services/theme.service';
 
 
 @Component({
@@ -91,7 +92,8 @@ export class LandingComponent {
   constructor(
     private registroService: RegistroService,
     private spinner: NgxSpinnerService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private themeService: ThemeService
   ){
     this.checkScreenSize();
   }
@@ -104,6 +106,10 @@ export class LandingComponent {
   @HostListener('window:resize')
   onResize() {
     this.checkScreenSize();
+  }
+
+  get isDarkMode(): boolean {
+    return this.themeService.getTheme() === 'dark';
   }
 
   getCatSexo(){
