@@ -28,6 +28,7 @@ export class InicioComponent {
 
   ngOnInit(){
     this.spinner.show();
+    this.obtieneTramites();
   }
 
   @HostListener('window:resize')
@@ -39,4 +40,7 @@ export class InicioComponent {
     this.isSmallScreen = window.innerWidth < 768; // <768px se considera pantalla chica
   }
 
+  obtieneTramites(){
+    this.spinner.hide();
+  }
 }

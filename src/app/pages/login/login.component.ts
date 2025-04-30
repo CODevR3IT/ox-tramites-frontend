@@ -31,9 +31,9 @@ export class LoginComponent {
       '',
       [
         Validators.required,
-        Validators.pattern(
-          /(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/
-        ),
+        // Validators.pattern(
+        //   /(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/
+        // ),
       ],
     ],
   });
@@ -52,7 +52,7 @@ export class LoginComponent {
   }
 
   ngOnInit(){
-    this.spinner.show();
+    //this.spinner.show();
   }
 
   @HostListener('window:resize')
