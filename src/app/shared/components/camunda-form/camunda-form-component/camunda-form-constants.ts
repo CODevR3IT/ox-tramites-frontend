@@ -1,0 +1,1 @@
+export const validTypes = ['textfield','filepicker','radio','textarea','number','checkbox','checklist','select','datetime']; 

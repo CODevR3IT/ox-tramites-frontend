@@ -53,14 +53,15 @@ export class AuthService {
   logout() {
     this.storageService.clearData();
     this.isAuthenticated = false;
-    this.httpOptions = {
+    this.router.navigate(['/login']);
+    /*this.httpOptions = {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         Authorization: 'Bearer '+this.payload.token,
       })
     };
-   console.log(this.httpOptions);
-    return this.http
+
+    /*return this.http
       .post<User>(`${this.apiUrl}/login/logout`, {}, this.httpOptions)
       .pipe(
         tap((res:any) => {
@@ -71,7 +72,7 @@ export class AuthService {
             this.router.navigate(['/login']);
           }
         })
-      );
+      );*/
     //window.location.href = `${environment.loginUrl}/login/${environment.appUuid}`;
     
   }

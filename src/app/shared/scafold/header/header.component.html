@@ -44,42 +44,80 @@
             ></i>
           </a>
         </div>
-        <div class="nav-item dropdown">
-          <a
-            href="#"
-            class="nav-link d-flex lh-1 text-reset p-0"
-            data-bs-toggle="dropdown"
-            aria-label="Open user menu"
-          >
-            <span
-              class="avatar avatar-sm"
-              style="background-image: url()"
-            ></span>
-            <div class="d-none d-xl-block ps-2">
-              <div>{{ user.full_name }}</div>
-              <div class="mt-1 small text-secondary">{{ user.email }}</div>
+        @if(logedIn){
+          <div class="nav-item dropdown d-none d-md-flex me-3">
+            <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Mostrar notificaciones">
+              <i
+              class="ti ti-bell icon menu-icon"
+          
+            ></i>
+              <span class="badge bg-red"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Notificaciones</h3>
+                </div>
+                <div class="list-group list-group-flush list-group-hoverable">
+                  @for (notificacion of notificaciones; track $index) {
+                  <div class="list-group-item">
+                    <div class="row align-items-center">
+                      <div class="col-auto"><span class="status-dot d-block" [ngClass]="notificacion.badge"></span></div>
+                      <div class="col text-truncate">
+                        <a href="javascript:void(0)" class="text-body d-block">{{notificacion.titulo}}</a>
+                        <div class="d-block text-muted text-truncate mt-n1">
+                          {{notificacion.mensaje}}
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <a href="#" class="list-group-item-actions">
+                    
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                }
+                </div>
+              </div>
             </div>
-          </a>
-          <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-            <!--<a href="#" class="dropdown-item">Status</a>
-            <a href="./profile.html" class="dropdown-item">Profile</a>
-            <a href="#" class="dropdown-item">Feedback</a>
-            <div class="dropdown-divider"></div>
-            <a href="./settings.html" class="dropdown-item">Settings</a>-->
-            <a
-              href="javascript:void(0)"
-              (click)="logout()"
-              class="dropdown-item"
-              >Cerrar sesión</a
-            >
-            <a 
-              href="javascript:void(0)"
-              class="dropdown-item"
-              routerLink="/cambio-pass">
-              Cambiar contraseña</a
-            >
           </div>
-        </div>
+         
+          <div class="nav-item dropdown">
+            <a
+              href="#"
+              class="nav-link d-flex lh-1 text-reset p-0"
+              data-bs-toggle="dropdown"
+              aria-label="Open user menu"
+            >
+            <svg width="100" height="100" class="avatar avatar-sm" data-jdenticon-value="John Doe"></svg>
+          
+              <div class="d-none d-xl-block ps-2">
+                <div>{{ user.full_name }}</div>
+                <div class="mt-1 small text-secondary">{{ user.email }}</div>
+              </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <!--<a href="#" class="dropdown-item">Status</a>
+              <a href="./profile.html" class="dropdown-item">Profile</a>
+              <a href="#" class="dropdown-item">Feedback</a>
+              <div class="dropdown-divider"></div>
+              <a href="./settings.html" class="dropdown-item">Settings</a>-->
+              <a
+                href="javascript:void(0)"
+                (click)="logout()"
+                class="dropdown-item"
+                >Cerrar sesión</a
+              >
+              <a 
+                href="javascript:void(0)"
+                class="dropdown-item"
+                routerLink="/cambio-pass">
+                Cambiar contraseña</a
+              >
+            </div>
+          </div>
+        }
+       
       </div>
     </div>
   </header>

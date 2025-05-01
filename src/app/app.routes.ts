@@ -15,25 +15,25 @@ export const routes: Routes = [
     component: MainComponent,
     children: [
       { 
-        path: 'registro', component: LandingComponent, data: {breadcrumb: 'Registro'},
+        path: 'registro', component: LandingComponent,
       },
       { 
-        path: 'validacion', component: ValidacionComponent, data: {breadcrumb: ''},
+        path: 'validacion', component: ValidacionComponent,
       },
       { 
-        path: '', component: LoginComponent, data: {breadcrumb: 'login'},
+        path: '', component: LoginComponent,
       },
       { 
-        path: 'login', component: LoginComponent, data: {breadcrumb: 'login'},
+        path: 'login', component: LoginComponent,
       },
       { 
         path: 'inicio', component: InicioComponent, data: {breadcrumb: 'Inicio'},
       },
       { 
-        path: 'olvide-password', component: ForgotPasswordComponent, data: {breadcrumb: 'Olvide'},
+        path: 'olvide-password', component: ForgotPasswordComponent,
       },
       { 
-        path: 'cambio-pass', component: RestorePasswordComponent, data: {breadcrumb: 'Cambio'},
+        path: 'cambio-pass', component: RestorePasswordComponent,
       }
     ],
   },

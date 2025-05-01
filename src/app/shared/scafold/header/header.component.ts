@@ -7,12 +7,14 @@ import { ThemeService } from '../../services/theme.service';
 import { CommonModule } from '@angular/common';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { RegistroService } from '../../services/registro.service';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
+import { Notificacion } from '../../interfaces/notificaciones.interface';
+import { NgxJdenticonModule } from "ngx-jdenticon";
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, NgbTooltipModule, RouterModule],
+  imports: [CommonModule, NgbTooltipModule, RouterModule, NgxJdenticonModule],
   templateUrl: './header.component.html',
   styles: ``
 })
@@ -21,13 +23,22 @@ export class HeaderComponent {
   theme: string;
   user: User = {} as User;
   app: AppPublic = {} as AppPublic;
+  logedIn: boolean = false;
+  notificaciones: Notificacion[] = [
+    { titulo: 'Notificacion 1', mensaje: 'Mensaje de la notificacion 1 123123123123', badge: 'status-dot-animated bg-red' },
+    { titulo: 'Notificacion 2', mensaje: 'Mensaje de la notificacion 2', badge: 'badge badge-success' },
+    { titulo: 'Notificacion 3', mensaje: 'Mensaje de la notificacion 3', badge: 'badge badge-warning' },
+    { titulo: 'Notificacion 4', mensaje: 'Mensaje de la notificacion 4', badge: 'badge badge-info' },
+    { titulo: 'Notificacion 5', mensaje: 'Mensaje de la notificacion 5', badge: 'status-dot-animated bg-green' }
+  ];
   constructor(private readonly authService: AuthService,
+    private readonly route: ActivatedRoute,
     private readonly ssoService: SsoService,
     private readonly themeService: ThemeService,
     private pagosService: RegistroService,
     private router: Router
-  ){
-    this.theme = this.themeService.getTheme(); 
+  ) {
+    this.theme = this.themeService.getTheme();
     //this.user = authService.getUser();
     /*this.authService.getProfileBase64().subscribe((img) =>{
       this.img = img.img;
@@ -35,37 +46,36 @@ export class HeaderComponent {
     this.ssoService.getApp(this.ssoService.getUuidApp()).subscribe((res)=> this.app = res);*/
   }
 
-  
 
-  ngOnInit(){
+  ngOnInit() {
     this.pagosService.getApp().subscribe(
       {
-        next:(res:any)=>{
+        next: (res: any) => {
           this.app = res
-          
+
         },
-        error: (err: any)=> {
-          
+        error: (err: any) => {
         }
       }
-      )
+    );
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.logedIn = this.authService.isLoggedIn();
+      }
+    });
   }
 
-  
-  
 
-  logout(){
-    console.log("loooo");
-    this.authService.logout().subscribe();
+  logout() {
+    this.authService.logout();
   }
 
-  cambiarPass(){
-    console.log("change pass activated");
+  cambiarPass() {
     this.router.navigate(['/olvide-password']);
   }
 
-  toggleTheme(){
+  toggleTheme() {
     this.themeService.toggleDarkMode();
-    this.theme = this.themeService.getTheme(); 
+    this.theme = this.themeService.getTheme();
   }
 }

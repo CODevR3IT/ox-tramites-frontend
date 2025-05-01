@@ -1,0 +1,17 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+  @for (component of components; track component; let idx = $index) {
+  <div class="mb-3 row">
+    <div>
+      <app-camunda-form-component
+        [component]="component"
+        [form]="form"
+      ></app-camunda-form-component>
+    </div>
+  </div>
+  }
+  <div class="mb-3">
+    <button type="submit" [disabled]="!form.valid" class="btn btn-primary">
+      {{ buttonText }}
+    </button>
+  </div>
+</form>

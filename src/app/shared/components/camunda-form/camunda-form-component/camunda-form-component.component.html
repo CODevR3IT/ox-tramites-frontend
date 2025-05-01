@@ -1,0 +1,145 @@
+<div [formGroup]="form">
+  @if(!['text', 'button','checkbox'].includes(component.type)){
+  <label
+    class="form-label"
+    [ngClass]="{ required: component.validate?.required }"
+    [attr.for]="component.key"
+    >{{ component.label || component.dateLabel }}</label
+  >
+  } @switch (component.type) { @case ('text') {
+    <div [innerHTML]="textComponent"></div>
+  } @case ('textfield') {
+  <input
+    class="form-control"
+    [id]="component.key"
+    [formControlName]="component.key"
+    [readonly]="component.readonly"
+    [ngClass]="componentError"
+    type="text"
+  />
+  <div class="invalid-feedback">{{ messageError }} </div>
+  } @case ('number') {
+  <input
+    class="form-control"
+    [id]="component.key"
+    [formControlName]="component.key"
+    [readonly]="component.readonly"
+    [ngClass]="componentError"
+    type="text"
+    mask="0*"
+  />
+  <div class="invalid-feedback">{{ messageError }} </div>
+  } @case ('datetime') {
+  <div class="input-icon">
+    <span class="input-icon-addon">
+      <i class="icon ti ti-calendar"></i>
+    </span>
+    <input
+      class="form-control"
+      [id]="component.key"
+      [formControlName]="component.key"
+      [readonly]="component.readonly"
+      [ngClass]="componentError"
+      ngbDatepicker
+      #d="ngbDatepicker"
+      (click)="d.toggle()"
+    />
+  </div>
+  <div class="invalid-feedback">{{ messageError }} </div>
+  } @case ('textarea') {
+  <textarea
+    [id]="component.key"
+    [formControlName]="component.key"
+    [readonly]="component.readonly"
+    [ngClass]="componentError"
+    class="form-control"
+  ></textarea>
+  <div class="invalid-feedback">{{ messageError }} </div>
+  } @case ('spacer') {
+  <span [ngStyle]="{ height: component.height, width: '100%' }">&nbsp;</span>
+  } @case ('select') {
+  <select
+    class="form-select"
+    [id]="component.key"
+    [formControlName]="component.key"
+    [ngClass]="componentError"
+  >
+    @for (select of component.values; track $index) {
+    <option [value]="select.value">
+      {{ select.label }}
+    </option>
+    }
+  </select>
+  <div class="invalid-feedback">{{ messageError }} </div>
+  } @case ('separator') {
+  <hr />
+  } @case ('checkbox') {
+  <label class="form-check form-check-inline">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      [id]="component.key"
+      [formControlName]="component.key"
+      [readonly]="component.readonly"
+      [ngClass]="componentError"
+    />
+    <span class="form-check-label">{{ component.label }}</span>
+  </label>
+  <div class="invalid-feedback">{{ messageError }} </div>
+  } @case ('checklist') { @for (checks of component.values; track $index) {
+  <label class="form-check">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      [id]="component.key"
+      [formControlName]="component.key"
+      [readonly]="component.readonly"
+      [value]="checks.value"
+      [ngClass]="componentError"
+    />
+    <span class="form-check-label">{{ checks.label }}</span>
+  </label>
+  <div class="invalid-feedback">{{ messageError }} </div>
+  } } @case ('filepicker') { @if(component.readonly){}@else{
+  <div class="row g-2">
+    <div class="col">
+      <input
+      [id]="component.key"
+      [formControlName]="component.key"
+      type="hidden"
+    />
+      <input
+        class="form-control"
+        [accept]="component.accept"
+        [ngClass]="componentError"
+        (change)="onFileSelected($event)"
+        type="file"
+      />
+      <div class="invalid-feedback">{{ messageError }} </div>
+    </div>
+    <div class="col-auto">
+      <button
+        class="btn btn-outline-primary btn-icon"
+        type="button"
+        (click)="uploadFile()"
+      >
+        <i class="ti ti-upload"></i>
+      </button>
+    </div>
+  </div>
+  } }@case ('radio') { @for (item of component.values; track $index) {
+  <label class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      [id]="component.key"
+      [formControlName]="component.key"
+      [value]="item.value"
+    />
+    <span class="form-check-label">{{ item.label }}</span>
+  </label>
+  }
+  <div class="invalid-feedback">{{ messageError }} </div>
+ } 
+} 
+</div>
