@@ -61,7 +61,10 @@ export class HeaderComponent {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.logedIn = this.authService.isLoggedIn();
-        this.getNotifications();
+        if(this.logedIn){
+          this.user = this.authService.getUser();
+          this.getNotifications();
+        }
       }
     });
   }

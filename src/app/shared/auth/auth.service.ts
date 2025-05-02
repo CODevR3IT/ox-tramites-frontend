@@ -90,12 +90,34 @@ export class AuthService {
   }
 
   getUser(): User {
-    let { sub, email, full_name, role, rolekey, access_token, token } = JSON.parse(
+    console.log("this.USER_DATA_KEY");
+    console.log(this.storageService.getData(this.USER_DATA_KEY));
+    let { user: {
+      idU,
+      email,
+      ciudadano:{
+          idC,
+          curp,
+          nombre,
+          primer_apellido,
+          segundo_apellido,
+      }
+    },sub, full_name, role, rolekey, access_token, token } = JSON.parse(
       this.storageService.getData(this.USER_DATA_KEY)
     );
     let user: User = {
+      user: {
+        idU,
+        email,
+        ciudadano:{
+            idC,
+            curp,
+            nombre,
+            primer_apellido,
+            segundo_apellido,
+        }
+      },
       sub,
-      email,
       full_name,
       access_token,
       role,

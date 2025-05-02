@@ -6,4 +6,6 @@ export interface AppPublic {
     url:         string;
     images:      string[];
     logoLink:    string;
+    tituloHeader: string;
+    date: string;
 }
