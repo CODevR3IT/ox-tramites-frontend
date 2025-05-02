@@ -1,0 +1,37 @@
+<div class="page page-center">
+    <div class="card">
+
+        <div class="card-status-top bg-primary"></div>
+
+        <div class="card-body">
+            <div class="container py-5">
+                <h2 class="mb-4 text-center">Trámites</h2>
+                <div class="accordion" id="menuTramites">
+
+                    @for (categoria of categorias; track $index) {
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingIdentificacion">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseIdentificacion" aria-expanded="true">
+                                {{categoria.categoria}}
+                            </button>
+                        </h2>
+                        <div id="collapseIdentificacion" class="accordion-collapse collapse show"
+                            data-bs-parent="#menuTramites">
+                            <div class="accordion-body">
+                                <div class="d-grid gap-2">
+                                    @for (tramite of categoria.tramites; track $index) {
+                                    <button class="btn btn-outline-primary" [routerLink]="'/inicio-tramite/'+ tramite.id"> {{tramite.tramite}} </button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

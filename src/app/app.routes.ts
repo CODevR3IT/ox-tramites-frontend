@@ -7,6 +7,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { RestorePasswordComponent } from './pages/restore-password/restore-password.component';
+import { MisTramitesComponent } from './pages/mis-tramites/mis-tramites.component';
+import { InicioTramiteComponent } from './pages/mis-tramites/components/inicio-tramite/inicio-tramite.component';
 
 export const routes: Routes = [
   { path: 'auth', component: AuthComponent },
@@ -34,6 +36,12 @@ export const routes: Routes = [
       },
       { 
         path: 'cambio-pass', component: RestorePasswordComponent,
+      },
+      { 
+        path: 'mis-tramites', component: MisTramitesComponent, data: {breadcrumb: 'Mis trámites'},
+      },
+      { 
+        path: 'inicio-tramite/:id', component: InicioTramiteComponent, data: {breadcrumb: 'Inicio trámite'},
       }
     ],
   },

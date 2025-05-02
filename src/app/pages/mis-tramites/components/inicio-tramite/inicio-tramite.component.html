@@ -1,0 +1,18 @@
+<div class="page page-center">
+    <div class="card">
+
+        <div class="card-status-top bg-primary"></div>
+
+        <div class="card-body">
+            <div class="container py-5">
+                <h2 class="mb-4 text-center">Trámites</h2>
+
+                @if(camundaComponents.length > 0) {
+                    <app-camunda-form [components]="camundaComponents" (onSubmitForm)="onSubmit($event)"></app-camunda-form>
+                }
+
+            </div>
+        </div>
+
+    </div>
+</div>
