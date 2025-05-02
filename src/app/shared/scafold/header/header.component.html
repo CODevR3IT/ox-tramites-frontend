@@ -59,14 +59,30 @@
                   <h3 class="card-title">Notificaciones</h3>
                 </div>
                 <div class="list-group list-group-flush list-group-hoverable">
-                  @for (notificacion of notificaciones; track $index) {
-                  <div class="list-group-item">
+                  @for (notificacion of notificacionRes; track $index) {
+                  <!-- <div class="list-group-item">
                     <div class="row align-items-center">
                       <div class="col-auto"><span class="status-dot d-block" [ngClass]="notificacion.badge"></span></div>
                       <div class="col text-truncate">
                         <a href="javascript:void(0)" class="text-body d-block">{{notificacion.titulo}}</a>
                         <div class="d-block text-muted text-truncate mt-n1">
                           {{notificacion.mensaje}}
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <a href="#" class="list-group-item-actions">
+                    
+                        </a>
+                      </div>
+                    </div>
+                  </div> -->
+                  <div class="list-group-item">
+                    <div class="row align-items-center">
+                      <div class="col-auto"><span class="status-dot d-block" [ngClass]="notificacion.badge"></span></div>
+                      <div class="col text-truncate">
+                        <a href="javascript:void(0)" class="text-body d-block">{{notificacion.type}}</a>
+                        <div class="d-block text-muted text-truncate mt-n1">
+                          {{notificacion.data.message}}
                         </div>
                       </div>
                       <div class="col-auto">

@@ -93,4 +93,7 @@ export class RegistroService {
         return this.postQuery(`datosUser/pedirCambioPassword`, payload);
     }
 
+    getNotifications(httpOptions: any){
+        return this.getQuery(`notifications`);
+    }
 }

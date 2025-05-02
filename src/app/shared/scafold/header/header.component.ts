@@ -10,6 +10,7 @@ import { RegistroService } from '../../services/registro.service';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Notificacion } from '../../interfaces/notificaciones.interface';
 import { NgxJdenticonModule } from "ngx-jdenticon";
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-header',
@@ -24,18 +25,20 @@ export class HeaderComponent {
   user: User = {} as User;
   app: AppPublic = {} as AppPublic;
   logedIn: boolean = false;
+  httpOptions: any;
   notificaciones: Notificacion[] = [
-    { titulo: 'Notificacion 1', mensaje: 'Mensaje de la notificacion 1 123123123123', badge: 'status-dot-animated bg-red' },
+    { titulo: 'Notificacion 1', mensaje: 'Mensaje de la notificacion 1', badge: 'status-dot-animated bg-red' },
     { titulo: 'Notificacion 2', mensaje: 'Mensaje de la notificacion 2', badge: 'badge badge-success' },
     { titulo: 'Notificacion 3', mensaje: 'Mensaje de la notificacion 3', badge: 'badge badge-warning' },
     { titulo: 'Notificacion 4', mensaje: 'Mensaje de la notificacion 4', badge: 'badge badge-info' },
     { titulo: 'Notificacion 5', mensaje: 'Mensaje de la notificacion 5', badge: 'status-dot-animated bg-green' }
   ];
+  notificacionRes: any;
   constructor(private readonly authService: AuthService,
     private readonly route: ActivatedRoute,
     private readonly ssoService: SsoService,
     private readonly themeService: ThemeService,
-    private pagosService: RegistroService,
+    private registroService: RegistroService,
     private router: Router
   ) {
     this.theme = this.themeService.getTheme();
@@ -48,11 +51,10 @@ export class HeaderComponent {
 
 
   ngOnInit() {
-    this.pagosService.getApp().subscribe(
+    this.registroService.getApp().subscribe(
       {
         next: (res: any) => {
           this.app = res
-
         },
         error: (err: any) => {
         }
@@ -61,10 +63,33 @@ export class HeaderComponent {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.logedIn = this.authService.isLoggedIn();
+        this.getNotifications();
       }
     });
   }
 
+  getNotifications(){
+    const token = this.authService.getAccessToken();
+    console.log("get sesión token");
+    console.log(token);
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+token,
+      })
+    };
+    this.registroService.getNotifications(this.httpOptions).subscribe(
+      {
+        next: (res: any) => {
+          this.notificacionRes = res.notifications.data;
+          console.log("this.notificacionRes");
+          console.log(this.notificacionRes);
+        },
+        error: (err: any) => {
+        }
+      }
+    );
+  }
 
   logout() {
     this.authService.logout();
