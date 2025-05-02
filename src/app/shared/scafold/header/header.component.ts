@@ -56,8 +56,6 @@ export class HeaderComponent {
         next: (res: any) => {
           this.app = res
         },
-        error: (err: any) => {
-        }
       }
     );
     this.router.events.subscribe(event => {
@@ -85,8 +83,6 @@ export class HeaderComponent {
           console.log("this.notificacionRes");
           console.log(this.notificacionRes);
         },
-        error: (err: any) => {
-        }
       }
     );
   }

@@ -138,17 +138,6 @@ export class ForgotPasswordComponent {
             confirmButtonColor: '#6a1c32',
             confirmButtonText: 'Aceptar',
           });
-
-        },
-        error: (err: { error: { message: any; }; }) => {
-          this.spinner.hide();
-          Swal.fire({
-            title: '¡Atención!',
-            text: err.error.message,
-            icon: 'error',
-            confirmButtonColor: '#6a1c32',
-            confirmButtonText: 'Aceptar',
-          });
         },
       }
     );

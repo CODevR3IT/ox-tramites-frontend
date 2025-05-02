@@ -13,22 +13,14 @@ export const httpErrorsInterceptor: HttpInterceptorFn = (req, next) => {
       if (err) {
         switch (err.status) {
           case 400:
-            let message = '';
-            if (Array.isArray(err.error.message)) {
-              err.error.message.forEach((value: string) => {
-                message += value;
-              });
-            } else {
-              message = err.error.message;
-            }
-            swalError(message);
+            swalError( err.error.msg + JSON.stringify(err.error.errores));
             break;
           case 401:
-            swalError(err.error.message);
+            swalError(err.error.msg);
             authService.logout();
             break;
           default:
-            swalError(err.error.message);
+            swalError(err.error.error || err.error.msg);
             break;
         }
       }

@@ -112,16 +112,6 @@ export class ValidacionComponent {
           });
           this.correoError = '';
         },
-        error: (err)=>  {
-          this.spinner.hide();
-          Swal.fire({
-            title: '¡Atención!',
-            text: err.error.message,
-            icon: 'error',
-            confirmButtonColor: '#6a1c32',
-            confirmButtonText: 'Aceptar',
-          });
-        },
       }
     );
   }
@@ -163,16 +153,6 @@ export class ValidacionComponent {
             password: '',
             codigo: '',
           };
-        },
-        error: (err)=>  {
-          this.spinner.hide();
-          Swal.fire({
-            title: '¡Atención!',
-            text: err.error.message,
-            icon: 'error',
-            confirmButtonColor: '#6a1c32',
-            confirmButtonText: 'Aceptar',
-          });
         },
       }
     );
@@ -241,16 +221,6 @@ export class ValidacionComponent {
             password: '',
             codigo: '',
           };
-        },
-        error: (err)=>  {
-          this.spinner.hide();
-          Swal.fire({
-            title: '¡Atención!',
-            text: err.error.message,
-            icon: 'error',
-            confirmButtonColor: '#6a1c32',
-            confirmButtonText: 'Aceptar',
-          });
         },
       }
     );

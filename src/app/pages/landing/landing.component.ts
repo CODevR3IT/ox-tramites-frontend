@@ -120,16 +120,6 @@ export class LandingComponent {
           this.catSexo = res;
           this.getCatPais();
         },
-        error: (err)=>  {
-          this.spinner.hide();
-          Swal.fire({
-            title: '¡Atención!',
-            text: err.error.message,
-            icon: 'error',
-            confirmButtonColor: '#6a1c32',
-            confirmButtonText: 'Aceptar',
-          });
-        },
       }
     );
   }
@@ -142,16 +132,6 @@ export class LandingComponent {
           this.catPais = res;
           this.getCatIde();
         },
-        error: (err)=>  {
-          this.spinner.hide();
-          Swal.fire({
-            title: '¡Atención!',
-            text: err.error.message,
-            icon: 'error',
-            confirmButtonColor: '#6a1c32',
-            confirmButtonText: 'Aceptar',
-          });
-        },
       }
     );
   }
@@ -163,16 +143,6 @@ export class LandingComponent {
           console.log(res);
           this.catIde = res;
           this.spinner.hide();
-        },
-        error: (err)=>  {
-          this.spinner.hide();
-          Swal.fire({
-            title: '¡Atención!',
-            text: err.error.message,
-            icon: 'error',
-            confirmButtonColor: '#6a1c32',
-            confirmButtonText: 'Aceptar',
-          });
         },
       }
     );
@@ -192,16 +162,6 @@ export class LandingComponent {
           let fechaDate: Date = parse(this.fechaN, 'dd/MM/yyyy', new Date());
           this.formData.fecha = format(fechaDate, 'yyyy-MM-dd');
         },
-        error: (err)=>  {
-          this.spinner.hide();
-          Swal.fire({
-            title: '¡Atención!',
-            text: err.error.message,
-            icon: 'error',
-            confirmButtonColor: '#6a1c32',
-            confirmButtonText: 'Aceptar',
-          });
-        },
       }
     );
   }
@@ -215,16 +175,6 @@ export class LandingComponent {
         next: (res:any)=>{
           console.log(res);
           this.arregloCP = res;
-        },
-        error: (err)=>  {
-          this.spinner.hide();
-          Swal.fire({
-            title: '¡Atención!',
-            text: err.error.message,
-            icon: 'error',
-            confirmButtonColor: '#6a1c32',
-            confirmButtonText: 'Aceptar',
-          });
         },
       }
     );
@@ -603,16 +553,6 @@ export class LandingComponent {
             }
           })
         },
-        error: (err)=>  {
-          this.spinner.hide();
-          Swal.fire({
-            title: '¡Atención!',
-            text: err.error.message,
-            icon: 'error',
-            confirmButtonColor: '#6a1c32',
-            confirmButtonText: 'Aceptar',
-          });
-        },
       }
     );
   }
@@ -664,16 +604,6 @@ export class LandingComponent {
               this.resetForm();
             }
           })
-        },
-        error: (err)=>  {
-          this.spinner.hide();
-          Swal.fire({
-            title: '¡Atención!',
-            text: err.error.message,
-            icon: 'error',
-            confirmButtonColor: '#6a1c32',
-            confirmButtonText: 'Aceptar',
-          });
         },
       }
     );
