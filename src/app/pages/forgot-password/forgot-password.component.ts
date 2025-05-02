@@ -65,7 +65,7 @@ export class ForgotPasswordComponent {
   }
 
   ngOnInit(){
-    this.spinner.show();
+    //this.spinner.show();
   }
 
   @HostListener('window:resize')
