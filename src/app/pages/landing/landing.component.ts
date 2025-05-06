@@ -193,6 +193,8 @@ export class LandingComponent {
     this.mensanjeValida = '';
     this.correoError = '';
     this.telefonoError = '';
+    this.passwordError = '';
+    this.passwordErrorB = '';
     if (this.validateStep() == 'z') {
       this.currentStep++;
     } else if(this.validateStep() !== 'z') {
@@ -340,13 +342,9 @@ export class LandingComponent {
         
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,12}$/;
 
-        if (!passwordRegex.test(this.formData.password)) {
-          case2 = 'j';
-        }
+        if (!passwordRegex.test(this.formData.password)) {case2 = 'j';}
 
-        if (!passwordRegex.test(this.formData.passwordB)) {
-          case2 = 'k';
-        }
+        if (!passwordRegex.test(this.formData.passwordB)) {case2 = 'k';}
 
         if((this.formData.password !== this.formData.passwordB) || (this.formData.password.trim() === '') || (this.formData.passwordB.trim() === undefined)){ case2 = 'i';}
         
