@@ -251,11 +251,17 @@
               <div class="col-lg-4 col-12 mb-3">
                 <label class="form-label">Contraseña</label>
                 <input [type]="showPassword ? 'text' : 'password'" class="form-control" name="example-text-input" placeholder="Crea una contraseña" [(ngModel)]="formData.password" #passwordInput/>
+                <div class="text-danger mt-1" *ngIf="passwordError">
+                  {{ passwordError }}
+                </div>
               </div>
     
               <div class="col-lg-4 col-12 mb-3">
                 <label class="form-label">Confirmar contraseña</label>
                 <input [type]="showPassword ? 'text' : 'password'" class="form-control" name="example-text-input" placeholder="Confirma tu contraseña" [(ngModel)]="formData.passwordB" #passwordBInput/>
+                <div class="text-danger mt-1" *ngIf="passwordErrorB">
+                  {{ passwordErrorB }}
+                </div>
               </div>
     
               <div class="col-lg-4 col-12 mb-3">

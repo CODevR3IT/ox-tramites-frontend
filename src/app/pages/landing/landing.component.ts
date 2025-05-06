@@ -59,6 +59,8 @@ export class LandingComponent {
   mensanjeValida:string = '';
   correoError: string = '';
   telefonoError: string = '';
+  passwordError: string = '';
+  passwordErrorB: string = '';
   file: any;
   activaUpload = true;
   formData: any = {
@@ -245,6 +247,16 @@ export class LandingComponent {
           setTimeout(() => this.passwordBInput.nativeElement.focus(), 0);
           this.mensanjeValida = 'Por favor completa la contraseña y verifique que las contraseñas coincidan antes de continuar.'
           break;
+        case 'j':
+          setTimeout(() => this.passwordInput.nativeElement.focus(), 0);
+          this.mensanjeValida = 'La contraseña debe tener entre 8 y 12 caracteres, incluir una mayúscula, una minúscula, un número y un símbolo.';  
+          this.passwordError = 'La contraseña debe tener entre 8 y 12 caracteres, incluir una mayúscula, una minúscula, un número y un símbolo.';
+          break;
+        case 'k':
+          setTimeout(() => this.passwordBInput.nativeElement.focus(), 0);
+          this.mensanjeValida = 'La contraseña debe tener entre 8 y 12 caracteres, incluir una mayúscula, una minúscula, un número y un símbolo.';  
+          this.passwordErrorB = 'La contraseña debe tener entre 8 y 12 caracteres, incluir una mayúscula, una minúscula, un número y un símbolo.';
+          break;
         case 'ext1':
           setTimeout(() => this.nacionalidadInput.nativeElement.focus(), 0);
           this.mensanjeValida = 'Por favor seleccione la nacionalidad antes de continuar.'
@@ -325,6 +337,17 @@ export class LandingComponent {
         return case1;
       case 2:
         let case2: string = 'z';
+        
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,12}$/;
+
+        if (!passwordRegex.test(this.formData.password)) {
+          case2 = 'j';
+        }
+
+        if (!passwordRegex.test(this.formData.passwordB)) {
+          case2 = 'k';
+        }
+
         if((this.formData.password !== this.formData.passwordB) || (this.formData.password.trim() === '') || (this.formData.passwordB.trim() === undefined)){ case2 = 'i';}
         
         return case2;
