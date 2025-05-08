@@ -58,6 +58,11 @@ export class HeaderComponent {
         },
       }
     );
+    this.logedIn = this.authService.isLoggedIn();
+    if(this.logedIn){
+      this.user = this.authService.getUser();
+      this.getNotifications();
+    }
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.logedIn = this.authService.isLoggedIn();
@@ -102,4 +107,5 @@ export class HeaderComponent {
     this.themeService.toggleDarkMode();
     this.theme = this.themeService.getTheme();
   }
+
 }

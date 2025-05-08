@@ -12,6 +12,11 @@
           }
         </a>
       </h1>
+      <div class="navbar-nav flex-row">
+        <div class="nav-item d-none d-md-flex" style="padding-top: 4px;">
+          <span style="font-size: medium;" class="d-none d-lg-block">{{app.tituloHeader}}, {{app.date}}</span>
+        </div>
+      </div>
       <div class="navbar-nav flex-row order-md-last">
         <div class="nav-item d-none d-md-flex me-3">
           <a href="javascript:void(0)" (click)="toggleTheme()" class="nav-link px-0" title="Enable dark mode"
@@ -22,6 +27,7 @@
               }"></i>
           </a>
         </div>
+        
         @if(logedIn){
         <div class="nav-item dropdown d-none d-md-flex me-3">
           <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Mostrar notificaciones">
@@ -94,11 +100,6 @@
           </div>
         </div>
         }
-        <div class="navbar-nav flex-row order-md-last">
-          <div class="nav-item d-none d-md-flex" style="padding-top: 4px;">
-            <span style="font-size: medium;" class="d-none d-lg-block">{{app.tituloHeader}}, {{app.date}}</span>
-          </div>
-        </div>
       </div>
     </div>
   </header>

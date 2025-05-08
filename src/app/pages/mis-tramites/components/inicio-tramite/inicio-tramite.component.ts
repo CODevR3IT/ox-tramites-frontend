@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MisTramitesService } from '../../mis-tramites.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { CamundaComponent, CamundaForm } from '../../../../shared/components/camunda-form/camunda-form.interface';
 import { CamundaFormComponent } from '../../../../shared/components/camunda-form/camunda-form.component';
 
@@ -18,19 +18,20 @@ export class InicioTramiteComponent {
 
   constructor(
     private readonly misTramitesService: MisTramitesService,
-    private route: ActivatedRoute,
+    private readonly activateRoute: ActivatedRoute,
+    private readonly router: Router
+
   ) { }
 
   ngOnInit(): void {
-    this.idTramite = this.route.snapshot.paramMap.get('id') || '';
+    this.idTramite = this.activateRoute.snapshot.paramMap.get('id') || '';
     this.misTramitesService.findStartForm(this.idTramite).subscribe((res: CamundaForm) => this.camundaComponents = res.components);
   }
 
   onSubmit(event: any): void {
-   /* console.log(event);
-    this.misTramitesService.startProcess(this.idTramite, event).subscribe((res: any) => {
-      console.log(res);
-    });*/
+    this.misTramitesService.definitionSubmitForm(this.idTramite, event).subscribe((res) => {
+      this.router.navigate(['/mis-tramites']);
+    });
   }
 
 }
