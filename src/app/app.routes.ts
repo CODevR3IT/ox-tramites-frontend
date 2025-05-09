@@ -37,6 +37,9 @@ export const routes: Routes = [
       { 
         path: 'cambio-pass', component: RestorePasswordComponent,
       },
+      { 
+        path: 'inicio-tramite/:id', component: InicioTramiteComponent, data: {breadcrumb: 'Inicio trámite'},
+      }
     ],
   },
 ];

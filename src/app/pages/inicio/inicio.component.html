@@ -1,3 +1,52 @@
+<div class="card mb-5" style="min-height: 60vh;">
+  <div class="card-status-top bg-primary"></div>
+  <div class="card-header">
+    <ul
+      class="nav nav-tabs card-header-tabs nav-fill"
+      data-bs-toggle="tabs"
+      role="tablist"
+    >
+      @for (navMenu of navMenus; track $index) {
+      <li class="nav-item" role="presentation">
+        <a
+          href="#{{ navMenu.id }}"
+          class="nav-link"
+          [ngClass]="{
+            active: navMenu.active,
+          }"
+          data-bs-toggle="tab"
+          aria-selected="true"
+          role="tab"
+        >
+          <i [ngClass]="navMenu.icon" class="icon me-2"></i>
+          {{ navMenu.title }}
+        </a>
+      </li>
+      }
+    </ul>
+  </div>
+  <div class="card-body">
+    <div class="tab-content">
+      <div class="tab-pane active show" id="difusion" role="tabpanel">
+        <h4>Difusión de trámites y servicios</h4>
+        <app-tramites-servicios></app-tramites-servicios>
+      </div>
+   
+      <div class="tab-pane" id="solicitud" role="tabpanel">
+        <h4>Solicitud de trámite</h4>
+        <app-mis-tramites></app-mis-tramites>
+      </div>
+      <div class="tab-pane" id="avance" role="tabpanel">
+        <h4>Avance de atención</h4>
+        <app-mis-expedientes></app-mis-expedientes>
+      </div>
+      <div class="tab-pane" id="citas" role="tabpanel">
+        <h4>Citas en línea</h4>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="card">
   <div class="card-status-top bg-primary"></div>
   <div class="card-body">
@@ -85,55 +134,4 @@
   </div>
 </div>
 
-<div class="card mt-5">
-  <div class="card-status-top bg-primary"></div>
-  <div class="card-header">
-    <ul
-      class="nav nav-tabs card-header-tabs nav-fill"
-      data-bs-toggle="tabs"
-      role="tablist"
-    >
-      @for (navMenu of navMenus; track $index) {
-      <li class="nav-item" role="presentation">
-        <a
-          href="#{{ navMenu.id }}"
-          class="nav-link"
-          [ngClass]="{
-            active: navMenu.active,
-          }"
-          data-bs-toggle="tab"
-          aria-selected="true"
-          role="tab"
-        >
-          <i [ngClass]="navMenu.icon" class="icon me-2"></i>
-          {{ navMenu.title }}
-        </a>
-      </li>
-      }
-    </ul>
-  </div>
-  <div class="card-body">
-    <div class="tab-content">
-      <div class="tab-pane active show" id="difusion" role="tabpanel">
-        <h4>Difusión de trámites y servicios</h4>
-        <div></div>
-      </div>
-      <div class="tab-pane" id="difusion" role="tabpanel">
-        <h4>Solicitud de trámite</h4>
-        <div></div>
-      </div>
-      <div class="tab-pane" id="solicitud" role="tabpanel">
-        <h4>Solicitud de trámite</h4>
-        <app-mis-tramites></app-mis-tramites>
-      </div>
-      <div class="tab-pane" id="avance" role="tabpanel">
-        <h4>Avance de atención</h4>
-        <div></div>
-      </div>
-      <div class="tab-pane" id="citas" role="tabpanel">
-        <h4>Citas en línea</h4>
-        <div></div>
-      </div>
-    </div>
-  </div>
-</div>
+

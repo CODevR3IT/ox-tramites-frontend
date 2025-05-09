@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { MisTramitesComponent } from '../mis-tramites/mis-tramites.component';
+import { TramitesServiciosComponent } from "../tramites-servicios/tramites-servicios.component";
+import { MisExpedientesComponent } from "../mis-expedientes/mis-expedientes.component";
 export interface NavMenu {
   title: string;
   icon: string;
@@ -13,7 +15,7 @@ export interface NavMenu {
 }
 @Component({
   selector: 'app-inicio',
-  imports: [CommonModule, NgbNavModule, MisTramitesComponent],
+  imports: [CommonModule, NgbNavModule, MisTramitesComponent, TramitesServiciosComponent, MisExpedientesComponent],
   templateUrl: './inicio.component.html',
 })
 export class InicioComponent {

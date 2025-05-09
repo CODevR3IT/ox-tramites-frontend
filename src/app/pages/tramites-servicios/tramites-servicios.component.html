@@ -37,26 +37,28 @@
         <ng-template>
           <div class="list-group list-group-flush list-group-hoverable">
             @for (tramite of categoria.tramites; track $index) {
-            <div class="list-group-item"  [routerLink]="'/inicio-tramite/' + tramite.id">
+            <div class="list-group-item">
               <div class="row align-items-center">
-                <div class="col-auto"><span class="badge bg-green"></span></div>
                 <div class="col-auto">
-                  <a href="#">
-                    <span class="avatar avatar-1">
-                      <img [src]="fileEndpoint + tramite.link_img" />
-                    </span>
-                  </a>
+                  <span class="avatar avatar-1">
+                    <img [src]="fileEndpoint + tramite.link_img" />
+                  </span>
                 </div>
                 <div class="col text-truncate">
-                    
-                    {{ tramite.tramite }}
+                  <a [href]="tramite.link_ayuda" target="_blank" class="text-reset d-block">
+                    {{ tramite.tramite }}</a
+                  >
                   <div class="d-block text-secondary text-truncate mt-n1">
                     {{ tramite.descripcion }}
                   </div>
                 </div>
                 <div class="col-auto">
-                  <a href="javascript:void(0)" class="list-group-item-actions"> 
-                    <i class="icon ti ti-external-link"></i>
+                  <a
+                    class="btn btn-icon list-group-item-actions"
+                    [href]="fileEndpoint + tramite.link_archivo"
+                    target="_blank"
+                  >
+                    <i class="icon ti ti-file"></i>
                   </a>
                 </div>
               </div>

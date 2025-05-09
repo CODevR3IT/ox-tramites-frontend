@@ -1,18 +1,16 @@
 import { Component } from '@angular/core';
-import { Categoria } from './interfaces/tramites.interface';
-import { MisTramitesService } from './mis-tramites.service';
-import { RouterLink } from '@angular/router';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { Categoria } from '../mis-tramites/interfaces/tramites.interface';
+import { MisTramitesService } from '../mis-tramites/mis-tramites.service';
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-mis-tramites',
-  standalone: true,
-  imports: [RouterLink, NgbAccordionModule],
-  templateUrl: './mis-tramites.component.html',
+  selector: 'app-tramites-servicios',
+  imports: [NgbAccordionModule],
+  templateUrl: './tramites-servicios.component.html',
   styles: ``
 })
-export class MisTramitesComponent {
+export class TramitesServiciosComponent {
   categorias: Categoria[] = [];
   fileEndpoint = environment.fileEndpoint + '/files/';
   constructor(
@@ -24,5 +22,4 @@ export class MisTramitesComponent {
       this.categorias = res;
     });
   }
-
 }
