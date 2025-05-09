@@ -29,7 +29,7 @@ export const routes: Routes = [
         path: 'login', component: LoginComponent,
       },
       { 
-        path: 'inicio', component: InicioComponent, data: {breadcrumb: 'Inicio'},
+        path: 'inicio', component: InicioComponent,
       },
       { 
         path: 'olvide-password', component: ForgotPasswordComponent,
@@ -37,12 +37,6 @@ export const routes: Routes = [
       { 
         path: 'cambio-pass', component: RestorePasswordComponent,
       },
-      { 
-        path: 'mis-tramites', component: MisTramitesComponent, data: {breadcrumb: 'Mis trámites'},
-      },
-      { 
-        path: 'inicio-tramite/:id', component: InicioTramiteComponent, data: {breadcrumb: 'Inicio trámite'},
-      }
     ],
   },
 ];

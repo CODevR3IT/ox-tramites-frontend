@@ -1,25 +1,30 @@
 import { transition, trigger, useAnimation } from '@angular/animations';
-import { Component, ElementRef, OnInit, ViewChild, HostListener } from '@angular/core';
-import { fadeInLeft } from 'ng-animate';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { RegistroService } from '../../shared/services/registro.service';
-import Swal from 'sweetalert2';
-import { NgxSpinnerService } from 'ngx-spinner';
 
+import { NgxSpinnerService } from 'ngx-spinner';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { MisTramitesComponent } from '../mis-tramites/mis-tramites.component';
+export interface NavMenu {
+  title: string;
+  icon: string;
+  id: string;
+  active: boolean;
+}
 @Component({
   selector: 'app-inicio',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, NgbNavModule, MisTramitesComponent],
   templateUrl: './inicio.component.html',
-  styleUrl: './inicio.component.scss',
-  animations: [
-    trigger('fadeInLeft', [transition('* => *', useAnimation(fadeInLeft))]),
-  ],
 })
 export class InicioComponent {
-  fadeInLeft: any;
+  // Variables para el menú
   isSmallScreen: boolean = false;
-
+  navMenus: NavMenu[] = [
+    { title: 'Difusión de trámites y servicios', icon: 'ti ti-ad-2', id: 'difusion', active: true },
+    { title: 'Solicitud de trámite', icon: 'ti ti-browser-plus', id: 'solicitud', active: false },
+    { title: 'Avance en atención', icon: 'ti ti-checkup-list', id: 'avance', active: false },
+    { title: 'Citas en línea', icon: 'ti ti-calendar-search', id: 'citas', active: false }
+  ]
   constructor(
     private spinner: NgxSpinnerService,
   ){

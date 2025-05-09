@@ -1,37 +1,78 @@
-<div class="page page-center">
-    <div class="card">
-
-        <div class="card-status-top bg-primary"></div>
-
-        <div class="card-body">
-            <div class="container py-5">
-                <h2 class="mb-4 text-center">Trámites</h2>
-                <div class="accordion" id="menuTramites">
-
-                    @for (categoria of categorias; track $index) {
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingIdentificacion">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseIdentificacion" aria-expanded="true">
-                                {{categoria.categoria}}
-                            </button>
-                        </h2>
-                        <div id="collapseIdentificacion" class="accordion-collapse collapse show"
-                            data-bs-parent="#menuTramites">
-                            <div class="accordion-body">
-                                <div class="d-grid gap-2">
-                                    @for (tramite of categoria.tramites; track $index) {
-                                    <button class="btn btn-outline-primary" [routerLink]="'/inicio-tramite/'+ tramite.id"> {{tramite.tramite}} </button>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    }
-
+<div class="mb-3">
+  <div class="input-icon">
+    <input
+      type="text"
+      value=""
+      class="form-control form-control-rounded"
+      placeholder="Buscar trámite"
+    />
+    <span class="input-icon-addon">
+      <!-- Download SVG icon from http://tabler.io/icons/icon/search -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="icon icon-1"
+      >
+        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+        <path d="M21 21l-6 -6"></path>
+      </svg>
+    </span>
+  </div>
+</div>
+<div ngbAccordion [closeOthers]="true">
+  @for (categoria of categorias; track $index) {
+  <div ngbAccordionItem>
+    <h2 ngbAccordionHeader>
+      <button ngbAccordionButton>{{ categoria.categoria }}</button>
+    </h2>
+    <div ngbAccordionCollapse>
+      <div ngbAccordionBody>
+        <ng-template>
+          <div class="list-group list-group-flush list-group-hoverable">
+            @for (tramite of categoria.tramites; track $index) {
+            <div class="list-group-item">
+              <div class="row align-items-center">
+                <div class="col-auto"><span class="badge bg-green"></span></div>
+                <div class="col-auto">
+                  <a href="#">
+                    <span
+                      class="avatar avatar-1"
+                      style="background-image: url({{ tramite.link_img }})"
+                    >
+                    </span>
+                  </a>
                 </div>
+                <div class="col text-truncate">
+                  <a
+                    [routerLink]="'/inicio-tramite/' + tramite.id"
+                    class="text-reset d-block"
+                  >
+                    {{ tramite.tramite }}</a
+                  >
+                  <div class="d-block text-secondary text-truncate mt-n1">
+                    {{ tramite.link_ayuda }}
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <a href="#" class="list-group-item-actions"
+                    >
+                   </a>
+                </div>
+              </div>
             </div>
-        </div>
 
+            }
+          </div>
+        </ng-template>
+      </div>
     </div>
+  </div>
+  }
 </div>

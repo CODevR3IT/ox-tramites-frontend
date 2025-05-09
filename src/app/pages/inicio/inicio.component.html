@@ -1,80 +1,139 @@
 <div class="card">
-    <div class="card-status-top bg-primary"></div>
-    <div class="card-body">
-      
-      <div id="carousel-sample" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carousel-sample" data-bs-slide-to="0"
-            class="active"></button>
-          <button type="button" data-bs-target="#carousel-sample"
-            data-bs-slide-to="1"></button>
-          <button type="button" data-bs-target="#carousel-sample"
-            data-bs-slide-to="2"></button>
-        </div>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img class="d-block w-100" alt="" src="/assets/imgs/pue-1.png" [ngClass]="isSmallScreen ? 'img-carrusel-celular' : 'img-carrusel'"/>
-            <div class="carousel-caption-background d-none d-md-block"></div>
-            <div class="carousel-caption d-none d-md-block text-start">
-              <h1>Visita Puebla</h1>
-              <p>Conoce todos los luagres que Puebla tiene preparado para ti...</p>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img class="d-block w-100" alt="" src="/assets/imgs/pue-2.png" [ngClass]="isSmallScreen ? 'img-carrusel-celular' : 'img-carrusel'"/>
-            <div class="carousel-caption-background d-none d-md-block"></div>
-            <div class="carousel-caption d-none d-md-block text-start">
-              <h1>¿Sabías que?</h1>
-              <p>Las 15 construcciones más asombrosas de Puebla.</p>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img class="d-block w-100" alt="" src="/assets/imgs/pue-3.png" [ngClass]="isSmallScreen ? 'img-carrusel-celular' : 'img-carrusel'"/>
-            <div class="carousel-caption-background d-none d-md-block"></div>
-            <div class="carousel-caption d-none d-md-block text-start">
-              <h1>No te vayas...</h1>
-              <p>Reserva ahora mismo cambia tu visita a Puebla...</p>
-            </div>
-          </div>
-        </div>
-        <a class="carousel-control-prev" data-bs-target="#carousel-sample"
-          role="button" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </a>
-        <a class="carousel-control-next" data-bs-target="#carousel-sample"
-          role="button" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </a>
+  <div class="card-status-top bg-primary"></div>
+  <div class="card-body">
+    <div id="carousel-sample" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button
+          type="button"
+          data-bs-target="#carousel-sample"
+          data-bs-slide-to="0"
+          class="active"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carousel-sample"
+          data-bs-slide-to="1"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carousel-sample"
+          data-bs-slide-to="2"
+        ></button>
       </div>
-
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img
+            class="d-block w-100"
+            alt=""
+            src="/assets/imgs/pue-1.png"
+            [ngClass]="isSmallScreen ? 'img-carrusel-celular' : 'img-carrusel'"
+          />
+          <div class="carousel-caption-background d-none d-md-block"></div>
+          <div class="carousel-caption d-none d-md-block text-start">
+            <h1>Visita Puebla</h1>
+            <p>
+              Conoce todos los luagres que Puebla tiene preparado para ti...
+            </p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img
+            class="d-block w-100"
+            alt=""
+            src="/assets/imgs/pue-2.png"
+            [ngClass]="isSmallScreen ? 'img-carrusel-celular' : 'img-carrusel'"
+          />
+          <div class="carousel-caption-background d-none d-md-block"></div>
+          <div class="carousel-caption d-none d-md-block text-start">
+            <h1>¿Sabías que?</h1>
+            <p>Las 15 construcciones más asombrosas de Puebla.</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img
+            class="d-block w-100"
+            alt=""
+            src="/assets/imgs/pue-3.png"
+            [ngClass]="isSmallScreen ? 'img-carrusel-celular' : 'img-carrusel'"
+          />
+          <div class="carousel-caption-background d-none d-md-block"></div>
+          <div class="carousel-caption d-none d-md-block text-start">
+            <h1>No te vayas...</h1>
+            <p>Reserva ahora mismo cambia tu visita a Puebla...</p>
+          </div>
+        </div>
+      </div>
+      <a
+        class="carousel-control-prev"
+        data-bs-target="#carousel-sample"
+        role="button"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </a>
+      <a
+        class="carousel-control-next"
+        data-bs-target="#carousel-sample"
+        role="button"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </a>
     </div>
-</div>
-
-<div class="row" style="margin-top: 3%;">
-  <div class="col-lg-4 col-12 mb-3" style="padding-left: 2!important; padding-right: 2!important;">
-    <a routerLink="#" style="text-decoration: none; cursor: pointer;">
-      <div class="card card-servicios" style="height: 120px; text-align: center;">
-          <h6 class="card-title" style="margin: auto;"><b>Servicios</b></h6>
-      </div>
-    </a>
-  </div>
-  <div class="col-lg-4 col-12 mb-3" style="padding-left: 2!important; padding-right: 2!important;">
-    <a routerLink="#" style="text-decoration: none; cursor: pointer;">
-      <div class="card card-pagos" style="height: 120px; text-align: center;">
-          <h6 class="card-title" style="margin: auto;"><b>Pagos</b></h6>
-      </div>
-    </a>
-  </div>
-  <div class="col-lg-4 col-12 mb-3" style="padding-left: 2!important; padding-right: 2!important;">
-    <a routerLink="#" style="text-decoration: none; cursor: pointer;">
-      <div class="card card-boletas" style="height: 120px; text-align: center;">
-          <h6 class="card-title" style="margin: auto;"><b>Boletas</b></h6>
-      </div>
-    </a>
   </div>
 </div>
 
-
-
+<div class="card mt-5">
+  <div class="card-status-top bg-primary"></div>
+  <div class="card-header">
+    <ul
+      class="nav nav-tabs card-header-tabs nav-fill"
+      data-bs-toggle="tabs"
+      role="tablist"
+    >
+      @for (navMenu of navMenus; track $index) {
+      <li class="nav-item" role="presentation">
+        <a
+          href="#{{ navMenu.id }}"
+          class="nav-link"
+          [ngClass]="{
+            active: navMenu.active,
+          }"
+          data-bs-toggle="tab"
+          aria-selected="true"
+          role="tab"
+        >
+          <i [ngClass]="navMenu.icon" class="icon me-2"></i>
+          {{ navMenu.title }}
+        </a>
+      </li>
+      }
+    </ul>
+  </div>
+  <div class="card-body">
+    <div class="tab-content">
+      <div class="tab-pane active show" id="difusion" role="tabpanel">
+        <h4>Difusión de trámites y servicios</h4>
+        <div></div>
+      </div>
+      <div class="tab-pane" id="difusion" role="tabpanel">
+        <h4>Solicitud de trámite</h4>
+        <div></div>
+      </div>
+      <div class="tab-pane" id="solicitud" role="tabpanel">
+        <h4>Solicitud de trámite</h4>
+        <app-mis-tramites></app-mis-tramites>
+      </div>
+      <div class="tab-pane" id="avance" role="tabpanel">
+        <h4>Avance de atención</h4>
+        <div></div>
+      </div>
+      <div class="tab-pane" id="citas" role="tabpanel">
+        <h4>Citas en línea</h4>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>
