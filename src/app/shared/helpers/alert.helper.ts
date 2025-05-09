@@ -13,7 +13,7 @@ export const responseAlertSuccess = () => {
   return (response: ResponseMessage) => {
     swal.fire({
       title: 'Correcto',
-      text: response.message,
+      text: response.msg,
       icon: 'success',
       confirmButtonText: 'Aceptar',
     });

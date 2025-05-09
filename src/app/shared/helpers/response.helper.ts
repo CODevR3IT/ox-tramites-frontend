@@ -14,7 +14,7 @@ export const responseSuccess = () => {
     return (response: ResponseMessage) => {
         return swal.fire({
             title: 'Correcto',
-            text: response.message,
+            text: response.msg,
             icon: 'success',
             confirmButtonText: 'Cerrar'
         });

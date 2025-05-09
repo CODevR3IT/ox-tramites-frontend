@@ -1,1 +1,36 @@
-<p>mis-expedientes works!</p>
+<div class="table-responsive">
+    <table class="table card-table table-vcenter text-nowrap datatable">
+        <thead>
+            <tr>
+                <th></th>
+                <th><button class="table-sort" (click)="sort('')">Folio</button></th>
+                <th><button class="table-sort" (click)="sort('')">Trámite</button></th>
+                <th><button class="table-sort" (click)="sort('')">Fecha Alta</button></th>
+                <th><button class="table-sort" (click)="sort('')">Estado Actual</button></th>
+                <th><button class="table-sort" (click)="sort('')">Fecha Act.</button></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (expediente of paginationData.data; track $index) {
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-icon"><i class="ti ti-eye"></i></button>
+                </td>
+                <td>{{expediente.id}}</td>
+                <td>{{expediente.tramite.tramite}}</td>
+                <td>{{expediente.created_at | date: 'd/M/y HH:mm'}}</td>
+                <td>{{expediente.tarea.tarea}}</td>
+                <td>{{expediente.updated_at| date: 'd/M/y HH:mm'}}</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<p class="m-0 text-secondary mt-5 mb-5">
+    Mostrando <span> {{ paginationQuery.page }}</span> -
+    <span> {{ paginationData.last_page }} </span> de
+    <span> {{ paginationData.total }} </span> entradas
+</p>
+<ngb-pagination class="m-0 ms-auto" [(page)]="paginationQuery.page" (pageChange)="getData()"
+    [pageSize]="paginationQuery.limit || 10" [boundaryLinks]="true" [collectionSize]="paginationData.total"
+    [ellipses]="false" [rotate]="true" [maxSize]="5" />
