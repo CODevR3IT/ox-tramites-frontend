@@ -23,7 +23,9 @@
                 </div>
                 <div class="col-lg-2 col-12 mb-3">
                     <label class="form-label" *ngIf="!isSmallScreen" style="color: transparent; margin-bottom: 16px!important;">.</label>
-                    <a (click)="olvidePass(0)" style="padding-top: 5px;">Olvidé mi constraseña</a>
+                    <button type="button" class="custom-botones-recuperacion">
+                        <a routerLink="/olvide-password">Olvidé mi contraseña</a>
+                    </button>
                 </div>
             </div>
 

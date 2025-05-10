@@ -24,23 +24,27 @@ import { ThemeService } from '../../shared/services/theme.service';
 })
 export class LandingComponent {
   @ViewChild('nombreInput') nombreInput!: ElementRef;
-  @ViewChild('appatInput') appatInput!: ElementRef
-  @ViewChild('apMaterno') apMaterno!: ElementRef
+  @ViewChild('appatInput') appatInput!: ElementRef;
+  @ViewChild('apMaterno') apMaterno!: ElementRef;
   @ViewChild('sexoInput') sexoInput!: ElementRef;
-  @ViewChild('fechaInput') fechaInput!: ElementRef
-  @ViewChild('cpInput') cpInput!: ElementRef
-  @ViewChild('coloniaInput') coloniaInput!: ElementRef
-  @ViewChild('estadoInput') estadoInput!: ElementRef
-  @ViewChild('municipioInput') municipioInput!: ElementRef
-  @ViewChild('correoInput') correoInput!: ElementRef
-  @ViewChild('correoBInput') correoBInput!: ElementRef
-  @ViewChild('telefonoInput') telefonoInput!: ElementRef
-  @ViewChild('passwordInput') passwordInput!: ElementRef
-  @ViewChild('telefonoBInput') telefonoBInput!: ElementRef
-  @ViewChild('passwordBInput') passwordBInput!: ElementRef
-  @ViewChild('nacionalidadInput') nacionalidadInput!: ElementRef
-  @ViewChild('identificaInput') identificaInput!: ElementRef
-  
+  @ViewChild('fechaInput') fechaInput!: ElementRef;
+  @ViewChild('cpInput') cpInput!: ElementRef;
+  @ViewChild('coloniaInput') coloniaInput!: ElementRef;
+  @ViewChild('estadoInput') estadoInput!: ElementRef;
+  @ViewChild('municipioInput') municipioInput!: ElementRef;
+  @ViewChild('correoInput') correoInput!: ElementRef;
+  @ViewChild('correoBInput') correoBInput!: ElementRef;
+  @ViewChild('telefonoInput') telefonoInput!: ElementRef;
+  @ViewChild('passwordInput') passwordInput!: ElementRef;
+  @ViewChild('telefonoBInput') telefonoBInput!: ElementRef;
+  @ViewChild('passwordBInput') passwordBInput!: ElementRef;
+  @ViewChild('nacionalidadInput') nacionalidadInput!: ElementRef;
+  @ViewChild('identificaInput') identificaInput!: ElementRef;
+  @ViewChild('rfcInput') rfcInput!: ElementRef;
+  @ViewChild('numNotInput') numNotInput!: ElementRef;
+  @ViewChild('claveNotInput') claveNotInput!: ElementRef;
+  @ViewChild('calleInput') calleInput!: ElementRef;
+  @ViewChild('caracterInput') caracterInput!: ElementRef;
 
   payload:any = {};
   catSexo: any;
@@ -52,6 +56,7 @@ export class LandingComponent {
   steps: string[] = ["Inicio", "Detalles", "Confirmación", "Finalizado"];
   currentStep: number = 0;
   existeCURP: boolean = true;
+  existeNotario: boolean = true;
   existeConfirma: boolean = true;
   existeOtro: boolean = false;
   arregloCP: any;
@@ -71,6 +76,9 @@ export class LandingComponent {
     sexo: '',
     fecha: '',
     colonia: '',
+    calle: '',
+    exterior: '',
+    interior: '',
     correo: '',
     password: '',
     telefono: '',
@@ -83,6 +91,10 @@ export class LandingComponent {
     especifique: '',
     archivo: '',
     observacion: '',
+    numNot: '',
+    claveNot: '',
+    rfc: '',
+    caracter: '',
   };
   event: any;
   password: string = '';
@@ -259,6 +271,26 @@ export class LandingComponent {
           this.mensanjeValida = 'La contraseña debe tener entre 8 y 12 caracteres, incluir una mayúscula, una minúscula, un número y un símbolo.';  
           this.passwordErrorB = 'La contraseña debe tener entre 8 y 12 caracteres, incluir una mayúscula, una minúscula, un número y un símbolo.';
           break;
+        case 'l':
+          setTimeout(() => this.calleInput.nativeElement.focus(), 0);
+          this.mensanjeValida = 'Por favor completa la calle antes de continuar.'
+          break;
+        case 'not1':
+          setTimeout(() => this.rfcInput.nativeElement.focus(), 0);
+          this.mensanjeValida = 'Por favor completa el RFC antes de continuar.'
+          break;
+        case 'not2':
+          setTimeout(() => this.numNotInput.nativeElement.focus(), 0);
+          this.mensanjeValida = 'Por favor completa el no. de notario antes de continuar.'
+          break;
+        case 'not3':
+          setTimeout(() => this.claveNotInput.nativeElement.focus(), 0);
+          this.mensanjeValida = 'Por favor completa la clave de notario antes de continuar.'
+          break;
+        case 'not4':
+          setTimeout(() => this.caracterInput.nativeElement.focus(), 0);
+          this.mensanjeValida = 'Por favor completa el caracter de notario antes de continuar.'
+          break;
         case 'ext1':
           setTimeout(() => this.nacionalidadInput.nativeElement.focus(), 0);
           this.mensanjeValida = 'Por favor seleccione la nacionalidad antes de continuar.'
@@ -321,7 +353,15 @@ export class LandingComponent {
         if(this.existeCURP){
           if(this.payload.cp === undefined){ case0 = 'e';}
           else if(this.formData.colonia === ''){ case0 = 'f';}
+          else if(this.formData.calle === ''){ case0 = 'l';}
           console.log("ACA EL SI EXISTE");
+          if(!this.existeNotario){
+            if(this.formData.rfc === ''){ case0 = 'not1';}
+            else if(this.formData.numNot === ''){ case0 = 'not2';}
+            else if(this.formData.claveNot === ''){ case0 = 'not3';}
+            else if(this.formData.caracter === ''){ case0 = 'not4';}
+            console.log("ACA EL SI EXISTE NOT");
+          }
         }else if(!this.existeCURP){
           console.log("ACA EL NO EXISTE");
           if(this.formData.nacionalidad === ''){ case0 = 'ext1';}
@@ -483,14 +523,17 @@ export class LandingComponent {
   
   resetForm() {
     this.formData = {
-      curp: '', nombre: '', detalles: '', apPaterno: '', apMaterno: '', sexo: '', fecha: '', colonia: '', correo: '', password: '', telefono: '',
-      correoB: '', passwordB: '', telefonoB: '', confirmado: false, nacionalidad: '', identifica: '', archivo: '', especifique: '', observacion: ''
+      curp: '', nombre: '', detalles: '', apPaterno: '', apMaterno: '', sexo: '', fecha: '', colonia: '', calle: '',
+      exterior: '', interior: '', correo: '', password: '', telefono: '', correoB: '', passwordB: '', telefonoB: '',
+      confirmado: false, nacionalidad: '', identifica: '', archivo: '', especifique: '', observacion: '', numNot: '', 
+      claveNot: '', rfc: '', caracter: '',
     };
     this.payload = {};
     this.arregloCP = '';
     this.currentStep = 0;
     this.existeConfirma = true;
     this.existeOtro = false;
+    this.existeNotario = true;
     console.log(this.formData);
     console.log(this.payload);
   }
@@ -498,6 +541,11 @@ export class LandingComponent {
   muestraCURP(e: any){
     this.existeCURP = (e.target.checked ? false:true);
     this.resetForm();
+  }
+
+  muestraNotario(e: any){
+    this.existeNotario = (e.target.checked ? false:true);
+    console.log(this.existeNotario);
   }
 
   confirma(e: any){
@@ -509,6 +557,7 @@ export class LandingComponent {
     this.formData.coloniaB = this.formData.colonia.colonia; 
     this.formData.estado = this.formData.colonia.estado;
     this.formData.municipio = this.formData.colonia.municipio;
+    this.payload.idCp = this.formData.colonia.id;
   }
 
   campoOtro(){
@@ -545,9 +594,12 @@ export class LandingComponent {
       "nombre": this.formData.nombre,
       "primer_apellido": this.formData.apPaterno,
       "segundo_apellido": this.formData.apMaterno,
-      "cp_id": this.payload.cp,
+      "cp_id": this.payload.idCp,
       "fecha_nacimiento":  fechaNacimiento,
       "sexo": this.formData.sexo,
+      "calle": this.formData.calle,
+      "num_ext": this.formData.exterior,
+      "num_int": this.formData.interior,
     }
     console.log(JSON.stringify(this.query));
     //return;
@@ -604,6 +656,63 @@ export class LandingComponent {
     console.log(JSON.stringify(this.query));
     //return;
     this.registroService.guardarExtranjero(this.query).subscribe(
+      {
+        next: (res:any)=>{
+          this.spinner.hide();
+          console.log("GUARDADO");
+          console.log(res);
+          Swal.fire({
+            title: '¡ATENCIÓN!',
+            text: res.msg,
+            icon: 'success',
+            confirmButtonColor: '#9f2241',
+            confirmButtonText: 'Aceptar',
+            customClass: {
+              actions: 'my-actions',
+              confirmButton: 'order-2',
+            }
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.existeCURP = true;
+              this.resetForm();
+            }
+          })
+        },
+      }
+    );
+  }
+
+  guardarNotario(){
+    console.log("this.formData");
+    console.log(this.formData);
+    this.spinner.show();
+    const fechaN = parse(this.formData.fecha, 'yyyy-MM-dd', new Date()); // Esto evita que el constructor de Date aplique la conversión por zona horaria, más seguro
+
+    const fechaNacimiento = format(fechaN, 'dd/MM/yyyy'); // Formato deseado
+    console.log(fechaNacimiento); // "29/06/1990" le quitaba un dia por la zona horaria.
+
+    this.query = {
+      "curp" : this.payload.curp,
+      "email": this.formData.correo,
+      "password": this.formData.password,
+      "telefono": this.formData.telefono,
+      "nombre": this.formData.nombre,
+      "primer_apellido": this.formData.apPaterno,
+      "segundo_apellido": this.formData.apMaterno,
+      "cp_id": this.payload.idCp,
+      "fecha_nacimiento":  fechaNacimiento,
+      "sexo": this.formData.sexo,
+      "calle": this.formData.calle,
+      "num_ext": this.formData.exterior,
+      "num_int": this.formData.interior,
+      "num_notaria": this.formData.numNot,
+      "clave_notario": this.formData.claveNot,
+      "rfc": this.formData.rfc,
+      "caracter": this.formData.caracter,
+    }
+    console.log(JSON.stringify(this.query));
+    //return;
+    this.registroService.guardarNotario(this.query).subscribe(
       {
         next: (res:any)=>{
           this.spinner.hide();

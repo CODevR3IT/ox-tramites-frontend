@@ -2,17 +2,16 @@
   <div class="card-status-top bg-primary"></div>
   <div class="card-body">
     <h3 class="titulo-pagina card-title text-center">Registro ciudadano</h3>
-    
+
     <div class="container mt-5">
       <div class="steps d-flex">
-        <div *ngFor="let step of steps; let i = index" 
-             class="step-item"
-             [ngClass]="{'active': i === currentStep, 'completed': i < currentStep}">
+        <div *ngFor="let step of steps; let i = index" class="step-item"
+          [ngClass]="{'active': i === currentStep, 'completed': i < currentStep}">
           <div class="step-marker">{{ i + 1 }}</div>
           <div class="step-content">{{ step }}</div>
         </div>
       </div>
-    
+
       <div class="mt-4">
         <!-- Contenido dinámico de cada paso -->
         <!-- ++++++ -->
@@ -20,14 +19,15 @@
         <!-- ++++++ -->
         <div *ngIf="currentStep === 0">
           <div class="offset-1 col-10" id="prueba1">
-        
+
             <h4 class="subtitulo-pagina">Registro de datos de usuario</h4>
-            
+
             <div class="row">
               @if(existeCURP){
               <div class="col-lg-4 col-8 mb-3">
                 <label class="form-label">CURP</label>
-                <input type="text" class="form-control" name="example-text-input" maxlength="18" placeholder="Ingresa tu CURP" [(ngModel)]="payload.curp"/>
+                <input type="text" class="form-control" name="example-text-input" maxlength="18"
+                  placeholder="Ingresa tu CURP" [(ngModel)]="payload.curp" />
               </div>
               <div class="col-lg-4 col-4 mb-3">
                 <label class="form-label" style="color: transparent;">.</label>
@@ -42,132 +42,199 @@
                 </label>
               </div>
             </div>
-            
+
             <div class="row">
-    
+
               <div class="col-lg-4 col-12 mb-3">
                 <label class="form-label">Nombre(s)</label>
-                <input type="text" class="form-control" name="example-text-input" [disabled]="existeCURP" placeholder="Ingresa tu nombre" [(ngModel)]="formData.nombre" #nombreInput/>
+                <input type="text" class="form-control" name="example-text-input" [disabled]="existeCURP"
+                  placeholder="Ingresa tu nombre" [(ngModel)]="formData.nombre" #nombreInput />
               </div>
-      
+
               <div class="col-lg-4 col-12 mb-3">
                 <label class="form-label">Apellido paterno</label>
-                <input type="text" class="form-control" name="example-text-input" [disabled]="existeCURP" placeholder="Ingresa tu apellido paterno" [(ngModel)]="formData.apPaterno" #appatInput/>
+                <input type="text" class="form-control" name="example-text-input" [disabled]="existeCURP"
+                  placeholder="Ingresa tu apellido paterno" [(ngModel)]="formData.apPaterno" #appatInput />
               </div>
-      
+
               <div class="col-lg-4 col-12 mb-3">
                 <label class="form-label">Apellido materno</label>
-                <input type="text" class="form-control" name="example-text-input" [disabled]="existeCURP" placeholder="Ingresa tu apellido materno" [(ngModel)]="formData.apMaterno"/>
+                <input type="text" class="form-control" name="example-text-input" [disabled]="existeCURP"
+                  placeholder="Ingresa tu apellido materno" [(ngModel)]="formData.apMaterno" />
               </div>
               <div *ngIf="existeCURP" class="col-lg-4 col-12 mb-3">
                 <label class="form-label">Sexo</label>
-                <input type="text" class="form-control" name="example-text-input" [disabled]="existeCURP" placeholder="Ingresa el sexo" [(ngModel)]="formData.sexo"/>
+                <input type="text" class="form-control" name="example-text-input" [disabled]="existeCURP"
+                  placeholder="Ingresa el sexo" [(ngModel)]="formData.sexo" />
               </div>
-              <div *ngIf="!existeCURP" class="col-lg-4 col-6 mb-3">
+              <div *ngIf="!existeCURP" class="col-lg-4 col-12 mb-3">
                 <label class="form-label">Sexo</label>
-                <select class="form-select" name="opcion" id="exampleFormControlInput9"
-                  [(ngModel)]="formData.sexo" required #sexo="ngModel" #sexoInput
-                  [class.is-invalid]="sexo.invalid && (sexo.dirty || sexo.touched)">
-                    @for (sexo of catSexo; track $index) {
-                      <option [ngValue]="sexo">{{sexo.sexo}}</option>
-                    }
+                <select class="form-select" name="opcion" id="exampleFormControlInput9" [(ngModel)]="formData.sexo"
+                  required #sexo="ngModel" #sexoInput [class.is-invalid]="sexo.invalid && (sexo.dirty || sexo.touched)">
+                  @for (sexo of catSexo; track $index) {
+                  <option [ngValue]="sexo">{{sexo.sexo}}</option>
+                  }
                 </select>
               </div>
-      
+
               <div class="col-lg-4 col-6 mb-3">
                 <label class="form-label">Fecha de nacimiento</label>
-                <input type="date" class="form-control" name="example-text-input" [disabled]="existeCURP" placeholder="Ingresa tu fecha de nacimiento"
-                  [(ngModel)]="formData.fecha" #fechaInput (change)="setDate()"/>
+                <input type="date" class="form-control" name="example-text-input" [disabled]="existeCURP"
+                  placeholder="Ingresa tu fecha de nacimiento" [(ngModel)]="formData.fecha" #fechaInput
+                  (change)="setDate()" />
               </div>
 
             </div>
-            
-            @if(existeCURP){
-              <!-- CP -->
-              <div class="row">
-                <div class="col-lg-4 col-8 mb-3">
-                  <label class="form-label">Código postal</label>
-                  <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu código postal" [(ngModel)]="payload.cp" #cpInput/>
-                </div>
-                <div class="col-lg-4 col-4 mb-3">
-                  <label class="form-label" style="color: transparent;">.</label>
-                  <button class="btn btn-primary" (click)="getCP()">Obtener</button>
-                </div>
-              </div>
-            
-              <!-- Estado, municipio y colonia -->
-              <div class="row">
-                <div class="col-lg-4 col-12 mb-3">
-                  <label class="form-label">Colonia</label>
-                  <select class="form-select" name="opcion" id="exampleFormControlInput9"
-                    [(ngModel)]="formData.colonia" required #colonia="ngModel" #coloniaInput
-                    [class.is-invalid]="colonia.invalid && (colonia.dirty || colonia.touched)"
-                    (change)="verData()">
-                      @for (direccion of arregloCP; track $index) {
-                        <option [ngValue]="direccion">{{direccion.colonia}}</option>
-                      }
-                  </select>
-                </div>
 
-                <div class="col-lg-4 col-12 mb-3">
-                  <label class="form-label">Estado</label>
-                  <input type="text" class="form-control" name="example-text-input" [disabled]="true" placeholder="Ingresa tu estado" placeholder="" [(ngModel)]="formData.estado" #estadoInput/>
-                </div>
-      
-                <div class="col-lg-4 col-12 mb-3">
-                  <label class="form-label">Municipio</label>
-                  <input type="text" class="form-control" name="example-text-input" [disabled]="true" placeholder="Ingresa tu municipio" [(ngModel)]="formData.municipio" #municipioInput/>
-                </div>
+            <div class="row">
+              <div class="col-lg-4 col-6 mb-3" [ngClass]="{'lg-12': !existeNotario}">
+                <label class="form-label" *ngIf="!isSmallScreen" style="color: transparent;">.</label>
+                <label class="form-check" style="padding-top: 10px;">
+                  <input class="form-check-input" type="checkbox" (click)="muestraNotario($event)" />
+                  <span class="form-check-label">¿Eres notario?</span>
+                </label>
               </div>
+              @if(!existeNotario){
+              <div class="col-lg-4 col-6 mb-3">
+                <label class="form-label">RFC</label>
+                <input type="text" class="form-control" name="example-text-input" maxlength="13"
+                  placeholder="Ingresa tu RFC" [(ngModel)]="formData.rfc" #rfcInput/>
+              </div>
+              }
+            </div>
+
+            @if(existeCURP){
+            <div class="row">
+              @if(!existeNotario){
+              <div class="col-lg-4 col-12 mb-3">
+                <label class="form-label">Caracter</label>
+                <input type="text" class="form-control" name="example-text-input" maxlength="13"
+                  placeholder="Ingresa el caracter" [(ngModel)]="formData.caracter" #caracterInput/>
+              </div>
+              <div class="col-lg-4 col-12 mb-3">
+                <label class="form-label">No. notario</label>
+                <input type="text" class="form-control" name="example-text-input" maxlength="5"
+                  placeholder="Ingresa tu no. de notario" [(ngModel)]="formData.numNot" #numNotInput/>
+              </div>
+              <div class="col-lg-4 col-12 mb-3">
+                <label class="form-label">Clave</label>
+                <input type="text" class="form-control" name="example-text-input" maxlength="5"
+                  placeholder="Ingresa tu clave de notario" [(ngModel)]="formData.claveNot" #claveNotInput/>
+              </div>
+              }
+            </div>
+
+            <!-- CP -->
+            <div class="row">
+              <div class="col-lg-4 col-8 mb-3">
+                <label class="form-label">Código postal</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu código postal"
+                  [(ngModel)]="payload.cp" #cpInput />
+              </div>
+              <div class="col-lg-4 col-4 mb-3">
+                <label class="form-label" style="color: transparent;">.</label>
+                <button class="btn btn-primary" (click)="getCP()">Obtener</button>
+              </div>
+            </div>
+
+            <!-- Calle, No Ext, No Int -->
+            <div class="row">
+              <div class="col-lg-4 col-12 mb-3">
+                <label class="form-label">Calle</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu calle"
+                  placeholder="" [(ngModel)]="formData.calle" #calleInput />
+              </div>
+
+              <div class="col-lg-4 col-12 mb-3">
+                <label class="form-label">No. exterior</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu No. exterior"
+                  placeholder="" [(ngModel)]="formData.exterior" #exteriorInput />
+              </div>
+
+              <div class="col-lg-4 col-12 mb-3">
+                <label class="form-label">No. interior</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu No. interior"
+                  [(ngModel)]="formData.interior" #interiorInput />
+              </div>
+            </div>
+
+            <!-- Estado, municipio y colonia -->
+            <div class="row">
+              <div class="col-lg-4 col-12 mb-3">
+                <label class="form-label">Colonia</label>
+                <select class="form-select" name="opcion" id="exampleFormControlInput9" [(ngModel)]="formData.colonia"
+                  required #colonia="ngModel" #coloniaInput
+                  [class.is-invalid]="colonia.invalid && (colonia.dirty || colonia.touched)" (change)="verData()">
+                  @for (direccion of arregloCP; track $index) {
+                  <option [ngValue]="direccion">{{direccion.colonia}}</option>
+                  }
+                </select>
+              </div>
+
+              <div class="col-lg-4 col-12 mb-3">
+                <label class="form-label">Estado</label>
+                <input type="text" class="form-control" name="example-text-input" [disabled]="true"
+                  placeholder="Ingresa tu estado" placeholder="" [(ngModel)]="formData.estado" #estadoInput />
+              </div>
+
+              <div class="col-lg-4 col-12 mb-3">
+                <label class="form-label">Municipio</label>
+                <input type="text" class="form-control" name="example-text-input" [disabled]="true"
+                  placeholder="Ingresa tu municipio" [(ngModel)]="formData.municipio" #municipioInput />
+              </div>
+            </div>
             }
             @if(!existeCURP){
-              <div class="row">
-                
-                <div class="col-lg-4 col-12 mb-3">
-                  <label class="form-label">Nacionalidad</label>
-                  <select class="form-select" name="opcion" id="exampleFormControlInput9"
-                    [(ngModel)]="formData.nacionalidad" required #nacionalidad="ngModel" #nacionalidadInput
-                    [class.is-invalid]="nacionalidad.invalid && (nacionalidad.dirty || nacionalidad.touched)">
-                      @for (pais of catPais; track $index) {
-                        <option [ngValue]="pais.id">{{pais.pais}}</option>
-                      }
-                  </select>
-                </div>
+            <div class="row">
 
-                <div class="col-lg-4 col-12 mb-3">
-                  <label class="form-label">Identificación</label>
-                  <select class="form-select" name="opcion" id="exampleFormControlInput9"
-                    [(ngModel)]="formData.identifica" required #identifica="ngModel" #identificaInput
-                    [class.is-invalid]="identifica.invalid && (identifica.dirty || identifica.touched)"
-                    (change)="campoOtro()">
-                      @for (identificacion of catIde; track $index) {
-                        <option [ngValue]="identificacion.id">{{identificacion.identificacion}}</option>
-                      }
-                  </select>
-                </div>
-
-                <div class="col-lg-4 col-12 mb-3">
-                  @if(existeOtro){
-                    <label class="form-label">Especifique el documento adjuntado</label>
-                    <input type="text" class="form-control" name="example-text-input" placeholder="Especifique el documento" [(ngModel)]="formData.especifique" #especifiqueInput />
+              <div class="col-lg-4 col-12 mb-3">
+                <label class="form-label">Nacionalidad</label>
+                <select class="form-select" name="opcion" id="exampleFormControlInput9"
+                  [(ngModel)]="formData.nacionalidad" required #nacionalidad="ngModel" #nacionalidadInput
+                  [class.is-invalid]="nacionalidad.invalid && (nacionalidad.dirty || nacionalidad.touched)">
+                  @for (pais of catPais; track $index) {
+                  <option [ngValue]="pais.id">{{pais.pais}}</option>
                   }
-                </div>
-                
+                </select>
               </div>
-              
-              <div class="row">
-                <div class="col-lg-4 col-12 mb-3">
-                  <div class="custom-file-upload text-center" style="padding-top: 10px;">
-                    <label for="fileInput">📁 Subir archivo</label>
-                    <input id="fileInput" name="file" type="file" accept=".pdf" (change)="convertirArchivoBase64($event)" />
-                    <small *ngIf="formData.archivo" class="text-success">Archivo listo</small>
-                  </div>
-                  <div class="dz-message text-center">
-                    <span class="dropzone-msg-desc" style="font-size: 10px; color: gray; font-weight: 500;">Peso no mayor a 5 MB, sólo formato PDF</span>
-                  </div>
+
+              <div class="col-lg-4 col-12 mb-3">
+                <label class="form-label">Identificación</label>
+                <select class="form-select" name="opcion" id="exampleFormControlInput9"
+                  [(ngModel)]="formData.identifica" required #identifica="ngModel" #identificaInput
+                  [class.is-invalid]="identifica.invalid && (identifica.dirty || identifica.touched)"
+                  (change)="campoOtro()">
+                  @for (identificacion of catIde; track $index) {
+                  <option [ngValue]="identificacion.id">{{identificacion.identificacion}}</option>
+                  }
+                </select>
+              </div>
+
+              <div class="col-lg-4 col-12 mb-3">
+                @if(existeOtro){
+                <label class="form-label">Especifique el documento adjuntado</label>
+                <input type="text" class="form-control" name="example-text-input" placeholder="Especifique el documento"
+                  [(ngModel)]="formData.especifique" #especifiqueInput />
+                }
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-lg-4 col-12 mb-3">
+                <div class="custom-file-upload text-center" style="padding-top: 10px;">
+                  <label for="fileInput">📁 Subir archivo</label>
+                  <input id="fileInput" name="file" type="file" accept=".pdf"
+                    (change)="convertirArchivoBase64($event)" />
+                  <small *ngIf="formData.archivo" class="text-success">Archivo listo</small>
                 </div>
-                  <!-- Vista previa PDF -->
-                  <!-- <div *ngIf="archivoSeguro">
+                <div class="dz-message text-center">
+                  <span class="dropzone-msg-desc" style="font-size: 10px; color: gray; font-weight: 500;">Peso no mayor
+                    a 5 MB, sólo formato PDF</span>
+                </div>
+              </div>
+              <!-- Vista previa PDF -->
+              <!-- <div *ngIf="archivoSeguro">
                     <p class="mt-2 mb-1">Vista previa PDF:</p>
                     <iframe
                       [src]="archivoSeguro"
@@ -175,18 +242,27 @@
                       frameborder="0"
                     ></iframe>
                   </div> -->
-                  <div class="col-lg-4 col-12 mb-3 pt-1" [ngClass]="{'text-center': isSmallScreen, 'text-start': !isSmallScreen}">
-                    <button class="btn btn-tertiary mt-2" (click)="abrirArchivoEnNuevaPestana()" [disabled]="!formData.archivoV">
-                      <svg width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-folder-open"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 19l2.757 -7.351a1 1 0 0 1 .936 -.649h12.307a1 1 0 0 1 .986 1.164l-.996 5.211a2 2 0 0 1 -1.964 1.625h-14.026a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v2" /></svg>
-                      Ver archivo
-                  </button>
-                  </div>
-                  
-                <div class="col-lg-8 col-12 mb-3">
-                  <label class="form-label">Observación del documento</label>
-                  <textarea type="text" rows="5" class="form-control" name="example-text-input" placeholder="Ingresa tu observación" [(ngModel)]="formData.observacion" #observacionInput></textarea>
-                </div>
+              <div class="col-lg-4 col-12 mb-3 pt-1"
+                [ngClass]="{'text-center': isSmallScreen, 'text-start': !isSmallScreen}">
+                <button class="btn btn-tertiary mt-2" (click)="abrirArchivoEnNuevaPestana()"
+                  [disabled]="!formData.archivoV">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-folder-open">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path
+                      d="M5 19l2.757 -7.351a1 1 0 0 1 .936 -.649h12.307a1 1 0 0 1 .986 1.164l-.996 5.211a2 2 0 0 1 -1.964 1.625h-14.026a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v2" />
+                  </svg>
+                  Ver archivo
+                </button>
               </div>
+
+              <div class="col-lg-8 col-12 mb-3">
+                <label class="form-label">Observación del documento</label>
+                <textarea type="text" rows="5" class="form-control" name="example-text-input"
+                  placeholder="Ingresa tu observación" [(ngModel)]="formData.observacion" #observacionInput></textarea>
+              </div>
+            </div>
             }
           </div>
         </div>
@@ -196,148 +272,225 @@
         <!-- ++++++ -->
         <div *ngIf="currentStep === 1">
           <div class="offset-1 col-10" id="prueba2">
-        
+
             <h4 class="subtitulo-pagina">Medios de contacto</h4>
-          
+
             <!-- Correo electrónico -->
             <div class="row">
-    
+
               <div class="col-lg-6 col-12 mb-3">
                 <label class="form-label">Correo electrónico</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu correo electrónico" [(ngModel)]="formData.correo" #correoInput/>
+                <input type="text" class="form-control" name="example-text-input"
+                  placeholder="Ingresa tu correo electrónico" [(ngModel)]="formData.correo" #correoInput />
                 <small *ngIf="correoError" class="text-danger">{{ correoError }}</small>
               </div>
-    
+
               <div class="col-lg-6 col-12 mb-3">
                 <label class="form-label">Confirma tu correo electrónico</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Confirma tu correo electrónico" [(ngModel)]="formData.correoB" #correoBInput/>
+                <input type="text" class="form-control" name="example-text-input"
+                  placeholder="Confirma tu correo electrónico" [(ngModel)]="formData.correoB" #correoBInput />
                 <small *ngIf="correoError" class="text-danger">{{ correoError }}</small>
               </div>
-    
+
             </div>
-          
+
             <!-- Número de celular -->
             <div class="row">
-    
+
               <div class="col-lg-6 col-12 mb-3">
                 <label class="form-label">Número celular</label>
-                <input type="tel" pattern="[0-9]*" inputmode="numeric" class="form-control" name="example-text-input" maxlength="10" placeholder="Ingresa tu número celular" 
-                  [(ngModel)]="formData.telefono" #telefonoInput (keypress)="permitirSoloNumeros($event)"/>
+                <input type="tel" pattern="[0-9]*" inputmode="numeric" class="form-control" name="example-text-input"
+                  maxlength="10" placeholder="Ingresa tu número celular" [(ngModel)]="formData.telefono" #telefonoInput
+                  (keypress)="permitirSoloNumeros($event)" />
                 <small *ngIf="telefonoError" class="text-danger">{{ telefonoError }}</small>
               </div>
-    
+
               <div class="col-lg-6 col-12 mb-3">
                 <label class="form-label">Confirma tu número celular</label>
-                <input type="tel" pattern="[0-9]*" inputmode="numeric" class="form-control" name="example-text-input" maxlength="10" placeholder="Confirma tu número celular" 
-                  [(ngModel)]="formData.telefonoB" #telefonoBInput (keypress)="permitirSoloNumeros($event)"/>
+                <input type="tel" pattern="[0-9]*" inputmode="numeric" class="form-control" name="example-text-input"
+                  maxlength="10" placeholder="Confirma tu número celular" [(ngModel)]="formData.telefonoB"
+                  #telefonoBInput (keypress)="permitirSoloNumeros($event)" />
                 <small *ngIf="telefonoError" class="text-danger">{{ telefonoError }}</small>
               </div>
-    
+
             </div>
           </div>
         </div>
-    
+
         <!-- ++++++ -->
         <!-- Paso 3 -->
         <!-- ++++++ -->
         <div *ngIf="currentStep === 2">
-          
+
           <div class="offset-1 col-10" id="prueba3">
-        
+
             <h4 class="subtitulo-pagina">Creación de contraseña</h4>
-    
+
             <div class="row">
-    
+
               <div class="col-lg-4 col-12 mb-3">
                 <label class="form-label">Contraseña</label>
-                <input [type]="showPassword ? 'text' : 'password'" class="form-control" name="example-text-input" placeholder="Crea una contraseña" [(ngModel)]="formData.password" #passwordInput/>
+                <input [type]="showPassword ? 'text' : 'password'" class="form-control" name="example-text-input"
+                  placeholder="Crea una contraseña" [(ngModel)]="formData.password" #passwordInput />
                 <div class="text-danger mt-1" *ngIf="passwordError">
                   {{ passwordError }}
                 </div>
               </div>
-    
+
               <div class="col-lg-4 col-12 mb-3">
                 <label class="form-label">Confirmar contraseña</label>
-                <input [type]="showPassword ? 'text' : 'password'" class="form-control" name="example-text-input" placeholder="Confirma tu contraseña" [(ngModel)]="formData.passwordB" #passwordBInput/>
+                <input [type]="showPassword ? 'text' : 'password'" class="form-control" name="example-text-input"
+                  placeholder="Confirma tu contraseña" [(ngModel)]="formData.passwordB" #passwordBInput />
                 <div class="text-danger mt-1" *ngIf="passwordErrorB">
                   {{ passwordErrorB }}
                 </div>
               </div>
-    
+
               <div class="col-lg-4 col-12 mb-3">
                 <label class="form-label" *ngIf="!isSmallScreen" style="color: transparent;">.</label>
-                <button class="custom-show-pass" type="button" (click)="togglePasswordVisibility()" [ngClass]="{'color-SP-modo-oscuro': isDarkMode, 'color-SP': !isDarkMode}">
-                  <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye-off"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" /><path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" /><path d="M3 3l18 18" /></svg>
+                <button class="custom-show-pass" type="button" (click)="togglePasswordVisibility()"
+                  [ngClass]="{'color-SP-modo-oscuro': isDarkMode, 'color-SP': !isDarkMode}">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-eye-off">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />
+                    <path
+                      d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" />
+                    <path d="M3 3l18 18" />
+                  </svg>
                   {{ showPassword ? 'Ocultar' : 'Mostrar contraseña' }}
                 </button>
               </div>
 
             </div>
-    
+
           </div>
-    
+
         </div>
-    
+
         <div *ngIf="currentStep === 3" class="row">
           <div class="col-10 offset-1">
             <h3 class="text-success">¡Registro Completo!</h3>
             <table class="table table-bordered">
-              <tr><th>Campo</th><th>Valor</th></tr>
-              <tr><td><strong>Nombre</strong></td><td>{{ formData.nombre }} {{ formData.apPaterno }} {{ formData.apMaterno }}</td></tr>
-              <tr><td><strong>Sexo</strong></td><td>@if(existeCURP){ {{ formData.sexo }} }@else{ {{ formData.sexo.sexo }} }</td></tr>
-              <tr><td><strong>Fecha de nacimiento</strong></td><td>{{ fechaN }}</td></tr>
-              @if(existeCURP){<tr><td><strong>Dirección</strong></td><td>{{ formData.coloniaB }} {{ formData.municipio }} {{ formData.estado }}, C.P. {{ this.payload.cp }}</td></tr>}
-              <tr><td><strong>Correo</strong></td><td>{{ formData.correo }}</td></tr>
-              <tr><td><strong>Teléfono</strong></td><td>{{ formData.telefono }}</td></tr>
+              <tr>
+                <th>Campo</th>
+                <th>Valor</th>
+              </tr>
+              <tr>
+                <td><strong>Nombre</strong></td>
+                <td>{{ formData.nombre }} {{ formData.apPaterno }} {{ formData.apMaterno }}</td>
+              </tr>
+              <tr>
+                <td><strong>Sexo</strong></td>
+                <td>@if(existeCURP){ {{ formData.sexo }} }@else{ {{ formData.sexo.sexo }} }</td>
+              </tr>
+              <tr>
+                <td><strong>Fecha de nacimiento</strong></td>
+                <td>{{ fechaN }}</td>
+              </tr>
+              @if(existeCURP){<tr>
+                <td><strong>Dirección</strong></td>
+                <td>{{formData.calle}} {{formData?.exterior}} {{formData?.interior}} {{formData.coloniaB}} {{formData.municipio}} {{formData.estado}}, C.P. {{this.payload.cp}}
+                </td>
+              </tr>}
+              <tr>
+                <td><strong>Correo</strong></td>
+                <td>{{ formData.correo }}</td>
+              </tr>
+              <tr>
+                <td><strong>Teléfono</strong></td>
+                <td>{{ formData.telefono }}</td>
+              </tr>
             </table>
             <!-- <button class="btn btn-warning mt-3" (click)="confirmReset()">🔄 Reiniciar</button> -->
           </div>
           <div class="col-10 offset-1">
             <label>
-              <input class="form-check-input" type="checkbox" [(ngModel)]="formData.confirmado" (click)="confirma($event)"/>
+              <input class="form-check-input" type="checkbox" [(ngModel)]="formData.confirmado"
+                (click)="confirma($event)" />
               Confirmo que mis datos son correctos
             </label>
           </div>
         </div>
-    
+
         <!-- Botones de navegación -->
         <div class="row mt-5">
 
-          <div class="col-lg-2 col-6" [ngClass]="{'text-center': isSmallScreen, 'text-end': !isSmallScreen, 'offset-lg-3': !isSmallScreen && currentStep >= 3, 'offset-lg-7': !isSmallScreen && currentStep < 3}">
+          <div class="col-lg-2 col-6"
+            [ngClass]="{'text-center': isSmallScreen, 'text-end': !isSmallScreen, 'offset-lg-3': !isSmallScreen && currentStep >= 3, 'offset-lg-7': !isSmallScreen && currentStep < 3}">
             <button class="btn btn-secondary boton-celular" (click)="prevStep()" [disabled]="currentStep === 0">
               Anterior
             </button>
           </div>
-          
+
           <div class="col-lg-2 col-6" [ngClass]="isSmallScreen ? 'text-center' : 'text-end'">
-            <button class="btn btn-primary boton-celular" (click)="nextStep()" [disabled]="currentStep === steps.length - 1 && currentStep <= 3">
+            <button class="btn btn-primary boton-celular" (click)="nextStep()"
+              [disabled]="currentStep === steps.length - 1 && currentStep <= 3">
               Siguiente
             </button>
           </div>
-          
+
           <div class="col-lg-2 col-6" [ngClass]="isSmallScreen ? 'text-center' : 'text-end'">
-            <button class="btn btn-primary boton-celular" style="background-color: #10312B!important;" (click)="confirmReset()" *ngIf="currentStep >= 3">
-              <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-refresh"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></svg>
+            <button class="btn btn-primary boton-celular" style="background-color: #10312B!important;"
+              (click)="confirmReset()" *ngIf="currentStep >= 3">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-refresh">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
+                <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
+              </svg>
               Reiniciar
             </button>
           </div>
-          
-          <div class="col-lg-2 col-6" *ngIf="existeCURP" [ngClass]="isSmallScreen ? 'text-center' : 'text-end'">
-            <button class="btn btn-primary boton-celular" style="background-color: #b17a45!important;" [disabled]="existeConfirma" (click)="guardar()" *ngIf="currentStep >= 3">
-              <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg>
-              Guardar
+
+          <div class="col-lg-2 col-6" *ngIf="existeCURP && existeNotario"
+            [ngClass]="isSmallScreen ? 'text-center' : 'text-end'">
+            <button class="btn btn-primary boton-celular" style="background-color: #b17a45!important;"
+              [disabled]="existeConfirma" (click)="guardar()" *ngIf="currentStep >= 3">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+                <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                <path d="M14 4l0 4l-6 0l0 -4" />
+              </svg>
+              Guardar C
             </button>
           </div>
           <div class="col-lg-2 col-6" *ngIf="!existeCURP" [ngClass]="isSmallScreen ? 'text-center' : 'text-end'">
-            <button class="btn btn-primary boton-celular" style="background-color: #b17a45!important;" [disabled]="existeConfirma" (click)="guardarExtranjero()" *ngIf="currentStep >= 3">
-              <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg>
-              Guardar
+            <button class="btn btn-primary boton-celular" style="background-color: #b17a45!important;"
+              [disabled]="existeConfirma" (click)="guardarExtranjero()" *ngIf="currentStep >= 3">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+                <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                <path d="M14 4l0 4l-6 0l0 -4" />
+              </svg>
+              Guardar E
             </button>
           </div>
-          
+          <div class="col-lg-2 col-6" *ngIf="!existeNotario" [ngClass]="isSmallScreen ? 'text-center' : 'text-end'">
+            <button class="btn btn-primary boton-celular" style="background-color: #b17a45!important;"
+              [disabled]="existeConfirma" (click)="guardarNotario()" *ngIf="currentStep >= 3">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+                <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                <path d="M14 4l0 4l-6 0l0 -4" />
+              </svg>
+              Guardar N
+            </button>
+          </div>
         </div>
       </div>
     </div>
-    
+
   </div>
 </div>

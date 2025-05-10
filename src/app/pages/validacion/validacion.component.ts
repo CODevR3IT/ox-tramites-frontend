@@ -7,10 +7,11 @@ import { RegistroService } from '../../shared/services/registro.service';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ThemeService } from '../../shared/services/theme.service';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-validacion',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './validacion.component.html',
   styleUrl: './validacion.component.scss',
   animations: [

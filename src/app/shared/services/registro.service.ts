@@ -32,6 +32,11 @@ export class RegistroService {
         return this.http.patch(url, payload, { })
     }
 
+    deleteQuery(query: string, payload: any){
+        const url = `${ this.baseUrl }/${ query }`;
+        return this.http.delete(url, payload)
+    }
+
     getApp(id: string = ''){
         return this.http.get<AppPublic>(`${this.api}/apps/public/${this.appUUID}`)
     }
@@ -77,6 +82,10 @@ export class RegistroService {
         return this.postQuery(`datosExtranjero/guardaExtranjero`, payload);
     }
 
+    guardarNotario(payload: any){
+        return this.postQuery(`datosNotario/guardaNotario`, payload);
+    }
+
     solicitarCodigo(payload: any){
         return this.postQuery(`datosUser/obtenercodigo`, payload);
     }
@@ -95,5 +104,9 @@ export class RegistroService {
 
     getNotifications(httpOptions: any){
         return this.getQuery(`notifications`);
+    }
+
+    deleteNotifications(id:any, httpOptions: any){
+        return this.deleteQuery(`notifications/${id}`,httpOptions);
     }
 }

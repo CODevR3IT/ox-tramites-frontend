@@ -11,6 +11,7 @@ import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/ro
 import { Notificacion } from '../../interfaces/notificaciones.interface';
 import { NgxJdenticonModule } from "ngx-jdenticon";
 import { HttpHeaders } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-header',
@@ -59,14 +60,14 @@ export class HeaderComponent {
       }
     );
     this.logedIn = this.authService.isLoggedIn();
-    if(this.logedIn){
+    if (this.logedIn) {
       this.user = this.authService.getUser();
       this.getNotifications();
     }
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.logedIn = this.authService.isLoggedIn();
-        if(this.logedIn){
+        if (this.logedIn) {
           this.user = this.authService.getUser();
           this.getNotifications();
         }
@@ -74,14 +75,14 @@ export class HeaderComponent {
     });
   }
 
-  getNotifications(){
+  getNotifications() {
     const token = this.authService.getAccessToken();
     console.log("get sesión token");
     console.log(token);
     this.httpOptions = {
       headers: new HttpHeaders({
         'Accept': 'application/json',
-        'Authorization': 'Bearer '+token,
+        'Authorization': 'Bearer ' + token,
       })
     };
     this.registroService.getNotifications(this.httpOptions).subscribe(
@@ -90,6 +91,31 @@ export class HeaderComponent {
           this.notificacionRes = res.notifications.data;
           console.log("this.notificacionRes");
           console.log(this.notificacionRes);
+        },
+      }
+    );
+  }
+
+  deleteNotifications(id: any) {
+    const token = this.authService.getAccessToken();
+    console.log(id);
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + token,
+      })
+    };
+    this.registroService.deleteNotifications(id, this.httpOptions).subscribe(
+      {
+        next: (res: any) => {
+          this.getNotifications();
+          // Swal.fire({
+          //   title: '¡Atención!',
+          //   text: res.message,
+          //   icon: 'success',
+          //   confirmButtonColor: '#6a1c32',
+          //   confirmButtonText: 'Aceptar',
+          // });
         },
       }
     );
