@@ -24,7 +24,6 @@ export const httpErrorsInterceptor: HttpInterceptorFn = (req, next) => {
             break;
         }
       }
-
       throw err;
     })
   );
