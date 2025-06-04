@@ -7,9 +7,9 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RegistroService } from '../../shared/services/registro.service';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { format, parse  } from "date-fns";
-import moment from 'moment';
+import { format, parse } from "date-fns";
 import { ThemeService } from '../../shared/services/theme.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -46,11 +46,11 @@ export class LandingComponent {
   @ViewChild('calleInput') calleInput!: ElementRef;
   @ViewChild('caracterInput') caracterInput!: ElementRef;
 
-  payload:any = {};
+  payload: any = {};
   catSexo: any;
   catPais: any;
   catIde: any;
-  query:any = {};
+  query: any = {};
   datosCURP: any = {}
   fadeInLeft: any;
   steps: string[] = ["Inicio", "Detalles", "Confirmación", "Finalizado"];
@@ -60,8 +60,8 @@ export class LandingComponent {
   existeConfirma: boolean = true;
   existeOtro: boolean = false;
   arregloCP: any;
-  fechaN:string = '';
-  mensanjeValida:string = '';
+  fechaN: string = '';
+  mensanjeValida: string = '';
   correoError: string = '';
   telefonoError: string = '';
   passwordError: string = '';
@@ -107,12 +107,13 @@ export class LandingComponent {
     private registroService: RegistroService,
     private spinner: NgxSpinnerService,
     private sanitizer: DomSanitizer,
-    private themeService: ThemeService
-  ){
+    private themeService: ThemeService,
+    private readonly router: Router,
+  ) {
     this.checkScreenSize();
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.spinner.show();
     this.getCatSexo();
   }
@@ -126,11 +127,10 @@ export class LandingComponent {
     return this.themeService.getTheme() === 'dark';
   }
 
-  getCatSexo(){
+  getCatSexo() {
     this.registroService.getCatSexo().subscribe(
       {
-        next: (res:any)=>{
-          console.log(res);
+        next: (res: any) => {
           this.catSexo = res;
           this.getCatPais();
         },
@@ -138,11 +138,10 @@ export class LandingComponent {
     );
   }
 
-  getCatPais(){
+  getCatPais() {
     this.registroService.getCatPais().subscribe(
       {
-        next: (res:any)=>{
-          console.log(res);
+        next: (res: any) => {
           this.catPais = res;
           this.getCatIde();
         },
@@ -150,11 +149,11 @@ export class LandingComponent {
     );
   }
 
-  getCatIde(){
+  getCatIde() {
     this.registroService.getCatIde().subscribe(
       {
-        next: (res:any)=>{
-          console.log(res);
+        next: (res: any) => {
+
           this.catIde = res;
           this.spinner.hide();
         },
@@ -162,11 +161,10 @@ export class LandingComponent {
     );
   }
 
-  getCURP(){
+  getCURP() {
     this.registroService.getCURP(this.payload.curp).subscribe(
       {
-        next: (res:any)=>{
-          console.log(res);
+        next: (res: any) => {
           this.datosCURP = res;
           this.formData.nombre = this.datosCURP.nombres;
           this.formData.apPaterno = this.datosCURP.primer_apellido;
@@ -180,28 +178,26 @@ export class LandingComponent {
     );
   }
 
-  getCP(){
+  getCP() {
     this.formData.estado = '';
     this.formData.municipio = '';
     this.arregloCP = '';
     this.registroService.getCP(this.payload.cp).subscribe(
       {
-        next: (res:any)=>{
-          console.log(res);
+        next: (res: any) => {
           this.arregloCP = res;
         },
       }
     );
   }
 
-  setDate(){
+  setDate() {
     const fecha = parse(this.formData.fecha, 'yyyy-MM-dd', new Date()); // Esto evita que el constructor de Date aplique la conversión por zona horaria, más seguro
     const fechaNacimiento = format(fecha, 'dd/MM/yyyy'); // Formato deseado
-    console.log(fechaNacimiento); // "29/06/1990" le quitaba un dia por la zona horaria.
+    // "29/06/1990" le quitaba un dia por la zona horaria.
     this.fechaN = fechaNacimiento;
   }
   nextStep() {
-    console.log(this.validateStep());
     this.mensanjeValida = '';
     this.correoError = '';
     this.telefonoError = '';
@@ -209,8 +205,8 @@ export class LandingComponent {
     this.passwordErrorB = '';
     if (this.validateStep() == 'z') {
       this.currentStep++;
-    } else if(this.validateStep() !== 'z') {
-      switch(this.validateStep()){
+    } else if (this.validateStep() !== 'z') {
+      switch (this.validateStep()) {
         case 'a':
           setTimeout(() => this.nombreInput.nativeElement.focus(), 0);
           this.mensanjeValida = 'Por favor completa el nombre antes de continuar.'
@@ -263,12 +259,12 @@ export class LandingComponent {
           break;
         case 'j':
           setTimeout(() => this.passwordInput.nativeElement.focus(), 0);
-          this.mensanjeValida = 'La contraseña debe tener entre 8 y 12 caracteres, incluir una mayúscula, una minúscula, un número y un símbolo.';  
+          this.mensanjeValida = 'La contraseña debe tener entre 8 y 12 caracteres, incluir una mayúscula, una minúscula, un número y un símbolo.';
           this.passwordError = 'La contraseña debe tener entre 8 y 12 caracteres, incluir una mayúscula, una minúscula, un número y un símbolo.';
           break;
         case 'k':
           setTimeout(() => this.passwordBInput.nativeElement.focus(), 0);
-          this.mensanjeValida = 'La contraseña debe tener entre 8 y 12 caracteres, incluir una mayúscula, una minúscula, un número y un símbolo.';  
+          this.mensanjeValida = 'La contraseña debe tener entre 8 y 12 caracteres, incluir una mayúscula, una minúscula, un número y un símbolo.';
           this.passwordErrorB = 'La contraseña debe tener entre 8 y 12 caracteres, incluir una mayúscula, una minúscula, un número y un símbolo.';
           break;
         case 'l':
@@ -306,7 +302,7 @@ export class LandingComponent {
           this.mensanjeValida = 'Ocurrio un error, intente más tarde'
           break;
       }
-      
+
       Swal.fire({
         title: '¡Atención!',
         text: this.mensanjeValida,
@@ -342,52 +338,48 @@ export class LandingComponent {
   // }
 
   validateStep(): any {
-    console.log(this.formData);
     switch (this.currentStep) {
       case 0:
         let case0: string = 'z';
-        if(this.formData.nombre.trim() === ''){ case0 = 'a';}
-        else if(this.formData.apPaterno.trim() === ''){ case0 = 'b';}
-        else if(this.formData.sexo === ''){ case0 = 'c';}
-        else if(this.formData.fecha.trim() === ''){ case0 = 'd';}
-        if(this.existeCURP){
-          if(this.payload.cp === undefined){ case0 = 'e';}
-          else if(this.formData.colonia === ''){ case0 = 'f';}
-          else if(this.formData.calle === ''){ case0 = 'l';}
-          console.log("ACA EL SI EXISTE");
-          if(!this.existeNotario){
-            if(this.formData.rfc === ''){ case0 = 'not1';}
-            else if(this.formData.numNot === ''){ case0 = 'not2';}
-            else if(this.formData.claveNot === ''){ case0 = 'not3';}
-            else if(this.formData.caracter === ''){ case0 = 'not4';}
-            console.log("ACA EL SI EXISTE NOT");
+        if (this.formData.nombre.trim() === '') { case0 = 'a'; }
+        else if (this.formData.apPaterno.trim() === '') { case0 = 'b'; }
+        else if (this.formData.sexo === '') { case0 = 'c'; }
+        else if (this.formData.fecha.trim() === '') { case0 = 'd'; }
+        if (this.existeCURP) {
+          if (this.payload.cp === undefined) { case0 = 'e'; }
+          else if (this.formData.colonia === '') { case0 = 'f'; }
+          else if (this.formData.calle === '') { case0 = 'l'; }
+          if (!this.existeNotario) {
+            if (this.formData.rfc === '') { case0 = 'not1'; }
+            else if (this.formData.numNot === '') { case0 = 'not2'; }
+            else if (this.formData.claveNot === '') { case0 = 'not3'; }
+            else if (this.formData.caracter === '') { case0 = 'not4'; }
           }
-        }else if(!this.existeCURP){
-          console.log("ACA EL NO EXISTE");
-          if(this.formData.nacionalidad === ''){ case0 = 'ext1';}
-          else if(this.formData.identifica === ''){ case0 = 'ext2';}
-          else if(this.formData.archivo === ''){ case0 = 'ext3';}
+        } else if (!this.existeCURP) {
+          if (this.formData.nacionalidad === '') { case0 = 'ext1'; }
+          else if (this.formData.identifica === '') { case0 = 'ext2'; }
+          else if (this.formData.archivo === '') { case0 = 'ext3'; }
         }
         return case0;
       case 1:
         let case1: string = 'z';
-        if((this.formData.correo !== this.formData.correoB) || (this.formData.correo.trim() === '') || (this.formData.correoB.trim() === '')){ case1 = 'g';}
-        else if((this.formData.telefono !== this.formData.telefonoB) || (this.formData.telefono.trim() === '') || (this.formData.telefonoB === '')){ case1 = 'h';}
-        
-        if (!this.isValidEmail(this.formData.correo) || !this.isValidEmail(this.formData.correoB)) { case1 = 'g1';}
-        if (!this.isValidPhone(this.formData.telefono) || !this.isValidPhone(this.formData.telefonoB)) { case1 = 'h1';}
+        if ((this.formData.correo !== this.formData.correoB) || (this.formData.correo.trim() === '') || (this.formData.correoB.trim() === '')) { case1 = 'g'; }
+        else if ((this.formData.telefono !== this.formData.telefonoB) || (this.formData.telefono.trim() === '') || (this.formData.telefonoB === '')) { case1 = 'h'; }
+
+        if (!this.isValidEmail(this.formData.correo) || !this.isValidEmail(this.formData.correoB)) { case1 = 'g1'; }
+        if (!this.isValidPhone(this.formData.telefono) || !this.isValidPhone(this.formData.telefonoB)) { case1 = 'h1'; }
         return case1;
       case 2:
         let case2: string = 'z';
-        
+
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,12}$/;
 
-        if (!passwordRegex.test(this.formData.password)) {case2 = 'j';}
+        if (!passwordRegex.test(this.formData.password)) { case2 = 'j'; }
 
-        if (!passwordRegex.test(this.formData.passwordB)) {case2 = 'k';}
+        if (!passwordRegex.test(this.formData.passwordB)) { case2 = 'k'; }
 
-        if((this.formData.password !== this.formData.passwordB) || (this.formData.password.trim() === '') || (this.formData.passwordB.trim() === undefined)){ case2 = 'i';}
-        
+        if ((this.formData.password !== this.formData.passwordB) || (this.formData.password.trim() === '') || (this.formData.passwordB.trim() === undefined)) { case2 = 'i'; }
+
         return case2;
       default:
         return 'z';
@@ -413,24 +405,20 @@ export class LandingComponent {
 
   convertirArchivoBase64(event: any): void {
     const archivo: File = event.target.files[0];
-    console.log("archivo");
-    console.log(archivo);
     if (!archivo) return;
-    
-    if(archivo.size < 5200123 && archivo.type === 'application/pdf'){
+
+    if (archivo.size < 5200123 && archivo.type === 'application/pdf') {
       this.payload.nombreOriginal = archivo.name;
       const lector = new FileReader();
-    
+
       lector.onload = () => {
         const base64 = lector.result as string;
-        const cadena64: any = base64.split(";base64,"); 
+        const cadena64: any = base64.split(";base64,");
         this.formData.archivo = cadena64[1];
         this.formData.archivoV = base64;
         this.archivoSeguro = this.sanitizer.bypassSecurityTrustResourceUrl(base64);
-        console.log('Archivo en base64 guardado en formData:', this.formData.archivo);
-        console.log(this.formData.archivoV);
       };
-      
+
       lector.onerror = (error) => {
         console.error('Error al leer el archivo:', error);
         Swal.fire({
@@ -441,9 +429,9 @@ export class LandingComponent {
           confirmButtonText: 'Aceptar',
         });
       };
-    
+
       lector.readAsDataURL(archivo);
-    }else{
+    } else {
       Swal.fire({
         title: '¡Atención!',
         text: 'El archivo debe ser menor a 5MB y formato PDF.',
@@ -453,7 +441,7 @@ export class LandingComponent {
       });
     }
   }
-  
+
   abrirArchivoEnNuevaPestana(): void {
     const base64 = this.formData.archivoV;
     //Verificamos que exista, que sea texto, y que contenga un PDF en base64
@@ -478,9 +466,9 @@ export class LandingComponent {
 
     const byteArray = new Uint8Array(byteNumbers); // Creamos un Uint8Array, que es lo que necesita el Blob para representar los datos binarios
     const blob = new Blob([byteArray], { type: 'application/pdf' }); // Creamos el archivo "simulado" (Blob) con tipo PDF
-  
+
     const blobUrl = URL.createObjectURL(blob); // Creamos una URL temporal (blob URL) que el navegador puede entender como un archivo
-  
+
     const nuevaPestana = window.open(blobUrl, '_blank'); // Abrimos esa URL en una nueva pestaña
 
     if (!nuevaPestana) {
@@ -520,12 +508,12 @@ export class LandingComponent {
       }
     })
   }
-  
+
   resetForm() {
     this.formData = {
       curp: '', nombre: '', detalles: '', apPaterno: '', apMaterno: '', sexo: '', fecha: '', colonia: '', calle: '',
       exterior: '', interior: '', correo: '', password: '', telefono: '', correoB: '', passwordB: '', telefonoB: '',
-      confirmado: false, nacionalidad: '', identifica: '', archivo: '', especifique: '', observacion: '', numNot: '', 
+      confirmado: false, nacionalidad: '', identifica: '', archivo: '', especifique: '', observacion: '', numNot: '',
       claveNot: '', rfc: '', caracter: '',
     };
     this.payload = {};
@@ -534,35 +522,30 @@ export class LandingComponent {
     this.existeConfirma = true;
     this.existeOtro = false;
     this.existeNotario = true;
-    console.log(this.formData);
-    console.log(this.payload);
   }
 
-  muestraCURP(e: any){
-    this.existeCURP = (e.target.checked ? false:true);
+  muestraCURP(e: any) {
+    this.existeCURP = (e.target.checked ? false : true);
     this.resetForm();
   }
 
-  muestraNotario(e: any){
-    this.existeNotario = (e.target.checked ? false:true);
-    console.log(this.existeNotario);
+  muestraNotario(e: any) {
+    this.existeNotario = (e.target.checked ? false : true);
   }
 
-  confirma(e: any){
-    this.existeConfirma = (e.target.checked ? false:true);
+  confirma(e: any) {
+    this.existeConfirma = (e.target.checked ? false : true);
   }
 
-  verData(){
-    console.log(JSON.stringify(this.formData.colonia));
-    this.formData.coloniaB = this.formData.colonia.colonia; 
+  verData() {
+    this.formData.coloniaB = this.formData.colonia.colonia;
     this.formData.estado = this.formData.colonia.estado;
     this.formData.municipio = this.formData.colonia.municipio;
     this.payload.idCp = this.formData.colonia.id;
   }
 
-  campoOtro(){
-    this.existeOtro = (this.formData.identifica === 13 ? true:false);
-    console.log(this.formData.identifica);
+  campoOtro() {
+    this.existeOtro = (this.formData.identifica === 13 ? true : false);
   }
 
   /**
@@ -570,24 +553,21 @@ export class LandingComponent {
    * @param event La información del archivo que se va a cargar
    * @returns 
    */
-  adjuntarArchivo(event: any){
+  adjuntarArchivo(event: any) {
     this.file = '';
     this.file = event.target.files[0];
-    this.activaUpload = (this.file !== undefined) ?  false : true;
-    console.log(this.file);
+    this.activaUpload = (this.file !== undefined) ? false : true;
   }
 
-  guardar(){
-    console.log("this.formData");
-    console.log(this.formData);
+  guardar() {
     this.spinner.show();
     const fechaN = parse(this.formData.fecha, 'yyyy-MM-dd', new Date()); // Esto evita que el constructor de Date aplique la conversión por zona horaria, más seguro
 
     const fechaNacimiento = format(fechaN, 'dd/MM/yyyy'); // Formato deseado
-    console.log(fechaNacimiento); // "29/06/1990" le quitaba un dia por la zona horaria.
+    // "29/06/1990" le quitaba un dia por la zona horaria.
 
     this.query = {
-      "curp" : this.payload.curp,
+      "curp": this.payload.curp,
       "email": this.formData.correo,
       "password": this.formData.password,
       "telefono": this.formData.telefono,
@@ -595,20 +575,19 @@ export class LandingComponent {
       "primer_apellido": this.formData.apPaterno,
       "segundo_apellido": this.formData.apMaterno,
       "cp_id": this.payload.idCp,
-      "fecha_nacimiento":  fechaNacimiento,
+      "fecha_nacimiento": fechaNacimiento,
       "sexo": this.formData.sexo,
       "calle": this.formData.calle,
       "num_ext": this.formData.exterior,
       "num_int": this.formData.interior,
     }
-    console.log(JSON.stringify(this.query));
+
     //return;
     this.registroService.guardar(this.query).subscribe(
       {
-        next: (res:any)=>{
+        next: (res: any) => {
           this.spinner.hide();
-          console.log("GUARDADO");
-          console.log(res);
+
           Swal.fire({
             title: '¡ATENCIÓN!',
             text: res.msg,
@@ -622,6 +601,7 @@ export class LandingComponent {
           }).then((result) => {
             if (result.isConfirmed) {
               this.existeCURP = true;
+              this.router.navigate(['/login']);
               this.resetForm();
             }
           })
@@ -630,10 +610,8 @@ export class LandingComponent {
     );
   }
 
-  guardarExtranjero(){
+  guardarExtranjero() {
     this.spinner.show();
-    console.log("this.formData");
-    console.log(this.formData);
     let sexoId: string = String(this.formData.sexo.id);
     let identId: string = String(this.formData.identifica);
     this.query = {
@@ -644,7 +622,7 @@ export class LandingComponent {
       "primer_apellido": this.formData.apPaterno,
       "segundo_apellido": this.formData.apMaterno,
       "sexo_id": sexoId,
-      "fecha_nacimiento":  this.fechaN,
+      "fecha_nacimiento": this.fechaN,
       "pais_id": this.formData.nacionalidad,
       "identificacion_id": identId,
       "documento_especifico": this.formData.especifique,
@@ -653,14 +631,11 @@ export class LandingComponent {
       "nombre_original": this.payload.nombreOriginal,
     }
 
-    console.log(JSON.stringify(this.query));
     //return;
     this.registroService.guardarExtranjero(this.query).subscribe(
       {
-        next: (res:any)=>{
+        next: (res: any) => {
           this.spinner.hide();
-          console.log("GUARDADO");
-          console.log(res);
           Swal.fire({
             title: '¡ATENCIÓN!',
             text: res.msg,
@@ -674,6 +649,7 @@ export class LandingComponent {
           }).then((result) => {
             if (result.isConfirmed) {
               this.existeCURP = true;
+              this.router.navigate(['/login']);
               this.resetForm();
             }
           })
@@ -682,17 +658,15 @@ export class LandingComponent {
     );
   }
 
-  guardarNotario(){
-    console.log("this.formData");
-    console.log(this.formData);
+  guardarNotario() {
     this.spinner.show();
     const fechaN = parse(this.formData.fecha, 'yyyy-MM-dd', new Date()); // Esto evita que el constructor de Date aplique la conversión por zona horaria, más seguro
 
     const fechaNacimiento = format(fechaN, 'dd/MM/yyyy'); // Formato deseado
-    console.log(fechaNacimiento); // "29/06/1990" le quitaba un dia por la zona horaria.
+    // "29/06/1990" le quitaba un dia por la zona horaria.
 
     this.query = {
-      "curp" : this.payload.curp,
+      "curp": this.payload.curp,
       "email": this.formData.correo,
       "password": this.formData.password,
       "telefono": this.formData.telefono,
@@ -700,7 +674,7 @@ export class LandingComponent {
       "primer_apellido": this.formData.apPaterno,
       "segundo_apellido": this.formData.apMaterno,
       "cp_id": this.payload.idCp,
-      "fecha_nacimiento":  fechaNacimiento,
+      "fecha_nacimiento": fechaNacimiento,
       "sexo": this.formData.sexo,
       "calle": this.formData.calle,
       "num_ext": this.formData.exterior,
@@ -710,14 +684,11 @@ export class LandingComponent {
       "rfc": this.formData.rfc,
       "caracter": this.formData.caracter,
     }
-    console.log(JSON.stringify(this.query));
     //return;
     this.registroService.guardarNotario(this.query).subscribe(
       {
-        next: (res:any)=>{
+        next: (res: any) => {
           this.spinner.hide();
-          console.log("GUARDADO");
-          console.log(res);
           Swal.fire({
             title: '¡ATENCIÓN!',
             text: res.msg,
@@ -731,6 +702,7 @@ export class LandingComponent {
           }).then((result) => {
             if (result.isConfirmed) {
               this.existeCURP = true;
+              this.router.navigate(['/login']);
               this.resetForm();
             }
           })

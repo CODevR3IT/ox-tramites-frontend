@@ -90,7 +90,6 @@ export class RestorePasswordComponent {
 
   onSubmit() {
     const body = this.restorePasswordForm.value as RestorePasswordDto;
-    console.log(body);
     this.authService.restorePassword(body).subscribe();
   }
   get codigoErrors() {
@@ -149,7 +148,6 @@ export class RestorePasswordComponent {
     this.registroService.pedirCambioPassword(query).subscribe(
       {
         next: (res: any) => {
-          console.log(res);
           this.spinner.hide();
           Swal.fire({
             title: '¡Atención!',

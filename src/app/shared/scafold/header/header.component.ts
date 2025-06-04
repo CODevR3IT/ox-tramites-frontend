@@ -77,8 +77,6 @@ export class HeaderComponent {
 
   getNotifications() {
     const token = this.authService.getAccessToken();
-    console.log("get sesión token");
-    console.log(token);
     this.httpOptions = {
       headers: new HttpHeaders({
         'Accept': 'application/json',
@@ -89,8 +87,6 @@ export class HeaderComponent {
       {
         next: (res: any) => {
           this.notificacionRes = res.notifications.data;
-          console.log("this.notificacionRes");
-          console.log(this.notificacionRes);
         },
       }
     );
@@ -98,7 +94,6 @@ export class HeaderComponent {
 
   deleteNotifications(id: any) {
     const token = this.authService.getAccessToken();
-    console.log(id);
     this.httpOptions = {
       headers: new HttpHeaders({
         'Accept': 'application/json',

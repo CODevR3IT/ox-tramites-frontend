@@ -56,21 +56,14 @@ export class ValidacionComponent {
   }
 
   validaForm(): any{
-    console.log("aca valdoo");
-    console.log(this.payload);
-    console.log("aca valdo1o" + this.payload.correo);
     this.correoError = '';
     if (!this.isValidEmail(this.payload.correo)) { 
       this.correoError = 'Correo inválido. Usa el formato: nombre@dominio.com';
-      console.log("aca entre1");
-      console.log(this.existeCodigo);
       return false;
     }
     if(this.existeCodigo){
-      console.log("aca entre2");
       return this.valida = (this.payload.correo !== '' && this.payload.password !== '' && this.payload.codigo !== '' ? true : false);
     }else{
-      console.log("aca entre3");
       return this.valida = (this.payload.correo !== '' && this.payload.password !== '' ? true : false);
     }
   }
@@ -90,11 +83,8 @@ export class ValidacionComponent {
         confirmButtonColor: '#6a1c32',
         confirmButtonText: 'Aceptar',
       });
-      console.log("aca entresol");
       return;
     }
-    console.log("this.validaForm()");
-    console.log(this.validaForm());
     const query = {
         "email":this.payload.correo,
         "password":this.payload.password,
@@ -102,7 +92,6 @@ export class ValidacionComponent {
     this.registroService.solicitarCodigo(query).subscribe(
       {
         next: (res:any)=>{
-          console.log(res);
           this.spinner.hide();
           Swal.fire({
             title: '¡Atención!',
@@ -127,11 +116,8 @@ export class ValidacionComponent {
         confirmButtonColor: '#6a1c32',
         confirmButtonText: 'Aceptar',
       });
-      console.log("aca entreval");
       return;
     }
-    console.log("this.validaForm()");
-    console.log(this.validaForm());
     const query = {
         "email":this.payload.correo,
         "password":this.payload.password,
@@ -140,7 +126,6 @@ export class ValidacionComponent {
     this.registroService.validaCodigo(query).subscribe(
       {
         next: (res:any)=>{
-          console.log(res);
           Swal.fire({
             title: '¡Atención!',
             text: res.msg,
@@ -195,11 +180,10 @@ export class ValidacionComponent {
         confirmButtonColor: '#6a1c32',
         confirmButtonText: 'Aceptar',
       });
-      console.log("aca entreval");
+
       return;
     }
-    console.log("this.validaFormPass()");
-    console.log(this.validaFormPass());
+
     const query = {
         "email":this.payload.correo,
         "password":this.payload.cambiaPassword,
@@ -208,7 +192,6 @@ export class ValidacionComponent {
     this.registroService.cambiarPass(query).subscribe(
       {
         next: (res:any)=>{
-          console.log(res);
           Swal.fire({
             title: '¡Atención!',
             text: res.msg,

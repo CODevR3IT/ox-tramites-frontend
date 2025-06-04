@@ -1,5 +1,6 @@
 export interface ExpedienteCiudadano {
     id:                string;
+    folio:             string;
     tramite_data:      string;
     definition_id:     string;
     tarea_id_actual:   string;

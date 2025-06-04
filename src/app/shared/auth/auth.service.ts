@@ -41,8 +41,6 @@ export class AuthService {
       })
       .pipe(
         tap((user) => {
-          console.log("user");
-          console.log(user);
           if (user.token) {
             this.setSession(user);
           }
@@ -65,8 +63,6 @@ export class AuthService {
       .post<User>(`${this.apiUrl}/login/logout`, {}, this.httpOptions)
       .pipe(
         tap((res:any) => {
-          console.log("res");
-          console.log(res);
           if (res.message === "Sesión cerrada exitosamente") {
             this.payload = {};
             this.router.navigate(['/login']);
@@ -90,8 +86,6 @@ export class AuthService {
   }
 
   getUser(): User {
-    console.log("this.USER_DATA_KEY");
-    console.log(this.storageService.getData(this.USER_DATA_KEY));
     let { user: {
       idU,
       email,
@@ -131,8 +125,6 @@ export class AuthService {
     this.storageService.saveData(this.TOKEN_KEY, user.token);
     this.storageService.saveData(this.USER_DATA_KEY, JSON.stringify(user));
     const usuario = this.storageService.getData('usuario');
-    console.log("this.storageService");
-    console.log(this.storageService);
     this.payload.token = user.token;
     this.isAuthenticated = true;
     this.router.navigate(['/inicio']);
