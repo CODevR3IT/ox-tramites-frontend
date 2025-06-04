@@ -28,4 +28,7 @@ export class MisTramitesService {
   definitionSubmitForm(id:string, payload:any){
     return this.http.post<ResponseMessage>(`${this.api}/tramites/submit-form/${id}`, payload).pipe(tap(this.responseSuccess));;
   }
+  getMarkdown(id: string) {
+    return this.http.get<string>(`${this.api}/tramites/markdown/${id}`);
+  }
 }
