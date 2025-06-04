@@ -33,7 +33,7 @@ export class MisExpedientesComponent {
 
   getData() {
     this.paginationService
-      .findAll<ExpedienteCiudadano>('/expedientes', this.paginationQuery)
+      .findAll<ExpedienteCiudadano>('/expedientes/ciudadano/find-all', this.paginationQuery)
       .subscribe((data: PaginateLaravel<ExpedienteCiudadano>) => (this.paginationData = data));
   }
 
