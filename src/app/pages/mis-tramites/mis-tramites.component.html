@@ -37,7 +37,7 @@
         <ng-template>
           <div class="list-group list-group-flush list-group-hoverable">
             @for (tramite of categoria.tramites; track $index) {
-            <div class="list-group-item"  [routerLink]="'/inicio-tramite/' + tramite.id">
+            <div class="list-group-item cursor-pointer"  [routerLink]="'/inicio-tramite/' + tramite.id">
               <div class="row align-items-center">
                 <div class="col-auto"><span class="badge bg-green"></span></div>
                 <div class="col-auto">

@@ -34,7 +34,7 @@ export class HeaderComponent {
     { titulo: 'Notificacion 4', mensaje: 'Mensaje de la notificacion 4', badge: 'badge badge-info' },
     { titulo: 'Notificacion 5', mensaje: 'Mensaje de la notificacion 5', badge: 'status-dot-animated bg-green' }
   ];
-  notificacionRes: any;
+  notificacionRes: any[] = [];
   constructor(private readonly authService: AuthService,
     private readonly route: ActivatedRoute,
     private readonly ssoService: SsoService,

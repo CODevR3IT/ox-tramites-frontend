@@ -97,11 +97,11 @@
                       </div>
                     </div>
                   </div> -->
-                <div class="list-group-item">
+                <div class="list-group-item cursor-pointer" (click)="deleteNotifications(notificacion.id)">
                   <div class="row align-items-center">
                     <div class="col-auto"><span class="status-dot d-block" [ngClass]="notificacion.badge"></span></div>
                     <div class="col text-truncate">
-                      <a href="javascript:void(0)" class="text-body d-block" (click)="deleteNotifications(notificacion.id)">{{notificacion.data?.titulo}}</a>
+                      <span class="text-body d-block" >{{notificacion.data?.titulo}}</span>
                       <div class="d-block text-muted text-truncate mt-n1">
                         {{notificacion.data.message}}
                       </div>
