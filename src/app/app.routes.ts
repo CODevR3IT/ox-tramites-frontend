@@ -42,7 +42,7 @@ export const routes: Routes = [
         path: 'inicio-tramite/:id', component: InicioTramiteComponent, data: {breadcrumb: 'Inicio trámite'},
       },
       { 
-        path: 'tramite/info/:id', component: TramitesMarkdownComponent, data: {breadcrumb: 'Inicio trámite'},
+        path: 'tramite/info/:id', component: TramitesMarkdownComponent,
       }
     ],
   },
