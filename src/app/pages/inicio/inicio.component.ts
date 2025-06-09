@@ -22,7 +22,7 @@ export interface NavMenu {
   templateUrl: './inicio.component.html',
 })
 export class InicioComponent {
-  app: AppPublic = {} as AppPublic;
+  app: any;
   // Variables para el menú
   isSmallScreen: boolean = false;
   navMenus: NavMenu[] = [
