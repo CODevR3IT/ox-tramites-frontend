@@ -1,13 +1,15 @@
 import { transition, trigger, useAnimation } from '@angular/animations';
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { MisTramitesComponent } from '../mis-tramites/mis-tramites.component';
 import { TramitesServiciosComponent } from "../tramites-servicios/tramites-servicios.component";
 import { MisExpedientesComponent } from "../mis-expedientes/mis-expedientes.component";
 import { TramitesCitasComponent } from "../tramites-citas/tramites-citas.component";
+import { RegistroService } from '../../shared/services/registro.service';
+import { AppPublic } from '../../shared/interfaces/app-public.interface';
 export interface NavMenu {
   title: string;
   icon: string;
@@ -16,10 +18,11 @@ export interface NavMenu {
 }
 @Component({
   selector: 'app-inicio',
-  imports: [CommonModule, NgbNavModule, MisTramitesComponent, TramitesServiciosComponent, MisExpedientesComponent, TramitesCitasComponent],
+  imports: [NgbCarouselModule, CommonModule, NgbNavModule, MisTramitesComponent, TramitesServiciosComponent, MisExpedientesComponent, TramitesCitasComponent],
   templateUrl: './inicio.component.html',
 })
 export class InicioComponent {
+  app: AppPublic = {} as AppPublic;
   // Variables para el menú
   isSmallScreen: boolean = false;
   navMenus: NavMenu[] = [
@@ -30,12 +33,20 @@ export class InicioComponent {
   ]
   constructor(
     private spinner: NgxSpinnerService,
+    private registroService: RegistroService,
   ){
     this.checkScreenSize();
   }
 
   ngOnInit(){
     this.spinner.show();
+    this.registroService.getApp().subscribe(
+      {
+        next: (res: any) => {
+          this.app = res
+        },
+      }
+    );
     this.obtieneTramites();
   }
 
