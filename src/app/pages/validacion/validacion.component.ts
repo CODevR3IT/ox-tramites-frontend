@@ -80,7 +80,7 @@ export class ValidacionComponent {
         title: '¡Atención!',
         text: 'Ingrese los campos solicitados.',
         icon: 'error',
-        confirmButtonColor: '#6a1c32',
+        confirmButtonColor: '#03277E',
         confirmButtonText: 'Aceptar',
       });
       return;
@@ -97,7 +97,7 @@ export class ValidacionComponent {
             title: '¡Atención!',
             text: res.msg,
             icon: 'success',
-            confirmButtonColor: '#6a1c32',
+            confirmButtonColor: '#03277E',
             confirmButtonText: 'Aceptar',
           });
           this.correoError = '';
@@ -113,7 +113,7 @@ export class ValidacionComponent {
         title: '¡Atención!',
         text: 'Ingrese los campos solicitados.',
         icon: 'error',
-        confirmButtonColor: '#6a1c32',
+        confirmButtonColor: '#03277E',
         confirmButtonText: 'Aceptar',
       });
       return;
@@ -130,7 +130,7 @@ export class ValidacionComponent {
             title: '¡Atención!',
             text: res.msg,
             icon: 'success',
-            confirmButtonColor: '#6a1c32',
+            confirmButtonColor: '#03277E',
             confirmButtonText: 'Aceptar',
           });
           this.correoError = '';
@@ -177,7 +177,7 @@ export class ValidacionComponent {
         title: '¡Atención!',
         text: 'Ingrese los campos solicitados.',
         icon: 'error',
-        confirmButtonColor: '#6a1c32',
+        confirmButtonColor: '#03277E',
         confirmButtonText: 'Aceptar',
       });
 
@@ -196,7 +196,7 @@ export class ValidacionComponent {
             title: '¡Atención!',
             text: res.msg,
             icon: 'success',
-            confirmButtonColor: '#6a1c32',
+            confirmButtonColor: '#03277E',
             confirmButtonText: 'Aceptar',
           });
           this.correoError = '';

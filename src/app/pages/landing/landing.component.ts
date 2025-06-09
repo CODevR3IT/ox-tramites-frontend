@@ -307,7 +307,7 @@ export class LandingComponent {
         title: '¡Atención!',
         text: this.mensanjeValida,
         icon: 'error',
-        confirmButtonColor: '#6a1c32',
+        confirmButtonColor: '#03277E',
         confirmButtonText: 'Aceptar',
       });
     }
@@ -425,7 +425,7 @@ export class LandingComponent {
           title: '¡Atención!',
           text: 'Error al leer el archivo.',
           icon: 'error',
-          confirmButtonColor: '#6a1c32',
+          confirmButtonColor: '#03277E',
           confirmButtonText: 'Aceptar',
         });
       };
@@ -436,7 +436,7 @@ export class LandingComponent {
         title: '¡Atención!',
         text: 'El archivo debe ser menor a 5MB y formato PDF.',
         icon: 'error',
-        confirmButtonColor: '#6a1c32',
+        confirmButtonColor: '#03277E',
         confirmButtonText: 'Aceptar',
       });
     }
@@ -450,7 +450,7 @@ export class LandingComponent {
         title: '¡Atención!',
         text: 'El archivo no es un PDF válido.',
         icon: 'error',
-        confirmButtonColor: '#6a1c32',
+        confirmButtonColor: '#03277E',
         confirmButtonText: 'Aceptar',
       });
       return;
@@ -477,7 +477,7 @@ export class LandingComponent {
         title: '¡Atención!',
         text: 'Tu navegador bloqueó la nueva pestaña. Revisa los permisos de ventanas emergentes.',
         icon: 'error',
-        confirmButtonColor: '#6a1c32',
+        confirmButtonColor: '#03277E',
         confirmButtonText: 'Aceptar',
       });
     }

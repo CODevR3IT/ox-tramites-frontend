@@ -447,7 +447,7 @@
 
           <div class="col-lg-2 col-6" *ngIf="existeCURP && existeNotario"
             [ngClass]="isSmallScreen ? 'text-center' : 'text-end'">
-            <button class="btn btn-primary boton-celular" style="background-color: #b17a45!important;"
+            <button class="btn btn-primary boton-celular" style="background-color: #434344!important;"
               [disabled]="existeConfirma" (click)="guardar()" *ngIf="currentStep >= 3">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round"
@@ -461,7 +461,7 @@
             </button>
           </div>
           <div class="col-lg-2 col-6" *ngIf="!existeCURP" [ngClass]="isSmallScreen ? 'text-center' : 'text-end'">
-            <button class="btn btn-primary boton-celular" style="background-color: #b17a45!important;"
+            <button class="btn btn-primary boton-celular" style="background-color: #434344!important;"
               [disabled]="existeConfirma" (click)="guardarExtranjero()" *ngIf="currentStep >= 3">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round"
@@ -475,7 +475,7 @@
             </button>
           </div>
           <div class="col-lg-2 col-6" *ngIf="!existeNotario" [ngClass]="isSmallScreen ? 'text-center' : 'text-end'">
-            <button class="btn btn-primary boton-celular" style="background-color: #b17a45!important;"
+            <button class="btn btn-primary boton-celular" style="background-color: #434344!important;"
               [disabled]="existeConfirma" (click)="guardarNotario()" *ngIf="currentStep >= 3">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round"

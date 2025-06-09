@@ -1,7 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/@tabler/core/src/scss/core";
-$primary: #6a1c32;
-$tertiary: #b17a45;
+// $primary: #6a1c32;
+// $tertiary: #b17a45;
+$primary: #03277E;
+$tertiary: #434344;
 $link-color: $primary;
 $link-hover-color: $primary;
 $form-select-focus-border-color: $primary;
@@ -169,12 +171,12 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 
 /* Estilo cuando el paso está activo */
 .step-item.active .step-marker {
-  background-color: #6a1c32;
+  background-color: #03277E;
 }
 
 /* Estilo cuando el paso ya fue completado */
 .step-item.completed .step-marker {
-  background-color: #b17a45;
+  background-color: #434344;
 }
 
 .boton-celular{
@@ -211,13 +213,13 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 // INICIO
 // ++++++++++++++++++++++++
 
-.img-carrusel{
-  height: 500px!important;
-}
+// .img-carrusel{
+//   height: 500px!important;
+// }
 
-.img-carrusel-celular{
-  height: 200px!important;
-}
+// .img-carrusel-celular{
+//   height: 200px!important;
+// }
 
 .card-pagos, .card-boletas, .card-servicios{
   background-color: $primary!important;
@@ -289,4 +291,54 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 
 .color-OC-modo-oscuro{
   color: #FFF!important;
+}
+
+/* ESTILOS MEJORADOS PARA EL CARRUSEL */
+.carrusel-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+ 
+.fixed-size-carousel {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+ 
+.picsum-img-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+}
+ 
+.img-carrusel {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+ 
+.tech-list {
+  list-style-type: none;
+  padding-left: 0;
+  li {
+      font-size: 1.1rem;
+      padding: 0.5rem 0;
+      position: relative;
+      padding-left: 1.5rem;
+&::before {
+          content: "•";
+          color: #00a8ff;
+          font-size: 1.5rem;
+          position: absolute;
+          left: 0;
+          top: 0;
+      }
+  }
 }

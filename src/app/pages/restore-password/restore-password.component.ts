@@ -153,7 +153,7 @@ export class RestorePasswordComponent {
             title: '¡Atención!',
             text: res.msg,
             icon: 'success',
-            confirmButtonColor: '#6a1c32',
+            confirmButtonColor: '#03277E',
             confirmButtonText: 'Aceptar',
           });
 
