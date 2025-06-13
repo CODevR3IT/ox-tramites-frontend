@@ -21,7 +21,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class LoginComponent {
   private formBuilder = inject(FormBuilder);
-  payload:any = {
+  payload: any = {
     correo: '',
     password: ''
   };
@@ -47,12 +47,14 @@ export class LoginComponent {
     private readonly router: Router,
     private readonly authService: AuthService,
     private spinner: NgxSpinnerService,
-  ){
+  ) {
     this.checkScreenSize();
   }
 
-  ngOnInit(){
-    //this.spinner.show();
+  ngOnInit() {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/inicio']);
+    }
   }
 
   @HostListener('window:resize')
@@ -63,13 +65,13 @@ export class LoginComponent {
   get emailErrors() {
     return isValidControl(this.loginForm.get('email'));
   }
-  get emailMessageError(){
+  get emailMessageError() {
     return getMessageError(this.loginForm.get('email')?.errors, 'correo electrónico');
   }
   get passwordErrors() {
     return isValidControl(this.loginForm.get('password'));
   }
-  get passwordMessageError(){
+  get passwordMessageError() {
     return getMessageError(this.loginForm.get('password')?.errors, 'contraseña', 'La contraseña debe de tener mínimo 6 caracteres con una letra mayúscula, minúscula y un número.');
   }
 

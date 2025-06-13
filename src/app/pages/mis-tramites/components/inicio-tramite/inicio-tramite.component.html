@@ -3,7 +3,7 @@
     <div class="card-status-top bg-primary"></div>
     <div class="card-body">
       <div class="container py-5">
-        @if(camundaComponents.length > 0) {
+        @if(cargaComponents) {
         <app-camunda-form
           [components]="camundaComponents"
           (onSubmitForm)="onSubmit($event)"

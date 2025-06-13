@@ -14,6 +14,7 @@ import { CamundaFormComponent } from '../../../../shared/components/camunda-form
 })
 export class InicioTramiteComponent {
   idTramite: string = '';
+  cargaComponents: boolean = false;
   camundaComponents: CamundaComponent[] = [];
 
   constructor(
@@ -25,7 +26,10 @@ export class InicioTramiteComponent {
 
   ngOnInit(): void {
     this.idTramite = this.activateRoute.snapshot.paramMap.get('id') || '';
-    this.misTramitesService.findStartForm(this.idTramite).subscribe((res: CamundaForm) => this.camundaComponents = res.components);
+    this.misTramitesService.findStartForm(this.idTramite).subscribe((res: CamundaForm) => {
+      this.camundaComponents = res.components;
+      this.cargaComponents = true;
+    });
   }
 
   onSubmit(event: any): void {
