@@ -10,6 +10,7 @@ import { MisExpedientesComponent } from "../mis-expedientes/mis-expedientes.comp
 import { TramitesCitasComponent } from "../tramites-citas/tramites-citas.component";
 import { RegistroService } from '../../shared/services/registro.service';
 import { AppPublic } from '../../shared/interfaces/app-public.interface';
+import { RouterOutlet } from '@angular/router';
 export interface NavMenu {
   title: string;
   icon: string;

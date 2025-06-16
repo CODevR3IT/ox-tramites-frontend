@@ -5,10 +5,11 @@ import { environment } from '../../../environments/environment';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
+  const router = inject(Router);
   if(authService.isLoggedIn()){
     return true;
   } else {
-    window.location.href = `${environment.loginUrl}/login/${environment.appUuid}`;
+    router.navigate(['/login']);
     return false;
   } 
 };

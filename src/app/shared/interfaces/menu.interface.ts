@@ -3,6 +3,7 @@ export interface Menu {
     label: string;
     iconClass: string;
     submenu?: SubMenu;
+    hasChildren: boolean;
     hasSubmenu: boolean;
 }
 

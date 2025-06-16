@@ -1,0 +1,28 @@
+<div class="datagrid">
+  @for (item of components; track $index) { @switch (item.type) {
+  @case('string') {
+  <div class="datagrid-item">
+    <div class="datagrid-title">{{ item.label }}</div>
+    <div class="datagrid-content">{{ item.value }}</div>
+  </div>
+  } @case('file') {
+  <div class="datagrid-item">
+    <div class="datagrid-title">{{ item.label }}</div>
+    <div class="datagrid-content">
+      <a class="btn btn-primary" target="_blank" [href]="fileUrl + item.value"
+        ><i class="ti ti-download me-2"></i>Descargar</a
+      >
+    </div>
+  </div>
+  } @case('date') {
+  <div class="datagrid-item">
+    <div class="datagrid-title">{{ item.label }}</div>
+    <div class="datagrid-content">{{ item.value }}</div>
+  </div>
+  } @case('boolean') {
+  <div class="datagrid-item">
+    <div class="datagrid-title">{{ item.label }}</div>
+    <div class="datagrid-content">{{ item.value == "true" ? "Si" : "No" }}</div>
+  </div>
+  } } }
+</div>

@@ -7,11 +7,12 @@ import { ExpedienteCiudadano } from './expediente-ciudadano.interface';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-mis-expedientes',
   standalone: true,
-  imports: [NgbPaginationModule, CommonModule, FormsModule],
+  imports: [NgbPaginationModule, CommonModule, FormsModule, RouterLink],
   templateUrl: './mis-expedientes.component.html',
   styles: ``
 })

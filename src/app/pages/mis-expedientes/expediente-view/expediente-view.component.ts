@@ -14,7 +14,6 @@ export class ExpedienteViewComponent {
 processMenu: Menu[] = [
     { label: 'Datos Generales', route: 'general', iconClass: 'ti ti-settings', hasSubmenu: false, hasChildren: false },
     { label: 'Oficios', route: 'oficios', iconClass: 'ti ti-file-text', hasSubmenu: false, hasChildren: false },
-    { label: 'Diagrama', route: 'bpmn', iconClass: 'ti ti-sitemap', hasSubmenu: false, hasChildren: false },
     { label: 'Trazabilidad', route: 'trazabilidad', iconClass: 'ti ti-timeline', hasSubmenu: false, hasChildren: false },
   ];
 }

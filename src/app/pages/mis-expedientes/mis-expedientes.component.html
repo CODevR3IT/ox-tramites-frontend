@@ -14,7 +14,7 @@
             @for (expediente of paginationData.data; track $index) {
             <tr>
                 <td>
-                    <button type="button" class="btn btn-icon"><i class="ti ti-eye"></i></button>
+                    <button type="button" class="btn btn-icon" [routerLink]="'/expediente/' + expediente.id"><i class="ti ti-eye"></i></button>
                 </td>
                 <td>{{expediente.folio}}</td>
                 <td>{{expediente.tramite.tramite}}</td>

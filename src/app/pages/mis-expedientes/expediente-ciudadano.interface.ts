@@ -27,6 +27,7 @@ export interface Tarea {
 }
  
 export interface Tramite {
+    configuracion: any;
     id:           string;
     tramite:      string;
     process_key:  string;

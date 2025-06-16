@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ExpedientesService } from '../expedientes.service';
-import { ExpedienteCiudadano } from '../../tasks/expediente.ciudadano.interface';
-import { Tramite } from '../../tramites/tramite.interface';
-import { TramitesService } from '../../tramites/tramites.service';
-import { DataGeneral } from '../expedientes.interface';
 import { DataGridComponent } from '../../../shared/components/data-grid/data-grid.component';
+import { ExpedienteCiudadano, Tramite } from '../expediente-ciudadano.interface';
+import { DataGeneral } from '../expedientes.interface';
+import { ExpedientesService } from '../expedientes.service';
+import { TramitesService } from '../tramites.service';
 
 @Component({
   selector: 'app-expediente-general',

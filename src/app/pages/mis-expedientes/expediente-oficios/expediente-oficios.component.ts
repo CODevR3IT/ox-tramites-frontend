@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ExpedientesService } from '../expedientes.service';
-import { OficioExpediente } from '../expedientes.interface';
+
 import { environment } from '../../../../environments/environment';
+import { OficioExpediente } from '../expedientes.interface';
+import { ExpedientesService } from '../expedientes.service';
 
 @Component({
   selector: 'app-expediente-oficios',
