@@ -1,0 +1,20 @@
+<div class="card">
+  <div class="card-status-top bg-primary"></div>
+  <div class="card-header">
+    <h3 class="card-title">Tárea {{ tareaTitulo }}</h3>
+  </div>
+  <div class="card-body">
+    <app-data-grid [components]="dataGeneral"></app-data-grid>
+    <br>
+    @if (components.length > 0) {
+    <app-camunda-form
+      [components]="components"
+      [payLoad]="payload"
+      [buttonText]="'Completar Tarea'"
+      (onSubmitForm)="onSubmit($event)"
+    ></app-camunda-form>
+    } @else {
+      <button type="button" class="btn btn-primary" (click)="onSubmit('')">Completar Tárea</button>
+    }
+  </div>
+</div>

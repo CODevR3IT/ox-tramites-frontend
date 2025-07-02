@@ -22,6 +22,8 @@ export interface Tarea {
     tarea_descripcion: string;
     prioridad:         string;
     tramite_id:        string;
+    target_group:      string[];
+    target_user:       string[];
     created_at:        Date;
     updated_at:        Date;
 }

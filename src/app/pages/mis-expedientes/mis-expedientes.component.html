@@ -1,36 +1,78 @@
-<div class="table-responsive">
-    <table class="table card-table table-vcenter text-nowrap datatable">
-        <thead>
-            <tr>
-                <th></th>
-                <th><button class="table-sort" (click)="sort('')">Folio</button></th>
-                <th><button class="table-sort" (click)="sort('')">Trámite</button></th>
-                <th><button class="table-sort" (click)="sort('')">Fecha Alta</button></th>
-                <th><button class="table-sort" (click)="sort('')">Estado Actual</button></th>
-                <th><button class="table-sort" (click)="sort('')">Fecha Act.</button></th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (expediente of paginationData.data; track $index) {
-            <tr>
-                <td>
-                    <button type="button" class="btn btn-icon" [routerLink]="'/expediente/' + expediente.id"><i class="ti ti-eye"></i></button>
-                </td>
-                <td>{{expediente.folio}}</td>
-                <td>{{expediente.tramite.tramite}}</td>
-                <td>{{expediente.created_at | date: 'd/M/y HH:mm'}}</td>
-                <td>{{expediente.tarea.tarea}}</td>
-                <td>{{expediente.updated_at| date: 'd/M/y HH:mm'}}</td>
-            </tr>
-            }
-        </tbody>
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-vcenter text-nowrap datatable">
+      <thead>
+        <tr>
+          <th></th>
+          <th><button class="table-sort" (click)="sort('')">Folio</button></th>
+          <th>
+            <button class="table-sort" (click)="sort('')">Trámite</button>
+          </th>
+          <th>
+            <button class="table-sort" (click)="sort('')">Fecha Alta</button>
+          </th>
+          <th>
+            <button class="table-sort" (click)="sort('')">Estado Actual</button>
+          </th>
+          <th>
+            <button class="table-sort" (click)="sort('')">Fecha Act.</button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (expediente of paginationData.data; track $index) {
+        <tr>
+          <td>
+            <div class="btn-list">
+              <button
+                type="button"
+                class="btn btn-icon"
+                [routerLink]="'/expediente/' + expediente.id"
+              >
+                <i class="ti ti-eye"></i>
+              </button>
+              @if(expediente.tarea.target_group && expediente.tarea.target_group.includes('CIUD') ){
+
+              <button
+                class="btn btn-icon"
+                routerLink="/tarea/{{ expediente.id }}"
+              >
+                <i class="ti ti-subtask"> </i>
+                <span
+                  class="badge badge-dot bg-red badge-notification badge-blink"
+                ></span>
+              </button>
+              }
+            </div>
+          </td>
+          <td>{{ expediente.folio }}</td>
+          <td>{{ expediente.tramite.tramite }}</td>
+          <td>{{ expediente.created_at | date : "d/M/y HH:mm" }}</td>
+          <td>{{ expediente.tarea.tarea }}</td>
+          <td>{{ expediente.updated_at | date : "d/M/y HH:mm" }}</td>
+        </tr>
+        }
+      </tbody>
     </table>
+  </div>
+  <div class="card-body">
+    <p class="m-0 text-secondary">
+      Mostrando <span> {{ paginationQuery.page }}</span> -
+      <span> {{ paginationData.last_page }} </span> de
+      <span> {{ paginationData.total }} </span> entradas
+    </p>
+  </div>
+  <div class="card-footer">
+    <ngb-pagination
+      class="m-0 ms-auto"
+      [(page)]="paginationQuery.page"
+      (pageChange)="getData()"
+      [pageSize]="paginationQuery.limit || 10"
+      [boundaryLinks]="true"
+      [collectionSize]="paginationData.total"
+      [ellipses]="false"
+      [rotate]="true"
+      [maxSize]="5"
+    />
+  </div>
 </div>
-<p class="m-0 text-secondary mt-5 mb-5">
-    Mostrando <span> {{ paginationQuery.page }}</span> -
-    <span> {{ paginationData.last_page }} </span> de
-    <span> {{ paginationData.total }} </span> entradas
-</p>
-<ngb-pagination class="m-0 ms-auto" [(page)]="paginationQuery.page" (pageChange)="getData()"
-    [pageSize]="paginationQuery.limit || 10" [boundaryLinks]="true" [collectionSize]="paginationData.total"
-    [ellipses]="false" [rotate]="true" [maxSize]="5" />

@@ -15,6 +15,7 @@ import { ExpedienteViewComponent } from './pages/mis-expedientes/expediente-view
 import { ExpedienteGeneralComponent } from './pages/mis-expedientes/expediente-general/expediente-general.component';
 import { ExpedienteOficiosComponent } from './pages/mis-expedientes/expediente-oficios/expediente-oficios.component';
 import { ExpedienteTrazabilidadComponent } from './pages/mis-expedientes/expediente-trazabilidad/expediente-trazabilidad.component';
+import { CompleteTaskComponent } from './pages/complete-task/complete-task.component';
 
 export const routes: Routes = [
   { path: 'auth', component: AuthComponent },
@@ -58,6 +59,12 @@ export const routes: Routes = [
           },
           { path: '', redirectTo: 'general', pathMatch: 'full' },
         ],
+      },
+       {
+        path: 'tarea/:id',
+        component: CompleteTaskComponent,
+        data: { breadcrumb: 'Tarea' },
+        canActivate: [authGuard],
       },
       {
         path: 'olvide-password', component: ForgotPasswordComponent,
