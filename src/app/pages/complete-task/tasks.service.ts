@@ -18,7 +18,7 @@ export class TasksService {
   constructor(private readonly http: HttpClient) { }
 
   completeTask(idExpediente: string, body: any){
-    return this.http.post<ResponseMessage>(`${this.api}/tareas/complete/${idExpediente}`, body).pipe(tap(this.responseSuccess));
+    return this.http.post<ResponseMessage>(`${this.api}/tareas/complete/externo/${idExpediente}`, body).pipe(tap(this.responseSuccess));
   }
 
   getTaskForm(key:string){
