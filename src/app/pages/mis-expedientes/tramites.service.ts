@@ -17,26 +17,26 @@ export class TramitesService {
   constructor(private readonly http: HttpClient) { }
 
   findOne(id: string) {
-    return this.http.get<Tramite>(`${this.api}/tramites/${id}`);
+    return this.http.get<Tramite>(`${this.api}/ciudadano/tramites/${id}`);
   }
 
   getCategorias() {
-    return this.http.get<Categoria[]>(`${this.api}/tramites/find-all/categorias`);
+    return this.http.get<Categoria[]>(`${this.api}/ciudadano/tramites/find-all/categorias`);
   }
 
   create(tramite: FormData) {
-    return this.http.post<ResponseMessage>(`${this.api}/tramites`, tramite).pipe(tap(this.responseSuccess));
+    return this.http.post<ResponseMessage>(`${this.api}/ciudadano/tramites`, tramite).pipe(tap(this.responseSuccess));
   }
 
   update(id: string, tramite: TramiteCreate) {	
-    return this.http.patch<ResponseMessage>(`${this.api}/tramites/${id}`, tramite).pipe(tap(this.responseSuccess));
+    return this.http.patch<ResponseMessage>(`${this.api}/ciudadano/tramites/${id}`, tramite).pipe(tap(this.responseSuccess));
   }
 
   setMarkdown(id: string, markdown: string) {	
-    return this.http.patch<ResponseMessage>(`${this.api}/tramites/markdown/${id}`, {markdown: markdown}).pipe(tap(this.responseSuccess));
+    return this.http.patch<ResponseMessage>(`${this.api}/ciudadano/tramites/markdown/${id}`, {markdown: markdown}).pipe(tap(this.responseSuccess));
   }
   
   getMarkdown(id: string) {
-    return this.http.get<string>(`${this.api}/tramites/markdown/${id}`);
+    return this.http.get<string>(`${this.api}/ciudadano/tramites/markdown/${id}`);
   }
 }
