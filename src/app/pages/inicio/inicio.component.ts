@@ -30,7 +30,7 @@ export class InicioComponent {
     { title: 'Difusión de trámites y servicios', icon: 'ti ti-ad-2', id: 'difusion', active: true },
     { title: 'Solicitud de trámite', icon: 'ti ti-browser-plus', id: 'solicitud', active: false },
     { title: 'Avance en atención', icon: 'ti ti-checkup-list', id: 'avance', active: false },
-    { title: 'Citas en línea', icon: 'ti ti-calendar-search', id: 'citas', active: false }
+    //{ title: 'Citas en línea', icon: 'ti ti-calendar-search', id: 'citas', active: false }
   ]
   constructor(
     private spinner: NgxSpinnerService,

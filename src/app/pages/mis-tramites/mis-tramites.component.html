@@ -27,8 +27,8 @@
   </div>
 </div>
 <div ngbAccordion [closeOthers]="true">
-  @for (categoria of categorias; track $index) {
-  <div ngbAccordionItem>
+  @for (categoria of categorias; track $index;let first = $first) {
+  <div ngbAccordionItem [collapsed]="!first">
     <h2 ngbAccordionHeader>
       <button ngbAccordionButton>{{ categoria.categoria }}</button>
     </h2>
