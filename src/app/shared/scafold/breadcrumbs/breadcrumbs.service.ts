@@ -15,6 +15,7 @@ export class BreadcrumsbService {
   readonly breadcrumbs$ = this._breadcrumbs$.asObservable();
 
   constructor(private router: Router) {
+    
     this.router.events.pipe(
       // Filter the NavigationEnd events as the breadcrumb is updated only when the route reaches its end
       filter((event) => event instanceof NavigationEnd)
@@ -33,7 +34,7 @@ export class BreadcrumsbService {
     if (route) {
       // Construct the route URL
       const routeUrl = parentUrl.concat(route.url.map(url => url.path));
-
+   
       // Add an element for the current route part
       if (route.data['breadcrumb']) {
         const breadcrumb = {

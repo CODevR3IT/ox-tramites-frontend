@@ -127,7 +127,7 @@ export class AuthService {
     const usuario = this.storageService.getData('usuario');
     this.payload.token = user.token;
     this.isAuthenticated = true;
-    this.router.navigate(['/inicio']);
+    this.router.navigate(['/']);
   }
   getProfileBase64() {
     return this.http.get<ProfileImg>(`${this.apiUrl}/auth/profile-img`);

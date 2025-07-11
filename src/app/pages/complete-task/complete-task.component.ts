@@ -57,7 +57,7 @@ export class CompleteTaskComponent {
   }
   onSubmit(payload: any) {
     this.tasksService.completeTask(this.expedienteId, payload).subscribe((res) => {
-      this.router.navigate(['/inicio']);
+      this.router.navigate(['/']);
     });
   }
 } 

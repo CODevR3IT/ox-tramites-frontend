@@ -30,13 +30,11 @@ export const routes: Routes = [
         path: 'validacion', component: ValidacionComponent,
       },
       {
-        path: '', component: LoginComponent,
-      },
-      {
         path: 'login', component: LoginComponent,
       },
       {
-        path: 'inicio', component: InicioComponent, canActivate: [authGuard],
+        path: '', component: InicioComponent, canActivate: [authGuard],
+         data: { breadcrumb: 'Inicio' }
       },
       {
         path: 'expediente/:id',

@@ -34,12 +34,12 @@ export class InicioTramiteComponent {
 
   onSubmit(event: any): void {
     this.misTramitesService.definitionSubmitForm(this.idTramite, event).subscribe((res) => {
-      this.router.navigate(['/inicio']);
+      this.router.navigate(['/']);
     });
   }
 
   cancel() {
-    this.router.navigate(['/inicio']);
+    this.router.navigate(['/']);
   }
 
 }
