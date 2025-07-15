@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { ProfileImg, User } from './interfaces/user.interface';
+import { ResponseLogin, User } from './interfaces/user.interface';
 import { StorageService } from '../services/storage.service';
 import { tap } from 'rxjs';
 import { Router } from '@angular/router';
@@ -30,19 +30,19 @@ export class AuthService {
     private readonly http: HttpClient,
     private readonly storageService: StorageService,
     private readonly router: Router
-  ) {}
+  ) { }
 
   login(email: string, password: string) {
     //this.setAccessToken(accessToken);
     return this.http
-      .post<User>(`${this.apiUrl}/login/login`, {
+      .post<ResponseLogin>(`${this.apiUrl}/login/login`, {
         email,
         password
       })
       .pipe(
-        tap((user) => {
-          if (user.token) {
-            this.setSession(user);
+        tap((res) => {
+          if (res.token) {
+            this.setSession(res);
           }
         })
       );
@@ -70,7 +70,12 @@ export class AuthService {
         })
       );*/
     //window.location.href = `${environment.loginUrl}/login/${environment.appUuid}`;
-    
+
+  }
+
+  getUser(): User {
+    const userData = this.storageService.getData(this.USER_DATA_KEY);
+    return JSON.parse(userData || '{}') as User;
   }
 
   isLoggedIn() {
@@ -85,61 +90,24 @@ export class AuthService {
     this.storageService.saveData(this.TOKEN_KEY, accessToken);
   }
 
-  getUser(): User {
-    let { user: {
-      idU,
-      email,
-      ciudadano:{
-          idC,
-          curp,
-          nombre,
-          primer_apellido,
-          segundo_apellido,
-      }
-    },sub, full_name, role, rolekey, access_token, token } = JSON.parse(
-      this.storageService.getData(this.USER_DATA_KEY)
-    );
-    let user: User = {
-      user: {
-        idU,
-        email,
-        ciudadano:{
-            idC,
-            curp,
-            nombre,
-            primer_apellido,
-            segundo_apellido,
-        }
-      },
-      sub,
-      full_name,
-      access_token,
-      role,
-      rolekey,
-      token
-    };
-    return user;
-  }
-  private setSession(user: User) {
-    //this.storageService.saveData('usuario', { nombre: 'Carlos', token: '123' });
-    this.storageService.saveData(this.TOKEN_KEY, user.token);
-    this.storageService.saveData(this.USER_DATA_KEY, JSON.stringify(user));
-    const usuario = this.storageService.getData('usuario');
-    this.payload.token = user.token;
+  /*getUser(): User {
+    
+  }*/
+  private setSession(response: ResponseLogin) {
+    this.storageService.saveData(this.TOKEN_KEY, response.token);
+    this.storageService.saveData(this.USER_DATA_KEY, JSON.stringify(response.user));
+    this.payload.token = response.token;
     this.isAuthenticated = true;
     this.router.navigate(['/']);
   }
-  getProfileBase64() {
-    return this.http.get<ProfileImg>(`${this.apiUrl}/auth/profile-img`);
-  }
 
-  forgotPassword(body: ForgotPasswordDto){
-    return this.http.post<ResponseMessage>(`${this.apiUrl}/datosUser/olvidePasswordT`, body).pipe(tap((res) => this.responseSuccess(res).then(() =>  this.router.navigate(['/login']))));
+  forgotPassword(body: ForgotPasswordDto) {
+    return this.http.post<ResponseMessage>(`${this.apiUrl}/datosUser/olvidePasswordT`, body).pipe(tap((res) => this.responseSuccess(res).then(() => this.router.navigate(['/login']))));
   }
-  restorePassword(body: RestorePasswordDto){
-    return this.http.post<ResponseMessage>(`${this.apiUrl}/datosUser/cambiaPassword`, body).pipe(tap((res) => this.responseSuccess(res).then(() =>  this.router.navigate(['/login']))));
+  restorePassword(body: RestorePasswordDto) {
+    return this.http.post<ResponseMessage>(`${this.apiUrl}/datosUser/cambiaPassword`, body).pipe(tap((res) => this.responseSuccess(res).then(() => this.router.navigate(['/login']))));
   }
-  changePassword(body: ChangePasswordDto){
-    return this.http.patch<ResponseMessage>(`${this.apiUrl}/auth/reset-password`, body).pipe(tap((res) => this.responseSuccess(res).then(() =>  this.router.navigate(['/login']))));
+  changePassword(body: ChangePasswordDto) {
+    return this.http.patch<ResponseMessage>(`${this.apiUrl}/auth/reset-password`, body).pipe(tap((res) => this.responseSuccess(res).then(() => this.router.navigate(['/login']))));
   }
 }

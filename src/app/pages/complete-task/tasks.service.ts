@@ -2,12 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { CamundaForm } from '../../shared/components/camunda-form/camunda-form.interface';
-
 import { PaginateLaravel } from '../../shared/interfaces/laravel.paginate.interface';
-import { ExpedienteCiudadano, Tarea } from '../mis-expedientes/expediente-ciudadano.interface';
 import { tap } from 'rxjs';
 import { responseSuccess } from '../../shared/helpers/response.helper';
 import { ResponseMessage } from '../../shared/interfaces/response-message.interface';
+import { Tarea } from '../mis-expedientes/expedientes.interface';
 
 @Injectable({
   providedIn: 'root'

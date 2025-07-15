@@ -1,3 +1,20 @@
+export interface Expediente {
+    id:                string;
+    folio:             string;
+    tramite_data:      string;
+    definition_id:     string;
+    tarea_id_actual:   string;
+    tramite_id:        string;
+    user_id:      string;
+    ended_at:          Date | null;
+    id_usuario_actual: string;
+    usuario_actual:    string;
+    created_at:        Date;
+    updated_at:        Date;
+    tarea:             Tarea;
+    tramite:           Tramite;
+}
+ 
 export interface Tarea {
     id:                string;
     tarea:             string;
@@ -5,8 +22,26 @@ export interface Tarea {
     tarea_descripcion: string;
     prioridad:         string;
     tramite_id:        string;
+    target_group:      string[];
+    target_user:       string[];
     created_at:        Date;
     updated_at:        Date;
+}
+ 
+export interface Tramite {
+    configuracion: any;
+    id:           string;
+    tramite:      string;
+    process_key:  string;
+    descripcion:  string;
+    icon:         string;
+    link_ayuda:   string;
+    link_archivo: string;
+    link_img:     string;
+    activo:       boolean;
+    categoria_id: string;
+    created_at:   Date;
+    updated_at:   Date;
 }
 
 export interface ProcessXml {
@@ -45,22 +80,7 @@ export interface ExpedienteTrazabilidad {
     updated_at:          Date;
     tarea:               Tarea;
 }
-export interface Tramite {
-    id:            string;
-    tramite:       string;
-    process_key:   string;
-    descripcion:   string;
-    icon:          string;
-    link_ayuda:    string;
-    link_archivo:  string;
-    link_img:      string;
-    is_cita:       boolean;
-    activo:        boolean;
-    categoria_id:  string;
-    created_at:    Date;
-    updated_at:    Date;
-    configuracion: Configuracion;
-}
+
 
 export interface Configuracion {
     id:               string;

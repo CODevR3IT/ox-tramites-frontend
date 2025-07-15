@@ -74,7 +74,22 @@ export class HeaderComponent {
       }
     });
   }
+  get nombreCompleto() {
+    if(this.user && this.user.ciudadano) {
+      return `${this.user.ciudadano.nombre || ''} ${this.user.ciudadano.primer_apellido || ''}`.trim();
+    }
+    if(this.user && this.user.notario) {
+      return `${this.user.notario.nombre || ''} ${this.user.notario.primer_apellido || ''}`.trim();
+    }
+    return '';
+  }
 
+  get claveNotario(){
+    if(this.user && this.user.notario) {
+      return this.user.notario.clave_notario || '';
+    }
+    return '';
+  }
   getNotifications() {
     const token = this.authService.getAccessToken();
     this.httpOptions = {

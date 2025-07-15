@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataGridComponent } from '../../../shared/components/data-grid/data-grid.component';
-import { ExpedienteCiudadano, Tramite } from '../expediente-ciudadano.interface';
-import { DataGeneral } from '../expedientes.interface';
+import { DataGeneral, Expediente, Tramite } from '../expedientes.interface';
 import { ExpedientesService } from '../expedientes.service';
 import { TramitesService } from '../tramites.service';
 
@@ -15,7 +14,7 @@ import { TramitesService } from '../tramites.service';
 })
 export class ExpedienteGeneralComponent {
   expedienteId: string = '';
-  dataExpediente: ExpedienteCiudadano = {} as ExpedienteCiudadano;
+  dataExpediente: Expediente = {} as Expediente;
   dataTramite: Tramite = {} as Tramite;
   dataGeneral: DataGeneral[] = [];
   tituloTramite = '';
@@ -31,7 +30,7 @@ export class ExpedienteGeneralComponent {
   }
 
   getDataExp() {
-    this.expedienteService.findById(this.expedienteId).subscribe((res: ExpedienteCiudadano) => {
+    this.expedienteService.findById(this.expedienteId).subscribe((res: Expediente) => {
       this.dataExpediente = res;
       this.tituloTramite = this.dataExpediente.tramite.tramite;
       this.getDataTramite(this.dataExpediente.tramite.id);

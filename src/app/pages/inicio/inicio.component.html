@@ -29,12 +29,12 @@
     <div class="tab-content">
       <div class="tab-pane active show" id="difusion" role="tabpanel">
         <h4>Difusión de trámites y servicios</h4>
-        <app-tramites-servicios></app-tramites-servicios>
+        <app-tramites-servicios [categorias]="categorias"></app-tramites-servicios>
       </div>
    
       <div class="tab-pane" id="solicitud" role="tabpanel">
         <h4>Solicitud de trámite</h4>
-        <app-mis-tramites></app-mis-tramites>
+        <app-mis-tramites [categorias]="categorias"></app-mis-tramites>
       </div>
       <div class="tab-pane" id="avance" role="tabpanel">
         <h4>Avance de atención</h4>

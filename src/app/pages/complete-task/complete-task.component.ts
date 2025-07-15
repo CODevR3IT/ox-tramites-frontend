@@ -3,8 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CamundaFormComponent } from '../../shared/components/camunda-form/camunda-form.component';
 import { CamundaComponent } from '../../shared/components/camunda-form/camunda-form.interface';
 import { DataGridComponent } from '../../shared/components/data-grid/data-grid.component';
-import { ExpedienteCiudadano, Tramite } from '../mis-expedientes/expediente-ciudadano.interface';
-import { DataGeneral } from '../mis-expedientes/expedientes.interface';
+import { DataGeneral, Expediente, Tramite } from '../mis-expedientes/expedientes.interface';
 import { ExpedientesService } from '../mis-expedientes/expedientes.service';
 import { TramitesService } from '../mis-expedientes/tramites.service';
 import { TasksService } from './tasks.service';
@@ -22,7 +21,7 @@ export class CompleteTaskComponent {
   expedienteId: string = '';
   components: CamundaComponent[] = [];
   camundaVariables: CamundaVariable[] = [];
-  dataExpediente: ExpedienteCiudadano = {} as ExpedienteCiudadano;
+  dataExpediente: Expediente = {} as Expediente;
   dataTramite: Tramite = {} as Tramite;
   dataGeneral: DataGeneral[] = [];
   payload = {};

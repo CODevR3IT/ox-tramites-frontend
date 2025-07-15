@@ -11,6 +11,8 @@ import { TramitesCitasComponent } from "../tramites-citas/tramites-citas.compone
 import { RegistroService } from '../../shared/services/registro.service';
 import { AppPublic } from '../../shared/interfaces/app-public.interface';
 import { RouterOutlet } from '@angular/router';
+import { Categoria } from '../mis-tramites/interfaces/tramites.interface';
+import { MisTramitesService } from '../mis-tramites/mis-tramites.service';
 export interface NavMenu {
   title: string;
   icon: string;
@@ -26,6 +28,7 @@ export class InicioComponent {
   app: any;
   // Variables para el menú
   isSmallScreen: boolean = false;
+  categorias: Categoria[] = [];
   navMenus: NavMenu[] = [
     { title: 'Difusión de trámites y servicios', icon: 'ti ti-ad-2', id: 'difusion', active: true },
     { title: 'Solicitud de trámite', icon: 'ti ti-browser-plus', id: 'solicitud', active: false },
@@ -35,11 +38,12 @@ export class InicioComponent {
   constructor(
     private spinner: NgxSpinnerService,
     private registroService: RegistroService,
-  ){
+    private readonly misTramitesService: MisTramitesService
+  ) {
     this.checkScreenSize();
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.spinner.show();
     this.registroService.getApp().subscribe(
       {
@@ -49,6 +53,9 @@ export class InicioComponent {
       }
     );
     this.obtieneTramites();
+    this.misTramitesService.findAll().subscribe((res: Categoria[]) => {
+      this.categorias = res;
+    });
   }
 
   @HostListener('window:resize')
@@ -60,7 +67,7 @@ export class InicioComponent {
     this.isSmallScreen = window.innerWidth < 768; // <768px se considera pantalla chica
   }
 
-  obtieneTramites(){
+  obtieneTramites() {
     this.spinner.hide();
   }
 }

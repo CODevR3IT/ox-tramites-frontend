@@ -3,11 +3,11 @@ import { PaginateQuery, OrderBy } from '../../shared/interfaces/paginate-query.i
 import { Paginate } from '../../shared/interfaces/paginate.interface';
 import { PaginationService } from '../../shared/services/pagination.service';
 import { PaginateLaravel } from '../../shared/interfaces/laravel.paginate.interface';
-import { ExpedienteCiudadano } from './expediente-ciudadano.interface';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterLink } from '@angular/router';
+import { Expediente } from './expedientes.interface';
 
 @Component({
   selector: 'app-mis-expedientes',
@@ -25,7 +25,7 @@ export class MisExpedientesComponent {
     orderBy: OrderBy.ASC,
     orderField: '',
   };
-  public paginationData: PaginateLaravel<ExpedienteCiudadano> = { total: 0, last_page: 0, data: [] };
+  public paginationData: PaginateLaravel<Expediente> = { total: 0, last_page: 0, data: [] };
   constructor(private readonly paginationService: PaginationService,) {}
 
   ngOnInit() {
@@ -34,8 +34,8 @@ export class MisExpedientesComponent {
 
   getData() {
     this.paginationService
-      .findAll<ExpedienteCiudadano>('/ciudadano/expedientes', this.paginationQuery)
-      .subscribe((data: PaginateLaravel<ExpedienteCiudadano>) => (this.paginationData = data));
+      .findAll<Expediente>('/public/expedientes', this.paginationQuery)
+      .subscribe((data: PaginateLaravel<Expediente>) => (this.paginationData = data));
   }
 
   sort(sort: string){

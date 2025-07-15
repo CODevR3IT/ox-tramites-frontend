@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { Categoria } from '../mis-tramites/interfaces/tramites.interface';
 import { MisTramitesService } from '../mis-tramites/mis-tramites.service';
@@ -12,15 +12,12 @@ import { RouterLink } from '@angular/router';
   styles: ``
 })
 export class TramitesServiciosComponent {
-  categorias: Categoria[] = [];
+  @Input() categorias: Categoria[] = [];
   fileEndpoint = environment.fileEndpoint + '/files/';
   constructor(
     private readonly misTramitesService: MisTramitesService,
   ) { }
 
   ngOnInit(): void {
-    this.misTramitesService.findAll().subscribe((res: Categoria[]) => {
-      this.categorias = res;
-    });
   }
 }

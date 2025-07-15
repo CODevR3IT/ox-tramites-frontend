@@ -18,17 +18,17 @@ export class MisTramitesService {
   ) { }
 
   findAll() {
-    return this.http.get<Categoria[]>(`${this.api}/ciudadano/tramites`);
+    return this.http.get<Categoria[]>(`${this.api}/public/tramites`);
   }
 
   findStartForm(id: string) {
-    return this.http.get<CamundaForm>(`${this.api}/ciudadano/tramites/start-form/${id}`);
+    return this.http.get<CamundaForm>(`${this.api}/public/tramites/start-form/${id}`);
   }
 
   definitionSubmitForm(id:string, payload:any){
-    return this.http.post<ResponseMessage>(`${this.api}/ciudadano/tramites/submit-form/${id}`, payload).pipe(tap(this.responseSuccess));;
+    return this.http.post<ResponseMessage>(`${this.api}/public/tramites/submit-form/${id}`, payload).pipe(tap(this.responseSuccess));;
   }
   getMarkdown(id: string) {
-    return this.http.get<string>(`${this.api}/ciudadano/tramites/markdown/${id}`);
+    return this.http.get<string>(`${this.api}/public/tramites/markdown/${id}`);
   }
 }
