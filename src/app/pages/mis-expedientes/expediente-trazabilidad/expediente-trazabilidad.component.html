@@ -1,38 +1,60 @@
 <ul class="timeline">
   @for (traza of dataTrazabilidad; track $index) {
-  <li class="timeline-event">
-    <div class="timeline-event-icon">
-      <!-- Download SVG icon from http://tabler.io/icons/icon/check -->
-      @if(traza.usuario_finalizo){
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="icon icon-1"
-      >
-        <path d="M5 12l5 5l10 -10" />
-      </svg>
-      } @else {
-        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-clock-hour-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 7v5" /><path d="M12 12l2 -3" /></svg>
-      }
-    </div>
-    <div class="card timeline-event-card">
-      <div class="card-body">
-        <div class="text-secondary float-end">
-          {{ traza.created_at | date : "dd/MM/y HH:mm" }}
+    @if(traza.usuario_finalizo){
+      <li class="timeline-event">
+        <div class="timeline-event-icon">
+          <!-- Download SVG icon from http://tabler.io/icons/icon/check -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon icon-1"
+          >
+            <path d="M5 12l5 5l10 -10" />
+          </svg>
         </div>
-        <h4>{{ traza.tarea.tarea }}</h4>
-        <p class="text-secondary">
-          Usuario finalizo {{ traza.usuario_finalizo }}
-        </p>
-      </div>
-    </div>
-  </li>
+        <div class="card timeline-event-card">
+          <div class="card-body">
+            <div class="text-secondary float-end">
+              {{ traza.updated_at | date : "dd/MM/y HH:mm" }}
+            </div>
+            <h4>{{ traza.tarea.tarea }}</h4>
+            <p class="text-secondary">
+              Usuario finalizo {{ traza.usuario_finalizo }}
+            </p>
+          </div>
+        </div>
+      </li>
+    } @else {
+      <li class="timeline-event">
+        <div class="timeline-event-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="icon icon-tabler icons-tabler-outline icon-tabler-clock-hour-1">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+            <path d="M12 7v5" />
+            <path d="M12 12l2 -3" />
+          </svg>
+        </div>
+        <div class="card timeline-event-card">
+          <div class="card-body">
+            <div class="text-secondary float-end">
+              {{ traza.updated_at | date : "dd/MM/y HH:mm" }}
+            </div>
+            <h4>{{ traza.tarea.tarea }}</h4>
+            <p class="text-secondary">
+              Tarea en proceso
+            </p>
+          </div>
+        </div>
+      </li>
+    }
   }
 </ul>
