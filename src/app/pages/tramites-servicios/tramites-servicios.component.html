@@ -5,6 +5,7 @@
       value=""
       class="form-control form-control-rounded"
       placeholder="Buscar trámite"
+       [(ngModel)]="filterText"
     />
     <span class="input-icon-addon">
       <!-- Download SVG icon from http://tabler.io/icons/icon/search -->
@@ -27,7 +28,7 @@
   </div>
 </div>
 <div ngbAccordion [closeOthers]="true">
-  @for (categoria of categorias; track $index; let first = $first) {
+  @for (categoria of categoriasFiltradas; track $index; let first = $first) {
   <div ngbAccordionItem [collapsed]="!first">
     <h2 ngbAccordionHeader>
       <button ngbAccordionButton>{{ categoria.categoria }}</button>
