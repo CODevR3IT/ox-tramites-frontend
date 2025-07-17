@@ -1,11 +1,11 @@
 <div class="datagrid">
   @for (item of components; track $index) { @switch (item.type) {
-  @case('string') {
+  @case('textfield') {
   <div class="datagrid-item">
     <div class="datagrid-title">{{ item.label }}</div>
     <div class="datagrid-content">{{ item.value }}</div>
   </div>
-  } @case('file') {
+  } @case('filepicker') {
   <div class="datagrid-item">
     <div class="datagrid-title">{{ item.label }}</div>
     <div class="datagrid-content">
@@ -14,15 +14,15 @@
       >
     </div>
   </div>
-  } @case('date') {
+  } @case('datetime') {
   <div class="datagrid-item">
     <div class="datagrid-title">{{ item.label }}</div>
     <div class="datagrid-content">{{ item.value }}</div>
   </div>
-  } @case('boolean') {
+  } @case('radio') {
   <div class="datagrid-item">
     <div class="datagrid-title">{{ item.label }}</div>
-    <div class="datagrid-content">{{ item.value == "true" ? "Si" : "No" }}</div>
+    <div class="datagrid-content">{{ item.value }}</div>
   </div>
   } } }
 </div>

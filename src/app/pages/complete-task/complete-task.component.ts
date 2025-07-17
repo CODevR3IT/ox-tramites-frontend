@@ -37,21 +37,16 @@ export class CompleteTaskComponent {
     this.expedienteId = this.route.snapshot.paramMap.get('id') || '';
     this.expedientesService.findById(this.expedienteId).subscribe((res) => {
       this.dataExpediente = res;
-      this.tareaTitulo = this.dataExpediente.tarea.tarea;
+      this.tareaTitulo = this.dataExpediente.tarea!.tarea;
       this.getDataTramite(this.dataExpediente.tramite.id);
-      this.tasksService.getTaskForm(this.dataExpediente.tarea.tarea_key).subscribe((res) => this.components = res.components);
+      this.tasksService.getTaskForm(this.dataExpediente.tarea!.tarea_key).subscribe((res) => this.components = res.components);
     });
 
   }
   getDataTramite(id: string) {
     this.tramiteService.findOne(id).subscribe((res: Tramite) => {
       this.dataTramite = res;
-
-      this.dataGeneral = JSON.parse(this.dataTramite.configuracion.init_data_labels).init;
-      const tramiteData = JSON.parse(this.dataExpediente.tramite_data);
-      for (let index = 0; index < this.dataGeneral.length; index++) {
-        this.dataGeneral[index]['value'] = tramiteData[this.dataGeneral[index]['key']];
-      }
+      this.dataGeneral = this.dataExpediente.tramite_data;
     });
   }
   onSubmit(payload: any) {

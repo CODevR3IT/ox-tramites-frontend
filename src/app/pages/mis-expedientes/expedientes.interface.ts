@@ -1,17 +1,18 @@
 export interface Expediente {
     id:                string;
     folio:             string;
-    tramite_data:      string;
+    tramite_data:      DataGeneral[];
     definition_id:     string;
     tarea_id_actual:   string;
     tramite_id:        string;
+    estatus:         string;
     user_id:      string;
     ended_at:          Date | null;
     id_usuario_actual: string;
     usuario_actual:    string;
     created_at:        Date;
     updated_at:        Date;
-    tarea:             Tarea;
+    tarea?:             Tarea | null;
     tramite:           Tramite;
 }
  

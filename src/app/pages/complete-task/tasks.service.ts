@@ -17,11 +17,11 @@ export class TasksService {
   constructor(private readonly http: HttpClient) { }
 
   completeTask(idExpediente: string, body: any){
-    return this.http.post<ResponseMessage>(`${this.api}/tareas/complete/externo/${idExpediente}`, body).pipe(tap(this.responseSuccess));
+    return this.http.post<ResponseMessage>(`${this.api}/public/tareas/complete/${idExpediente}`, body).pipe(tap(this.responseSuccess));
   }
 
   getTaskForm(key:string){
-    return this.http.get<CamundaForm>(`${this.api}/tareas/find-form/${key}`);
+    return this.http.get<CamundaForm>(`${this.api}/public/tareas/find-form/${key}`);
   }
 
   findById(id: string) {

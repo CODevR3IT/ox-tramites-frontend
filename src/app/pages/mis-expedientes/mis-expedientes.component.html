@@ -31,7 +31,7 @@
               >
                 <i class="ti ti-eye"></i>
               </button>
-              @if(expediente.tarea.target_group && expediente.tarea.target_group.includes('CIUD') ){
+              @if(expediente.tarea?.target_group && expediente.tarea?.target_group?.includes('NOTARIOS') ){
 
               <button
                 class="btn btn-icon"
@@ -48,7 +48,7 @@
           <td>{{ expediente.folio }}</td>
           <td>{{ expediente.tramite.tramite }}</td>
           <td>{{ expediente.created_at | date : "d/M/y HH:mm" }}</td>
-          <td>{{ expediente.tarea.tarea }}</td>
+          <td>{{ expediente.estatus  }}</td>
           <td>{{ expediente.updated_at | date : "d/M/y HH:mm" }}</td>
         </tr>
         }

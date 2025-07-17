@@ -40,12 +40,7 @@ export class ExpedienteGeneralComponent {
   getDataTramite(id: string) {
     this.tramiteService.findOne(id).subscribe((res: Tramite) => {
       this.dataTramite = res;
-    
-      this.dataGeneral = JSON.parse(this.dataTramite.configuracion.init_data_labels).init;
-      const tramiteData = JSON.parse(this.dataExpediente.tramite_data);
-      for (let index = 0; index < this.dataGeneral.length; index++) {
-        this.dataGeneral[index]['value'] = tramiteData[this.dataGeneral[index]['key']];       
-      }
+      this.dataGeneral = this.dataExpediente.tramite_data;
     });
   }
 

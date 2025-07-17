@@ -19,7 +19,7 @@ export class CamundaFormComponent {
   @Output() onSubmitForm = new EventEmitter<any>();
   form!: FormGroup;
   @Input() payLoad = {};
-  constructor(private cfs: CamundaFormService) {}
+  constructor(private cfs: CamundaFormService) { }
   ngOnInit() {
     this.form = this.cfs.toFormGroup(
       this.components as CamundaComponent[],
@@ -27,7 +27,15 @@ export class CamundaFormComponent {
     );
   }
   onSubmit() {
-    this.onSubmitForm.emit(this.form.value);
+    const payload = this.components?.map((component) => {
+        return {
+          key: component.key,
+          type : component.type,
+          value: this.form.value[component.key],
+          label: component.label || component.dateLabel,
+        };
+    }).filter((item) => item.value !== null && item.value !== undefined);
+    this.onSubmitForm.emit(payload);
   }
 
 }
