@@ -1,6 +1,11 @@
 <div class="datagrid">
   @for (item of components; track $index) { @switch (item.type) {
-  @case('textfield') {
+  @case('textarea') {
+  <div class="datagrid-item">
+    <div class="datagrid-title">{{ item.label }}</div>
+    <div class="datagrid-content">{{ item.value }}</div>
+  </div>
+  } @case('textfield') {
   <div class="datagrid-item">
     <div class="datagrid-title">{{ item.label }}</div>
     <div class="datagrid-content">{{ item.value }}</div>
