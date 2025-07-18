@@ -2,7 +2,7 @@
 @import "../node_modules/@tabler/core/src/scss/core";
 // $primary: #6a1c32;
 // $tertiary: #b17a45;
-$primary: #03277E;
+$primary: #2DA87F;
 $tertiary: #434344;
 $link-color: $primary;
 $link-hover-color: $primary;
@@ -171,7 +171,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 
 /* Estilo cuando el paso está activo */
 .step-item.active .step-marker {
-  background-color: #03277E;
+  background-color: $primary;
 }
 
 /* Estilo cuando el paso ya fue completado */

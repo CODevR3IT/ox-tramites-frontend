@@ -34,7 +34,7 @@ export const routes: Routes = [
       },
       {
         path: '', component: InicioComponent, canActivate: [authGuard],
-         data: { breadcrumb: 'Inicio' }
+         
       },
       {
         path: 'expediente/:id',
