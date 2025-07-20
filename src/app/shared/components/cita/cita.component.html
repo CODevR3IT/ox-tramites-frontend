@@ -1,0 +1,53 @@
+<ng-template
+  #dayTemplate
+  let-date
+  let-selected="selected"
+  let-disabled="disabled"
+>
+  <span
+    [ngClass]="{
+                'bg-success-lt text-white':
+                  getEstadoDia(date) === 'verde' && !selected && !disabled,
+                'bg-yellow-lt text-dark':
+                  getEstadoDia(date) === 'amarillo' && !selected && !disabled,
+                'bg-secondary text-white':
+                  getEstadoDia(date) === 'rojo' && !selected && !disabled,
+                  'bg-primary text-white': selected && !disabled,
+              }"
+    [style.opacity]="disabled ? 0.4 : 1"
+    style="
+      display: inline-block;
+      width: 2em;
+      height: 2em;
+      border-radius: 10%;
+      line-height: 2em;
+      text-align: center;
+    "
+  >
+    {{ date.day }}
+  </span>
+</ng-template>
+<div class="d-flex justify-content-center">
+  <ngb-datepicker
+    [displayMonths]="2"
+    [navigation]="'select'"
+    [showWeekNumbers]="false"
+    [outsideDays]="'visible'"
+    [markDisabled]="isDisabled"
+    [minDate]="minDate"
+    [maxDate]="maxDate"
+    [dayTemplate]="dayTemplate"
+    (dateSelect)="findAvailableTime()"
+    [(ngModel)]="date"
+  />
+</div>
+<div class="mt-5 row justify-content-center">
+  <div class="col-lg-6 col-md-auto col-sm-auto">
+    <select class="form-select" [disabled]="availableTimes.length === 0" [(ngModel)]="time">
+      <option value="">Seleccione el horario disponible...</option>
+      @for (times of availableTimes; track $index) {
+      <option [value]="times">{{ times }}</option>
+      }
+    </select>
+  </div>
+</div>

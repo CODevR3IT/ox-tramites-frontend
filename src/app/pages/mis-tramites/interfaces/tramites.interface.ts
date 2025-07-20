@@ -14,9 +14,14 @@ export interface Tramite {
     link_archivo?: string;
     icon?: string;
     link_img?: string;
+    is_cita: boolean;
     process_key: string;
     activo: boolean;
     categoria_id: string;
     created_at: Date;
     updated_at: Date;
+}
+
+export interface NowDate {
+    date: string;
 }

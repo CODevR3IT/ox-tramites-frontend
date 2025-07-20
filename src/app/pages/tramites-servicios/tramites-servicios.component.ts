@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-tramites-servicios',
-  imports: [NgbAccordionModule,RouterLink, FormsModule],
+  imports: [NgbAccordionModule, RouterLink, FormsModule],
   templateUrl: './tramites-servicios.component.html',
   styles: ``
 })
@@ -22,22 +22,22 @@ export class TramitesServiciosComponent {
 
   ngOnInit(): void {
   }
-    get categoriasFiltradas(): Categoria[] {
-     const quitarAcentos = (texto: string) =>
-    texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  get categoriasFiltradas(): Categoria[] {
+    const quitarAcentos = (texto: string) =>
+      texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
-  if (!this.filterText.trim()) {
-    return this.categorias;
-  }
-  const filtro = quitarAcentos(this.filterText);
+    if (!this.filterText.trim()) {
+      return this.categorias;
+    }
+    const filtro = quitarAcentos(this.filterText);
 
-  return this.categorias
-    .map(cat => ({
-      ...cat,
-      tramites: cat.tramites.filter(tramite =>
-        quitarAcentos(tramite.tramite).includes(filtro)
-      )
-    }))
-    .filter(cat => cat.tramites.length > 0);
+    return this.categorias
+      .map(cat => ({
+        ...cat,
+        tramites: cat.tramites.filter(tramite =>
+          quitarAcentos(tramite.tramite).includes(filtro)
+        )
+      }))
+      .filter(cat => cat.tramites.length > 0);
   }
 }

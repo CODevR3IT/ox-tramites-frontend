@@ -23,12 +23,8 @@ export class BreadcrumsbService {
       // Construct the breadcrumb hierarchy
       const root = this.router.routerState.snapshot.root;
       const breadcrumbs: Breadcrumb[] = [];
-      if (root.data['breadcrumb']) {
-        breadcrumbs.push({
-          label: 'Inicio',
-          url: '/'
-        });
-      }
+
+
       this.addBreadcrumb(root, [], breadcrumbs);
 
       // Emit the new hierarchy
@@ -42,6 +38,10 @@ export class BreadcrumsbService {
       const routeUrl = parentUrl.concat(route.url.map(url => url.path));
       // Add an element for the current route part
       if (route.data['breadcrumb']) {
+        breadcrumbs.push({
+          label: 'Inicio',
+          url: '/'
+        });
         const breadcrumb = {
           label: this.getLabel(route.data),
           url: '/' + routeUrl.join('/')

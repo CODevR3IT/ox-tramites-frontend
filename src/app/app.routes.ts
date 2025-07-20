@@ -71,10 +71,10 @@ export const routes: Routes = [
         path: 'cambio-pass', component: RestorePasswordComponent,
       },
       {
-        path: 'inicio-tramite/:id', component: InicioTramiteComponent, data: { breadcrumb: 'Inicio trámite' },
+        path: 'inicio-tramite/:id', component: InicioTramiteComponent, data: { breadcrumb: 'Alta trámite' },
       },
       {
-        path: 'tramite/info/:id', component: TramitesMarkdownComponent,
+        path: 'tramite/info/:id', component: TramitesMarkdownComponent,data: { breadcrumb: 'Información trámite' },
       }
     ],
   },

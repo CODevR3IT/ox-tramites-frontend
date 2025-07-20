@@ -5,7 +5,7 @@
       value=""
       class="form-control form-control-rounded"
       placeholder="Buscar trámite"
-       [(ngModel)]="filterText"
+      [(ngModel)]="filterText"
     />
     <span class="input-icon-addon">
       <!-- Download SVG icon from http://tabler.io/icons/icon/search -->
@@ -38,18 +38,25 @@
         <ng-template>
           <div class="list-group list-group-flush list-group-hoverable">
             @for (tramite of categoria.tramites; track $index) {
-            <div class="list-group-item" >
+            <div class="list-group-item">
               <div class="row align-items-center">
                 <div class="col-auto">
                   <span class="avatar avatar-1 cursor-pointer">
-                    <img [src]="fileEndpoint + tramite.link_img" [routerLink]="'/tramite/info/' + tramite.id" />
+                    <img
+                      [src]="fileEndpoint + tramite.link_img"
+                      [routerLink]="'/tramite/info/' + tramite.id"
+                    />
                   </span>
                 </div>
                 <div class="col text-truncate">
                   <!--<a [href]="tramite.link_ayuda" target="_blank" class="text-reset d-block">
                     {{ tramite.tramite }}</a
                   >-->
-                  <a [routerLink]="'/tramite/info/' + tramite.id" class="text-reset d-block">{{ tramite.tramite }}</a>
+                  <a
+                    [routerLink]="'/tramite/info/' + tramite.id"
+                    class="text-reset d-block"
+                    >{{ tramite.tramite }}</a
+                  >
                   <div class="d-block text-secondary text-truncate mt-n1">
                     {{ tramite.descripcion }}
                   </div>

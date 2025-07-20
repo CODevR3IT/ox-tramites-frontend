@@ -4,11 +4,12 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { provideNgxMask, NgxMaskDirective } from 'ngx-mask';
 import { validTypes } from './camunda-form-constants';
-import { NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerI18n, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { CamundaFormService } from '../camunda-form.service';
 import { environment } from '../../../../../environments/environment';
 import { SimpleDateAdapter, SimpleDateParserFormatter } from './simple-date.adapter';
 import { getMessageError, isValidControlClass } from './input-validator';
+import { NgbDatepickerEsI18n } from '../../../i18n/ngb-datepicker-es';
 
 
 @Component({
@@ -18,6 +19,7 @@ import { getMessageError, isValidControlClass } from './input-validator';
   templateUrl: './camunda-form-component.component.html',
   styles: ``,
   providers: [provideNgxMask(),
+  { provide: NgbDatepickerI18n, useClass: NgbDatepickerEsI18n },
   { provide: NgbDateAdapter, useClass: SimpleDateAdapter },
   { provide: NgbDateParserFormatter, useClass: SimpleDateParserFormatter }
   ],
@@ -32,15 +34,15 @@ export class CamundaFormComponentComponent {
   }
 
   get componentError() {
-    if(this.component.type === 'filepicker'){
-      return this.isFileUploaded && this.form.controls[this.component.key!].valid ? 'is-valid' :'is-invalid';
+    if (this.component.type === 'filepicker') {
+      return this.isFileUploaded && this.form.controls[this.component.key!].valid ? 'is-valid' : 'is-invalid';
     }
     return isValidControlClass(this.form.controls[this.component.key!]);
   }
 
-  get messageError(){
-    if(this.component.type === 'filepicker'){
-      return this.isFileUploaded && this.form.controls[this.component.key!].valid ? '' :'Debes de cargar un archivo';
+  get messageError() {
+    if (this.component.type === 'filepicker') {
+      return this.isFileUploaded && this.form.controls[this.component.key!].valid ? '' : 'Debes de cargar un archivo';
     }
     return getMessageError(this.form.controls[this.component.key!]?.errors, this.component.label && this.component.label.toLowerCase(), '')
   }
@@ -52,9 +54,9 @@ export class CamundaFormComponentComponent {
       if (match) {
         const level = match[0].length; // Cuenta cuántos # hay
         const content = text.replace(/^#+/, '').trim();
-        return `<h${level}>${content}</h${level}>`; 
+        return `<h${level}>${content}</h${level}>`;
       }
-      return `<span>${text}</span>`; 
+      return `<span>${text}</span>`;
     }
     return '';
   }
