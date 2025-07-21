@@ -1,4 +1,4 @@
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { ResponseMessage } from '../interfaces/response-message.interface';
 
 const swal = Swal.mixin({
@@ -19,7 +19,14 @@ export const responseAlertSuccess = () => {
     });
   };
 };
-
+export const fireSwal = (title: string, msg: string, icon: SweetAlertIcon) => {
+    swal.fire({
+      title: title,
+      text: msg,
+      icon: icon,
+      confirmButtonText: 'Aceptar',
+    });
+};
 export const responseAlertError = () => {
     return (message: string, title: string = '¡Atención!') => {
       swal.fire({

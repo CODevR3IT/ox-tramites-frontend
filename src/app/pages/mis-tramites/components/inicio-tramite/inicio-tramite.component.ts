@@ -7,6 +7,7 @@ import { Tramite } from '../../interfaces/tramites.interface';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { CitaComponent } from '../../../../shared/components/cita/cita.component';
 import { CitaConfig } from '../../../../shared/components/cita/cita.interface';
+import { fireSwal } from '../../../../shared/helpers/alert.helper';
 
 @Component({
   selector: 'app-inicio-tramite',
@@ -16,15 +17,18 @@ import { CitaConfig } from '../../../../shared/components/cita/cita.interface';
   styles: ``,
 })
 export class InicioTramiteComponent {
+
   idTramite: string = '';
   cargaComponents: boolean = false;
   camundaComponents: CamundaComponent[] = [];
 
   minDate: NgbDateStruct = {} as NgbDateStruct;
   maxDate: NgbDateStruct = {} as NgbDateStruct;
-
   tramite: Tramite = {} as Tramite;
   citaConfig: CitaConfig = {} as CitaConfig;
+  date: string = '';
+  time: string = '';
+
   constructor(
     private readonly misTramitesService: MisTramitesService,
     private readonly activateRoute: ActivatedRoute,
@@ -39,8 +43,8 @@ export class InicioTramiteComponent {
       this.tramite = res;
     });
     this.misTramitesService.findAvailableDate(this.idTramite).subscribe((res) => {
-      this.minDate = this.misTramitesService.dateToNgbDateStruct( new Date(res.minDate));
-      this.maxDate = this.misTramitesService.dateToNgbDateStruct( new Date(res.maxDate));
+      this.minDate = this.misTramitesService.dateToNgbDateStruct(new Date(res.minDate));
+      this.maxDate = this.misTramitesService.dateToNgbDateStruct(new Date(res.maxDate));
       this.citaConfig.minDate = new Date(res.minDate);
       this.citaConfig.maxDate = new Date(res.maxDate);
       this.citaConfig.disabledWeekDays = res.disabledWeekDays;
@@ -57,13 +61,22 @@ export class InicioTramiteComponent {
   }
 
   onSubmit(event: any): void {
-    this.misTramitesService.definitionSubmitForm(this.idTramite, event).subscribe((res) => {
+    if (this.tramite.is_cita && !this.date && !this.time) {
+      fireSwal('¡Atención!', 'Debe seleccionar una cita para continuar.', 'warning');
+      return;
+    }
+    this.misTramitesService.definitionSubmitForm(this.idTramite, { data: event, date: this.date, time: this.time }).subscribe((res) => {
       this.router.navigate(['/']);
     });
   }
 
   cancel() {
     this.router.navigate(['/']);
+  }
+
+  getCita(event: { fecha: string, hora: string }) {
+    this.date = event.fecha;
+    this.time = event.hora;
   }
 
 

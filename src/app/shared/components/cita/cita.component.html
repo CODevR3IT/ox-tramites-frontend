@@ -43,7 +43,7 @@
 </div>
 <div class="mt-5 row justify-content-center">
   <div class="col-lg-6 col-md-auto col-sm-auto">
-    <select class="form-select" [disabled]="availableTimes.length === 0" [(ngModel)]="time">
+    <select class="form-select" [disabled]="availableTimes.length === 0" [(ngModel)]="time" (change)="onTimeChange()">
       <option value="">Seleccione el horario disponible...</option>
       @for (times of availableTimes; track $index) {
       <option [value]="times">{{ times }}</option>

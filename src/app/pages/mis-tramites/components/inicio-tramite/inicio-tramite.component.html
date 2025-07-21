@@ -5,7 +5,7 @@
       <div class="container py-5">
         @if(tramite.is_cita  && minDate && maxDate && citaConfig.availableDays && citaConfig.availableDays!.length > 0 ) {
         <div class="mb-5">
-         <app-cita [citaConfig]="citaConfig" [minDate]="minDate" [maxDate]="maxDate" [idTramite]="idTramite"></app-cita>
+         <app-cita [citaConfig]="citaConfig" [minDate]="minDate" [maxDate]="maxDate" [idTramite]="idTramite" (onSelectCita)="getCita($event)"></app-cita>
         </div>
         } @if(cargaComponents) {
         <app-camunda-form

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbCalendar, NgbDate, NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerI18n, NgbDatepickerModule, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDatepickerEsI18n } from '../../i18n/ngb-datepicker-es';
 import { CommonModule } from '@angular/common';
@@ -25,6 +25,7 @@ export class CitaComponent {
   @Input() citaConfig: CitaConfig = {} as CitaConfig;
   @Input() minDate: NgbDateStruct = {} as NgbDateStruct;
   @Input() maxDate: NgbDateStruct = {} as NgbDateStruct;
+  @Output() onSelectCita = new EventEmitter<{ fecha: string, hora: string }>();
   date: string = '';
   time: string = '';
   availableTimes: string[] = [];
@@ -35,9 +36,9 @@ export class CitaComponent {
     this.isDisabled = (
       date: NgbDateStruct
     ) => {
-      return  this.citaConfig.holidays.find((x: any) =>
-        (new NgbDate(x.year, x.month, x.day).equals(date)) || 
-        (this.citaConfig.disabledWeekDays.includes(calendar.getWeekday(new NgbDate(date.year, date.month, date.day)))) || 
+      return this.citaConfig.holidays.find((x: any) =>
+        (new NgbDate(x.year, x.month, x.day).equals(date)) ||
+        (this.citaConfig.disabledWeekDays.includes(calendar.getWeekday(new NgbDate(date.year, date.month, date.day)))) ||
         this.getDisponibles(date) === 0
       )
         ? true
@@ -64,6 +65,9 @@ export class CitaComponent {
     this.misTramitesService.findAvailableTime(this.date, this.idTramite).subscribe(res => {
       this.availableTimes = res;
     });
+  }
+  onTimeChange() {
+    this.onSelectCita.emit({ fecha: this.date, hora: this.time });
   }
 
 }
