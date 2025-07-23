@@ -7,7 +7,6 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { MisTramitesComponent } from '../mis-tramites/mis-tramites.component';
 import { TramitesServiciosComponent } from "../tramites-servicios/tramites-servicios.component";
 import { MisExpedientesComponent } from "../mis-expedientes/mis-expedientes.component";
-import { TramitesCitasComponent } from "../tramites-citas/tramites-citas.component";
 import { RegistroService } from '../../shared/services/registro.service';
 import { AppPublic } from '../../shared/interfaces/app-public.interface';
 import { RouterOutlet } from '@angular/router';
@@ -21,7 +20,7 @@ export interface NavMenu {
 }
 @Component({
   selector: 'app-inicio',
-  imports: [NgbCarouselModule, CommonModule, NgbNavModule, MisTramitesComponent, TramitesServiciosComponent, MisExpedientesComponent, TramitesCitasComponent],
+  imports: [NgbCarouselModule, CommonModule, NgbNavModule, MisTramitesComponent, TramitesServiciosComponent, MisExpedientesComponent],
   templateUrl: './inicio.component.html',
 })
 export class InicioComponent {
