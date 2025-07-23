@@ -43,16 +43,17 @@ export class InicioTramiteComponent {
       this.tramite = res;
     });
     this.misTramitesService.findAvailableDate(this.idTramite).subscribe((res) => {
-      this.minDate = this.misTramitesService.dateToNgbDateStruct(new Date(res.minDate));
-      this.maxDate = this.misTramitesService.dateToNgbDateStruct(new Date(res.maxDate));
-      this.citaConfig.minDate = new Date(res.minDate);
-      this.citaConfig.maxDate = new Date(res.maxDate);
+      this.minDate = this.misTramitesService.dateToNgbDateStruct(res.minDate);
+      this.maxDate = this.misTramitesService.dateToNgbDateStruct(res.maxDate);
+      this.citaConfig.minDate = this.misTramitesService.dateToNgbDateStruct(res.minDate);
+      this.citaConfig.maxDate = this.misTramitesService.dateToNgbDateStruct(res.maxDate);
       this.citaConfig.disabledWeekDays = res.disabledWeekDays;
-      this.citaConfig.holidays = res.holidays.map((x: any) => new Date(x));
+      this.citaConfig.holidays = res.holidays.map((x: any) => this.misTramitesService.dateToNgbDateStruct(x));
       this.citaConfig.availableDays = res.availableDays.map((x: any) => ({
-        fecha: new Date(x.fecha),
+        fecha: this.misTramitesService.dateToNgbDateStruct(x.fecha),
         disponibles: x.disponibles
       }));
+      console.log(this.citaConfig);
     });
     this.misTramitesService.findStartForm(this.idTramite).subscribe((res: CamundaForm) => {
       this.camundaComponents = res.components;

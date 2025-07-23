@@ -7,7 +7,7 @@ import { ResponseMessage } from '../../shared/interfaces/response-message.interf
 import { tap } from 'rxjs';
 import { responseSuccess } from '../../shared/helpers/response.helper';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { CitaConfig } from '../../shared/components/cita/cita.interface';
+import { CitaConfig, CitaConfigResponse } from '../../shared/components/cita/cita.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -36,15 +36,18 @@ export class MisTramitesService {
   getMarkdown(id: string) {
     return this.http.get<string>(`${this.api}/public/tramites/markdown/${id}`);
   }
-  dateToNgbDateStruct(date: Date): NgbDateStruct {
+
+  dateToNgbDateStruct(ymd: string): NgbDateStruct {
+    const [year, month, day] = ymd.split('-').map(Number);
     return {
-      year: date.getFullYear(),
-      month: date.getMonth() + 1, // Los meses en Date empiezan en 0
-      day: date.getDate()
+      year,
+      month, // Los meses en Date empiezan en 0
+      day
     };
   }
-    findAvailableDate(tramiteId: string) {
-    return this.http.get<CitaConfig>(`${this.api}/public/tramites/cita/available-dates/${tramiteId}`);
+ 
+  findAvailableDate(tramiteId: string) {
+    return this.http.get<CitaConfigResponse>(`${this.api}/public/tramites/cita/available-dates/${tramiteId}`);
   }
   findAvailableTime(date: string, tramiteId: string) {
     return this.http.get<string[]>(`${this.api}/public/tramites/cita/available-time/${tramiteId}`, { params: { date } });

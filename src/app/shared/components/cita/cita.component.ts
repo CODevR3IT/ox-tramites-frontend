@@ -36,6 +36,7 @@ export class CitaComponent {
     this.isDisabled = (
       date: NgbDateStruct
     ) => {
+      console.log('isDisabled', date);
       return this.citaConfig.holidays.find((x: any) =>
         (new NgbDate(x.year, x.month, x.day).equals(date)) ||
         (this.citaConfig.disabledWeekDays.includes(calendar.getWeekday(new NgbDate(date.year, date.month, date.day)))) ||
@@ -55,8 +56,7 @@ export class CitaComponent {
   getDisponibles(date: NgbDateStruct): number {
 
     const fechaDisponible = this.citaConfig.availableDays.find(d => {
-      const de = this.misTramitesService.dateToNgbDateStruct(d.fecha);
-      return de.year === date.year && de.month === date.month && de.day === date.day;
+      return d.fecha.year === date.year && d.fecha.month === date.month && d.fecha.day === date.day;
     });
     return fechaDisponible?.disponibles || 0;
   }

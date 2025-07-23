@@ -1,12 +1,21 @@
+import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
+
 export interface CitaConfig {
-    minDate:          Date;
-    maxDate:          Date;
+    minDate:          NgbDateStruct;
+    maxDate:          NgbDateStruct;
     disabledWeekDays: number[];
-    holidays:         Date[];
+    holidays:         NgbDateStruct[];
+    availableDays:    AvailableDay[];
+}
+export interface CitaConfigResponse {
+    minDate:          string;
+    maxDate:          string;
+    disabledWeekDays: number[];
+    holidays:         string[];
     availableDays:    AvailableDay[];
 }
 
 export interface AvailableDay {
-    fecha:       Date;
+    fecha:       NgbDateStruct;
     disponibles: number;
 }
