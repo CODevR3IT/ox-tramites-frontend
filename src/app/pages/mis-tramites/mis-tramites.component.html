@@ -31,7 +31,7 @@
   @for (categoria of categoriasFiltradas; track $index;let first = $first) {
   <div ngbAccordionItem [collapsed]="!first">
     <h2 ngbAccordionHeader>
-      <button ngbAccordionButton>{{ categoria.categoria }}</button>
+      <button ngbAccordionButton class="text-primary">{{ categoria.categoria }}</button>
     </h2>
     <div ngbAccordionCollapse>
       <div ngbAccordionBody>
@@ -47,7 +47,7 @@
                     </span>
                   </a>
                 </div>
-                <div class="col text-truncate">
+                <div class="col text-truncate text-primary">
                     
                     {{ tramite.tramite }}
                   <div class="d-block text-secondary text-truncate mt-n1">
