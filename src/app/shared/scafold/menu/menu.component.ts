@@ -11,6 +11,9 @@ import { Menu } from '../../interfaces/menu.interface';
 })
 export class MenuComponent {
   public menus: Menu[] = [
-   // { label: 'Home', iconClass: 'ti ti-home', route: '/', hasSubmenu: false},
+   {
+     label: 'Home', iconClass: 'ti ti-home', route: '/', hasSubmenu: false,
+     hasChildren: false
+   },
   ];
 }
