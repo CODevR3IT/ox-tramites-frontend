@@ -7,8 +7,14 @@ import { PaginateQuery, OrderBy } from '../../shared/interfaces/paginate-query.i
 import { Paginate } from '../../shared/interfaces/paginate.interface';
 import { PaginationService } from '../../shared/services/pagination.service';
 import { PaginateLaravel } from '../../shared/interfaces/laravel.paginate.interface';
+import { TramitesService } from '../../shared/services/tramites.service';
 //import { Expediente } from './expedientes.interface';
 import Swal from 'sweetalert2';
+export interface dataToken {
+  access_token: any,
+  expires_at: any,
+  token_type: any,
+}
 
 @Component({
   selector: 'app-tramites',
@@ -17,6 +23,8 @@ import Swal from 'sweetalert2';
 })
 export class TramitesComponent {
   payload: any = {}
+  tokenData: dataToken = {} as dataToken;
+  data: any;
   private modalService = inject(NgbModal);
   closeResult: WritableSignal<string> = signal('');
   public paginationQuery: PaginateQuery = {
@@ -31,10 +39,40 @@ export class TramitesComponent {
   //para la paginación preguntar a Razo y Mario por cómo envían el back 
   constructor(
     private spinner: NgxSpinnerService,
+    private tramitesservice: TramitesService,
   ) { }
 
-  onInit() {
+  ngOnInit() {
+    this.getToken();
+  }
 
+  getToken(){
+    const query = {
+    "client_id": "f86f3bf8-6973-4ef3-a6e2-3973e54b3fca",
+    "client_secret": "22c6cd541b846161f8bb473072ffd0b5fe2727f97861898eebab1d9636a29ed8fdd29124e4bfb16c22d6023d45121fd3172e747f895802b5ba5bcb87d86042ed"
+    }
+    this.tramitesservice.getToken(query).subscribe(
+      {
+        next: (res: any) => {
+          console.log("TOKEN!!!!!!!");
+          this.tokenData = res;
+          console.log(this.tokenData);
+          this.getTramites();
+        },
+      }
+    );
+  }
+
+  getTramites(){
+    this.tramitesservice.getTramites('query', this.tokenData).subscribe(
+      {
+        next: (res: any) => {
+          console.log("TRAMITES!!!!!!!");
+          this.data = res;
+          console.log(this.data);
+        },
+      }
+    );
   }
 
   muestraAviso(content: TemplateRef<any>) {

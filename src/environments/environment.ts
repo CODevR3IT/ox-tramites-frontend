@@ -4,4 +4,5 @@ export const environment = {
     clientKey: '',
     appUuid: '807815e3-332f-4227-889b-2cc560e0b9e6',
     fileEndpoint: 'http://74.208.46.147/documental-services/api',
+    clientOax: 'https://apisgco.odigroup.mx',
 };
