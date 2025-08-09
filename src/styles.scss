@@ -391,7 +391,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   background: none;
   border: none;
   color: #ffffff;  /* texto blanco para botones */
-  font-size: 13px;
+  font-size: 10px;
   font-weight: 600;
   cursor: pointer;
   padding: 0;
@@ -408,6 +408,15 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 .table thead th.text-center {
   text-align: center;
   color: #ffffff;
+}
+
+.table th,
+.table td {
+  white-space: normal;       /* permite saltos de línea */
+  word-wrap: break-word;     /* rompe palabras largas */
+  overflow-wrap: anywhere;   /* rompe texto aunque no tenga espacios */
+  max-width: 200px;          /* evita que crezcan demasiado */
+  vertical-align: top;       /* para que el texto se alinee arriba si es multilinea */
 }
 
 
