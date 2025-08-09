@@ -17,6 +17,8 @@ import { ExpedienteOficiosComponent } from './pages/mis-expedientes/expediente-o
 import { ExpedienteTrazabilidadComponent } from './pages/mis-expedientes/expediente-trazabilidad/expediente-trazabilidad.component';
 import { CompleteTaskComponent } from './pages/complete-task/complete-task.component';
 import { TramitesComponent } from './pages/tramites/tramites.component';
+import { SubtramitesComponent } from './pages/subtramites/subtramites.component';
+import { ContribuyenteTramiteComponent } from './pages/contribuyente-tramite/contribuyente-tramite.component';
 
 export const routes: Routes = [
   { path: 'auth', component: AuthComponent },
@@ -35,6 +37,12 @@ export const routes: Routes = [
       },
       {
         path: 'tramites', component: TramitesComponent,
+      },
+      {
+        path: 'subtramites', component: SubtramitesComponent,
+      },
+      {
+        path: 'contribuyente-tramite', component: ContribuyenteTramiteComponent,
       },
       {
         path: '', component: InicioComponent, canActivate: [authGuard],
