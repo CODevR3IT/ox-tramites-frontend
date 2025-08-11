@@ -56,7 +56,7 @@ export class TramitesService {
         return this.http.post(url, payload, {});
     }
 
-    getTramites(payload: any, headers: any) {
+    getTramitesCiud(payload: any, headers: any) {
         console.log('Bearer '+headers.access_token);
         const opciones = {
             headers: new HttpHeaders({
@@ -72,59 +72,39 @@ export class TramitesService {
         return this.postQuery(`adeudos/vigentes`, payload);
     }
 
-    getCatSexo() {
-        return this.getQuery(`datosCatalogo/sexo`);
+    getTramite() {
+        return this.getQuery(`tramite`);
     }
 
-    getCatPais() {
-        return this.getQuery(`datosCatalogo/pais`);
+    getTramiteID() {
+        return this.getQuery(`tramite/obten`);
     }
 
-    getCatIde() {
-        return this.getQuery(`datosCatalogo/identificacion`);
+    guardarTramite(payload: any) {
+        return this.postQuery(`tramite/crea`, payload);
     }
 
-    getCP(cp: any) {
-        return this.getQuery(`datosCp/${cp}`);
-    }
-
-    getCURP(curp: any) {
-        return this.getQuery(`datosCURP/${curp}`);
-    }
-
-    guardar(payload: any) {
-        return this.postQuery(`datosCiudadano/guardaCiudadano`, payload);
-    }
-
-    guardarExtranjero(payload: any) {
-        return this.postQuery(`datosExtranjero/guardaExtranjero`, payload);
-    }
-
-    guardarNotario(payload: any) {
-        return this.postQuery(`datosNotario/guardaNotario`, payload);
-    }
-
-    solicitarCodigo(payload: any) {
-        return this.postQuery(`datosUser/obtenercodigo`, payload);
-    }
-
-    validaCodigo(payload: any) {
-        return this.postQuery(`datosUser/validaCodigo`, payload);
-    }
-
-    cambiarPass(payload: any) {
-        return this.postQuery(`datosUser/olvidePassword`, payload);
-    }
-
-    pedirCambioPassword(payload: any) {
-        return this.postQuery(`datosUser/pedirCambioPassword`, payload);
-    }
-
-    getNotifications(httpOptions: any) {
-        return this.getQuery(`notifications`);
+    actualizaTramiteID(payload: any) {
+        return this.patchQuery(`tramite/actualiza`, payload);
     }
 
     deleteNotifications(id: any, httpOptions: any) {
         return this.deleteQuery(`notifications/${id}`, httpOptions);
+    }
+
+    getsubTramite() {
+        return this.getQuery(`subtramite`);
+    }
+
+    getsubTramiteID() {
+        return this.getQuery(`subtramite/obten`);
+    }
+
+    guardarsubTramite(payload: any) {
+        return this.postQuery(`subtramite/crea`, payload);
+    }
+
+    actualizasubTramiteID(payload: any) {
+        return this.patchQuery(`subtramite/actualiza`, payload);
     }
 }

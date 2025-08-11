@@ -25,6 +25,7 @@ export class TramitesComponent {
   payload: any = {}
   tokenData: dataToken = {} as dataToken;
   data: any;
+  addEdit: number = 0;
   private modalService = inject(NgbModal);
   closeResult: WritableSignal<string> = signal('');
   public paginationQuery: PaginateQuery = {
@@ -43,28 +44,11 @@ export class TramitesComponent {
   ) { }
 
   ngOnInit() {
-    this.getToken();
+    this.getTramite();
   }
 
-  getToken(){
-    const query = {
-    "client_id": "f86f3bf8-6973-4ef3-a6e2-3973e54b3fca",
-    "client_secret": "22c6cd541b846161f8bb473072ffd0b5fe2727f97861898eebab1d9636a29ed8fdd29124e4bfb16c22d6023d45121fd3172e747f895802b5ba5bcb87d86042ed"
-    }
-    this.tramitesservice.getToken(query).subscribe(
-      {
-        next: (res: any) => {
-          console.log("TOKEN!!!!!!!");
-          this.tokenData = res;
-          console.log(this.tokenData);
-          this.getTramites();
-        },
-      }
-    );
-  }
-
-  getTramites(){
-    this.tramitesservice.getTramites('query', this.tokenData).subscribe(
+  getTramite() {
+    this.tramitesservice.getTramite().subscribe(
       {
         next: (res: any) => {
           console.log("TRAMITES!!!!!!!");
@@ -75,7 +59,8 @@ export class TramitesComponent {
     );
   }
 
-  muestraAviso(content: TemplateRef<any>) {
+  muestraAviso(content: TemplateRef<any>, tipo: number) {
+    this.addEdit = (tipo == 2 ? 2 : 1);
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'm', scrollable: true }).result.then(
       (result) => {
         this.closeResult.set(`Closed with: ${result}`);
@@ -84,6 +69,9 @@ export class TramitesComponent {
         this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
       },
     );
+    if (tipo == 2) {
+      this.getTramiteID();
+    }
   }
 
   private getDismissReason(reason: any): string {
@@ -97,8 +85,52 @@ export class TramitesComponent {
     }
   }
 
+  getTramiteID() {
+    this.tramitesservice.getTramiteID().subscribe(
+      {
+        next: (res: any) => {
+          console.log("TRAMITES!!!!!!!");
+          this.data = res;
+          console.log(this.data);
+        },
+      }
+    );
+  }
+
   guardarTramite() {
     console.log(this.payload);
+    const query = {
+      "descripcion": this.payload.tramite,
+      "tipo_usuarios_restringidos": "[2, 3, 4]"
+    }
+    this.tramitesservice.guardarTramite(query).subscribe(
+      {
+        next: (res: any) => {
+          console.log("GUARDAR!!!!!!!");
+          this.data = res;
+          console.log(this.data);
+          this.closeResult.set(`Closed with: ${res}`);
+          this.getTramite();
+        },
+      }
+    );
+  }
+
+  actualizaTramiteID() {
+    const query = {
+      "id": 2,
+      "descripcion": this.payload.tramite,
+    }
+    this.tramitesservice.actualizaTramiteID(query).subscribe(
+      {
+        next: (res: any) => {
+          console.log("GUARDAR!!!!!!!");
+          this.data = res;
+          console.log(this.data);
+          this.getTramite();
+        },
+      }
+    );
   }
 
   sort(sort: string) {

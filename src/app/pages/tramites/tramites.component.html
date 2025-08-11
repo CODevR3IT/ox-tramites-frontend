@@ -1,7 +1,7 @@
 <div class="card">
 
     <div class="col-12 text-left" style="margin-bottom: 2%;">
-        <button class="btn-tramite" (click)="muestraAviso(content)">
+        <button class="btn-tramite" (click)="muestraAviso(content,1)">
             <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -18,65 +18,43 @@
             <thead>
                 <tr>
                     <th>
-                        <button class="table-sort" (click)="sort('')">Nombre trámite</button>
+                        <button class="table-sort" (click)="sort('')">Descripción</button>
                     </th>
                     <th>
-                        <button class="table-sort" (click)="sort('')">Costo trámite</button>
+                        <button class="table-sort" (click)="sort('')">Fecha Creación</button>
                     </th>
                     <th>
-                        <button class="table-sort" (click)="sort('')">Documentos requeridos</button>
+                        <button class="table-sort" (click)="sort('')">Fecha Actualización</button>
                     </th>
                     <th>
-                        <button class="table-sort" (click)="sort('')">Fundamento juridico</button>
+                        <button class="table-sort" (click)="sort('')">Publicación</button>
                     </th>
-                    <th>
-                        <button class="table-sort" (click)="sort('')">Necesario predial</button>
-                    </th>
-                    <th>
-                        <button class="table-sort" (click)="sort('')">Necesario presente</button>
-                    </th>
-                    <th>
-                        <button class="table-sort" (click)="sort('')">Requiere pago</button>
-                    </th>
-                    <th>
-                        <button class="table-sort" (click)="sort('')">Tiempo respuesta</button>
-                    </th>
-                    <th>
-                        <button class="table-sort">Editar</button>
-                    </th>
-                    <th>
-                        <button class="table-sort" >Eliminar</button>
-                    </th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 @for (tramite of data; track $index) {
                 <tr>
-                    <td>{{tramite.nombre_tramite}}</td>
-                    <td>{{tramite.costo_tramite}}</td>
+                    <td>{{tramite.descripcion}}</td>
+                    <td>{{tramite.created_at}}</td>
+                    <td>{{tramite.updated_at}}</td>
                     <td>
-                        <ul>
-                            @for (docto of tramite.documentos_requeridos; track $index) {
-                            <li>{{docto.nombredocumento}}</li>
-                            <li>{{docto.obligatorio}}</li>
-                            }
-                        </ul>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        </div>
                     </td>
-                    <td>{{tramite.funda_juridico}}</td>
-                    <td>{{tramite.necesario_predial}}</td>
-                    <td>{{tramite.necesario_presentante}}</td>
-                    <td>{{tramite.requiere_pago_teso}}</td>
-                    <td>{{tramite.tiempo_respuesta_dias}}</td>
                     <td class="text-center">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-                            <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-                            <path d="M16 5l3 3" />
-                        </svg>
-
+                        <button class="btn-tramite" (click)="muestraAviso(content,2)">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                <path d="M16 5l3 3" />
+                            </svg>
+                        </button>
                     </td>
                     <td class="text-center">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -133,6 +111,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cerrar</button>
-        <button type="button" class="btn btn-aceptar" (click)="guardarTramite()">Aceptar</button>
+        <button type="button" *ngIf="addEdit == 1" class="btn btn-aceptar" (click)="guardarTramite()">Aceptar</button>
+        <button type="button" *ngIf="addEdit == 2" class="btn btn-aceptar" (click)="actualizaTramiteID()">Aceptar</button>
     </div>
 </ng-template>

@@ -56,14 +56,14 @@ export class ContribuyenteTramiteComponent {
           console.log("TOKEN!!!!!!!");
           this.tokenData = res;
           console.log(this.tokenData);
-          this.getTramites();
+          this.getTramitesCiud();
         },
       }
     );
   }
 
-  getTramites() {
-    this.tramitesservice.getTramites('query', this.tokenData).subscribe(
+  getTramitesCiud() {
+    this.tramitesservice.getTramitesCiud('query', this.tokenData).subscribe(
       {
         next: (res: any) => {
           console.log("TRAMITES!!!!!!!");
