@@ -1,10 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/@tabler/core/src/scss/core";
 
-// $primary: #6a1c32;
-// $tertiary: #b17a45;
-$primary: #2DA87F;
-$tertiary: #F8F9FA;
+$primary: #6a1c32;
+$tertiary: #b17a45;
+// $primary: #2DA87F;
+// $tertiary: #F8F9FA;
 $link-color: $primary;
 $link-hover-color: $primary;
 $form-select-focus-border-color: $primary;
@@ -354,8 +354,8 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background-color: #01987D; /* verde sólido */
-  color: #012D54; /* azul para texto */
+  background-color: #6a1c32; /* verde sólido */
+  color: #FFF; /* azul para texto */
   border: none;
   padding: 10px 16px;
   border-radius: 6px;
@@ -367,7 +367,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 }
 
 .btn-tramite .icon {
-  stroke: #012D54; /* azul para el ícono */
+  stroke: #FFF; /* azul para el ícono */
 }
 
 .btn-tramite:focus {
@@ -423,7 +423,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 // MODALS
 
 .modal-header {
-  background-color: #012D54; /* azul oscuro */
+  background-color: #6a1c32; /* azul oscuro */
   color: white;
   border-bottom: 1px solid #dee2e6;
 }
@@ -447,7 +447,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 }
 
 .btn-aceptar {
-  background-color: #01987D; /* verde sólido */
+  background-color: #6a1c32; /* verde sólido */
   color: white;
   border: none;
   padding: 8px 16px;
@@ -459,7 +459,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 
 /* Evita que Bootstrap meta su hover gris */
 .btn-aceptar:hover {
-  background-color: #01987D;
+  background-color: #6a1c32;
   color: white;
 }
 

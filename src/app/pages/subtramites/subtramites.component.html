@@ -34,6 +34,7 @@
                     </th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -59,6 +60,11 @@
                                 <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
                                 <path d="M16 5l3 3" />
                             </svg>
+                        </button>
+                    </td>
+                    <td class="text-center">
+                        <button class="btn-tramite" (click)="muestraCamposSubtramite(campos)">
+                            <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6h16" /><path d="M7 12h13" /><path d="M10 18h10" /></svg>
                         </button>
                     </td>
                     <td class="text-center">
@@ -96,6 +102,9 @@
     -->
 </div>
 
+
+<!-- MODALS -->
+
 <ng-template #content let-modal>
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Agregar subtrámite</h4>
@@ -119,7 +128,7 @@
                 <label class="form-label">Tipo de usuario</label>
                 <select class="form-select" multiple name="usuario" [(ngModel)]="payload.tipo_usuarios_restringidos"
                     [class.is-invalid]="usuario.invalid && (usuario.dirty || usuario.touched)" required
-                    #usuario="ngModel" style="width: 80%;">
+                    #usuario="ngModel" style="width: 100%;">
                     <option *ngFor="let usu of catTipoU" [value]="usu.id">{{usu.descripcion}}</option>
                 </select>
                 <label>
@@ -136,6 +145,7 @@
                 </select>
             </div>
             <div class="col-lg-12 col-12 mb-3">
+                <label class="form-label">Cargar Archivos</label>
                 <div class="custom-file-upload text-center" style="padding-top: 10px;">
                     <label for="fileInput">📁 Subir archivo</label>
                     <input id="fileInput" name="file" type="file" accept=".pdf"
@@ -174,6 +184,17 @@
                         a 5 MB, sólo formato PDF</span>
                 </div>
             </div>
+            <div class="col-lg-12 col-12 mb-3">
+                <label class="form-label">Ver Archivos</label>
+                <ul class="list-group">
+                    <li class="list-group-item d-flex">
+                        <a href="#"><svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-paperclip"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5" /></svg><span> Nombre del Archivo 1</span></a>
+                    </li>
+                    <li class="list-group-item d-flex">
+                        <a href="#"><svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-paperclip"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5" /></svg><span> Nombre del Archivo 2</span></a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="modal-footer">
@@ -183,4 +204,113 @@
         <button type="button" *ngIf="addEdit == 2" class="btn btn-aceptar"
             (click)="actualizasubTramiteID()">Actualizar</button>
     </div>
+</ng-template>
+
+
+<ng-template #campos let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Campos subtrámite</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+
+    <div class="modal-body" style="text-align: justify;">
+
+        <h3 style="margin-bottom: 0!important;">Sección</h3>
+        <hr style="margin-top: 10px!important;">
+        <div class="row">
+            <div class="col-lg-12 col-12 mb-3">
+                <label class="form-label">Título sección</label>
+                <input type="text" class="form-control" name="example-text-input"
+                    placeholder="Ingrese el nombre de la sección" #descripcionInput />
+            </div>
+            <div class="col-lg-12 col-12 mb-3 d-flex justify-content-end">
+                <button type="button" class="btn btn-aceptar">Agregar sección</button>
+            </div>
+        </div>
+
+        <h3 style="margin-bottom: 0!important;">Campos</h3>
+        <hr style="margin-top: 10px!important;">
+        <div class="row">
+            <div class="col-lg-6 col-12 mb-3">
+                <label class="form-label">Nombre</label>
+                <input type="text" class="form-control" name="example-text-input"
+                    placeholder="Ingrese el nombre" #descripcionInput />
+            </div>
+            <div class="col-lg-6 col-12 mb-3">
+                <label class="form-label">Etiqueta</label>
+                <input type="text" class="form-control" name="example-text-input"
+                    placeholder="Ingrese el nombre de la etiqueta" #descripcionInput />
+            </div>
+            <div class="col-lg-6 col-12 mb-3">
+                <label class="form-label">Validaciones</label>
+                <select class="form-select" name="opcion" id="exampleFormControlInput9" #tramiteInput>
+                    <option value="">validacion 1</option>
+                    <option value="">validacion 2</option>
+                </select>
+            </div>
+            <div class="col-lg-6 col-12 mb-3">
+                <label class="form-label">Mensaje error</label>
+                <input type="text" class="form-control" name="example-text-input"
+                    placeholder="Ingrese el mensaje de error" #descripcionInput />
+            </div>
+            <div class="col-lg-6 col-12 mb-3">
+                <label class="form-label">Longitud del campo</label>
+                <input type="text" class="form-control" name="example-text-input"
+                    placeholder="Ingrese la longitud del campo" #descripcionInput />
+            </div>
+            <div class="col-lg-6 col-12 mb-3">
+                <label class="form-label">Tipo campo</label>
+                <select class="form-select" name="opcion" id="exampleFormControlInput9" #tramiteInput>
+                    <option value="">tipo campo 1</option>
+                    <option value="">tipo campo 2</option>
+                </select>
+            </div>
+            <div class="col-lg-4 col-12 mb-3">
+                <label class="form-check">
+                    <input class="form-check-input" type="checkbox" />
+                    <span class="form-check-label">Requerido</span>
+                </label>
+            </div>
+            <div class="col-lg-4 col-12 mb-3">
+                <label class="form-check">
+                    <input class="form-check-input" type="checkbox" />
+                    <span class="form-check-label">Persona física</span>
+                </label>
+            </div>
+            <div class="col-lg-4 col-12 mb-3">
+                <label class="form-check">
+                    <input class="form-check-input" type="checkbox" />
+                    <span class="form-check-label">Persona moral</span>
+                </label>
+            </div>
+            <div class="col-lg-12 col-12 mb-3 d-flex justify-content-end">
+                <button type="button" class="btn btn-aceptar">Agregar campo</button>
+            </div>
+
+        </div>
+
+        <h3 style="margin-bottom: 0!important;">Vista previa</h3>
+        <hr style="margin-top: 10px!important;">
+        <div class="row align-items-center">
+            <div class="col-lg-1 col-12 mb-3"></div>
+            <div class="col-lg-9 col-12 mb-3">
+                <input type="text" class="form-control" name="example-text-input"
+                    placeholder="Información aquí" #descripcionInput />
+            </div>
+            <div class="col-lg-1 col-12 mb-3 text-center">
+                <div class="form-check form-switch" style="margin-bottom: 0rem!important;">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                </div>
+            </div>
+            <div class="col-lg-1 col-12 mb-3 text-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cerrar</button>
+        <button type="button" class="btn btn-aceptar">Guardar</button>
+    </div>
+
 </ng-template>

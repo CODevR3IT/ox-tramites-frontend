@@ -297,4 +297,21 @@ export class SubtramitesComponent {
   sort(sort: string) {
 
   }
+
+
+
+  muestraCamposSubtramite(content: TemplateRef<any>) {
+    // this.spinner.show();
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'm', scrollable: true }).result.then(
+      (result) => {
+        this.closeResult.set(`Closed with: ${result}`);
+      },
+      (reason) => {
+        this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
+      },
+    );
+  }
+
+
+
 }
