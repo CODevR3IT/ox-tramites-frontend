@@ -8,6 +8,7 @@ import { Paginate } from '../../shared/interfaces/paginate.interface';
 import { PaginationService } from '../../shared/services/pagination.service';
 import { PaginateLaravel } from '../../shared/interfaces/laravel.paginate.interface';
 import { TramitesService } from '../../shared/services/tramites.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 //import { Expediente } from './expedientes.interface';
 import Swal from 'sweetalert2';
 
@@ -21,8 +22,13 @@ export class SubtramitesComponent {
   payload: any = {}
   data: any;
   addEdit: number = 0;
+  catTipoU: any;
+  catTramite: any;
+  myArray: any[] = [];
   private modalService = inject(NgbModal);
   closeResult: WritableSignal<string> = signal('');
+  archivoBase64: string | null = null;
+  archivoSeguro: SafeResourceUrl | null = null;
   public paginationQuery: PaginateQuery = {
     page: 1,
     limit: 10,
@@ -36,6 +42,7 @@ export class SubtramitesComponent {
   constructor(
     private spinner: NgxSpinnerService,
     private tramitesservice: TramitesService,
+    private sanitizer: DomSanitizer,
   ) { }
 
   ngOnInit() {
@@ -54,7 +61,10 @@ export class SubtramitesComponent {
     );
   }
 
-  muestraAviso(content: TemplateRef<any>, tipo: number) {
+  muestraAviso(content: TemplateRef<any>, tipo: number, arreglo: any) {
+    this.spinner.show();
+    this.getCatTipoUsuario();
+    this.getTramiteEstatus();
     this.addEdit = (tipo == 2 ? 2 : 1);
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'm', scrollable: true }).result.then(
       (result) => {
@@ -65,7 +75,9 @@ export class SubtramitesComponent {
       },
     );
     if (tipo == 2) {
-      this.getsubTramiteID();
+      this.payload = {};
+      this.spinner.show();
+      this.getsubTramiteID(arreglo);
     }
   }
 
@@ -80,32 +92,67 @@ export class SubtramitesComponent {
     }
   }
 
-  getsubTramiteID() {
-    this.tramitesservice.getsubTramiteID().subscribe(
+  getCatTipoUsuario() {
+    this.tramitesservice.getCatTipoUsuario().subscribe(
       {
         next: (res: any) => {
           console.log("TRAMITES!!!!!!!");
-          this.data = res;
-          console.log(this.data);
+          this.catTipoU = res;
+          console.log(this.catTipoU);
+          this.spinner.hide();
+        },
+      }
+    );
+  }
+
+  getTramiteEstatus() {
+    this.payload = {};
+    this.tramitesservice.getTramiteEstatus().subscribe(
+      {
+        next: (res: any) => {
+          console.log("TRAMITES!!!!!!!");
+          this.catTramite = res;
+          console.log(this.catTramite);
+        },
+      }
+    );
+  }
+
+  getsubTramiteID(arreglo: any) {
+    this.tramitesservice.getsubTramiteID(arreglo).subscribe(
+      {
+        next: (res: any) => {
+          console.log("TRAMITES 1 a 1!!!!!!!");
+          console.log(res);
+          const jsonObject = JSON.parse(res[0].tipo_usuarios_restringidos);
+          for (const key in jsonObject) {
+            if (jsonObject.hasOwnProperty(key)) {
+              this.myArray.push(jsonObject[key]);
+            }
+          }
+          console.log(this.myArray);
+          // Ahora myArray contiene: ["value1", "value2", "value3"]
+          this.payload.descripcion = res[0].descripcion;
+          this.payload.detalle = res[0].detalle;
+          this.payload.tipo_usuarios_restringidos = this.myArray;
+          this.payload.id = res[0].id;
+          this.payload.ca_tramite_id = res[0].ca_tramite_id;
+          this.spinner.hide();
         },
       }
     );
   }
 
   guardarsubTramite() {
+    this.payload.tipo_usuarios_restringidos = JSON.stringify(this.payload.tipo_usuarios_restringidos);
+    console.log("this.payload");
     console.log(this.payload);
-    const query = {
-      "descripcion": this.payload.subtramite,
-      "ca_tramite_id": 1,
-      "tipo_usuarios_restringidos": "[2]"
-    }
-    this.tramitesservice.guardarsubTramite(query).subscribe(
+    this.tramitesservice.guardarsubTramite(this.payload).subscribe(
       {
         next: (res: any) => {
           console.log("GUARDAR!!!!!!!");
-          this.data = res;
-          console.log(this.data);
-          this.closeResult.set(`Closed with: ${res}`);
+          console.log(res);
+          this.modalService.dismissAll();
           this.getsubTramite();
         },
       }
@@ -113,6 +160,7 @@ export class SubtramitesComponent {
   }
 
   actualizasubTramiteID() {
+    this.payload.tipo_usuarios_restringidos = JSON.stringify(this.payload.tipo_usuarios_restringidos);
     const query = {
       "id": 2,
       "descripcion": this.payload.subtramite,
@@ -123,16 +171,127 @@ export class SubtramitesComponent {
       "ext1": "pdf",
       "nombre1": "PDF2"
     }
-    this.tramitesservice.actualizasubTramiteID(query).subscribe(
+    console.log(this.payload);
+    this.tramitesservice.actualizasubTramiteID(this.payload).subscribe(
       {
         next: (res: any) => {
-          console.log("GUARDAR!!!!!!!");
-          this.data = res;
-          console.log(this.data);
+          console.log("ACTUALIZADO!!!!!!!");
+          console.log(res);
+          this.modalService.dismissAll();
           this.getsubTramite();
         },
       }
     );
+  }
+
+  actualizasubTramiteEstatus(event: Event, arreglo: any) {
+    const checked = (event.target as HTMLInputElement).checked;
+    console.log(checked);
+    console.log(arreglo);
+    const query = {
+      "id": arreglo.id,
+      "estatus": checked,
+    }
+    this.tramitesservice.actualizasubTramiteID(query).subscribe(
+      {
+        next: (res: any) => {
+          console.log("ACTULIZA ESTATUS!!!!!!!");
+          console.log(res);
+          //this.getTramite();
+        },
+      }
+    );
+  }
+
+  borrasubTramiteID(arreglo: any) {
+    Swal.fire({
+      icon: "info",
+      title: "¿Está seguro que desea eliminar el registro?",
+      showCancelButton: true,
+      confirmButtonText: "Aceptar",
+      denyButtonText: `Cancelar`
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.tramitesservice.borrasubTramiteID(arreglo.id, {}).subscribe(
+          {
+            next: (res: any) => {
+              console.log("BORRAR!!!!!!!");
+              console.log(res);
+              Swal.fire({
+                icon: "success",
+                title: "¡EXITO!",
+                text: "Registro eliminado",
+              });
+              this.getsubTramite();
+            },
+          }
+        );
+      } /* else if (result.isDenied) {
+          Swal.fire("Changes are not saved", "", "info");
+        }*/
+    });
+  }
+
+  convertirArchivoBase64(event: any, opcion: any): void {
+    console.log("DATO LETRA");
+    console.log(opcion);
+    const archivo: File = event.target.files[0];
+    if (!archivo) return;
+
+    if (archivo.size < 5200123 && archivo.type === 'application/pdf') {
+      this.payload.nombreOriginal = archivo.name;
+      const lector = new FileReader();
+
+      lector.onload = () => {
+        const base64 = lector.result as string;
+        const cadena64: any = base64.split(";base64,");
+        switch (opcion) {
+          case "a":
+            this.payload.fileb64 = cadena64[1];
+            this.payload.ext = "pdf";
+            this.payload.nombre = "PDF";
+            break;
+          case "b":
+            this.payload.fileb641 = cadena64[1];
+            this.payload.ext1 = "pdf";
+            this.payload.nombre1 = "PDF1";
+            break;
+          case "c":
+            this.payload.fileb642 = cadena64[1];
+            this.payload.ext2 = "pdf";
+            this.payload.nombre2 = "PDF2";
+            break;
+          default:
+            break;
+        }
+        //this.payload.archivoV = base64;
+        console.log("this.payload");
+        console.log(this.payload);
+        this.archivoSeguro = this.sanitizer.bypassSecurityTrustResourceUrl(base64);
+      };
+
+      lector.onerror = (error) => {
+        console.error('Error al leer el archivo:', error);
+        Swal.fire({
+          title: '¡Atención!',
+          text: 'Error al leer el archivo.',
+          icon: 'error',
+          confirmButtonColor: '#03277E',
+          confirmButtonText: 'Aceptar',
+        });
+      };
+
+      lector.readAsDataURL(archivo);
+    } else {
+      Swal.fire({
+        title: '¡Atención!',
+        text: 'El archivo debe ser menor a 5MB y formato PDF.',
+        icon: 'error',
+        confirmButtonColor: '#03277E',
+        confirmButtonText: 'Aceptar',
+      });
+    }
   }
 
   sort(sort: string) {

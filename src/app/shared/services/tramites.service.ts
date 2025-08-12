@@ -76,8 +76,12 @@ export class TramitesService {
         return this.getQuery(`tramite`);
     }
 
-    getTramiteID() {
-        return this.getQuery(`tramite/obten`);
+    getTramiteID(payload: any) {
+        return this.getQuery(`tramite/obten?id=${payload.id}`);
+    }
+
+    getTramiteEstatus() {
+        return this.getQuery(`tramite/obten?estatus=true`);
     }
 
     guardarTramite(payload: any) {
@@ -88,16 +92,16 @@ export class TramitesService {
         return this.patchQuery(`tramite/actualiza`, payload);
     }
 
-    deleteNotifications(id: any, httpOptions: any) {
-        return this.deleteQuery(`notifications/${id}`, httpOptions);
+    borraTramiteID(id: any, httpOptions: any) {
+        return this.deleteQuery(`tramite/borra?id=${id}`, httpOptions);
     }
 
     getsubTramite() {
         return this.getQuery(`subtramite`);
     }
 
-    getsubTramiteID() {
-        return this.getQuery(`subtramite/obten`);
+    getsubTramiteID(payload: any) {
+        return this.getQuery(`subtramite/obten?id=${payload.id}`);
     }
 
     guardarsubTramite(payload: any) {
@@ -106,5 +110,13 @@ export class TramitesService {
 
     actualizasubTramiteID(payload: any) {
         return this.patchQuery(`subtramite/actualiza`, payload);
+    }
+
+    borrasubTramiteID(id: any, httpOptions: any) {
+        return this.deleteQuery(`subtramite/borra?id=${id}`, httpOptions);
+    }
+
+    getCatTipoUsuario(){
+        return this.getQuery(`catalogo/tipoUsuario`);
     }
 }

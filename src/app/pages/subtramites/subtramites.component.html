@@ -1,7 +1,7 @@
 <div class="card">
 
     <div class="col-12 text-left" style="margin-bottom: 2%;">
-        <button class="btn-tramite" (click)="muestraAviso(content,1)">
+        <button class="btn-tramite" (click)="muestraAviso(content,1,'')">
             <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -37,19 +37,20 @@
                 </tr>
             </thead>
             <tbody>
-                @for (tramite of data; track $index) {
+                @for (subtramite of data; track $index) {
                 <tr>
-                    <td>{{tramite.descripcion}}</td>
-                    <td>{{tramite.descripcion}}</td>
-                    <td>{{tramite.created_at}}</td>
-                    <td>{{tramite.updated_at}}</td>
+                    <td>{{subtramite.descripcion}}</td>
+                    <td>{{subtramite.descripcion}}</td>
+                    <td>{{subtramite.created_at}}</td>
+                    <td>{{subtramite.updated_at}}</td>
                     <td>
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                [checked]="subtramite.estatus" (change)="actualizasubTramiteEstatus($event,subtramite)">
                         </div>
                     </td>
                     <td class="text-center">
-                        <button class="btn-tramite" (click)="muestraAviso(content,2)">
+                        <button class="btn-tramite" (click)="muestraAviso(content,2,subtramite)">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                 class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
@@ -61,16 +62,18 @@
                         </button>
                     </td>
                     <td class="text-center">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M4 7l16 0" />
-                            <path d="M10 11l0 6" />
-                            <path d="M14 11l0 6" />
-                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                        </svg>
+                        <button class="btn-tramite" (click)="borrasubTramiteID(subtramite)">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M4 7l16 0" />
+                                <path d="M10 11l0 6" />
+                                <path d="M14 11l0 6" />
+                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                            </svg>
+                        </button>
                     </td>
                 </tr>
                 }
@@ -101,33 +104,83 @@
     <div class="modal-body" style="text-align: justify;">
         <div class="row">
             <div class="col-lg-12 col-12 mb-3">
-                <label class="form-label">Trámite</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu calle"
-                    placeholder="Ingrese el nombre del trámite" [(ngModel)]="payload.subtramite" #tramiteInput />
+                <label class="form-label">Subtrámite</label>
+                <input type="text" class="form-control" name="example-text-input"
+                    placeholder="Ingrese el nombre del subtrámite" [(ngModel)]="payload.descripcion"
+                    #descripcionInput />
             </div>
             <div class="col-lg-12 col-12 mb-3">
                 <label class="form-label">Detalle</label>
                 <textarea type="text" rows="5" class="form-control" name="example-text-input"
-                    placeholder="Detalle el trámite" maxlength="300" [(ngModel)]="payload.detalle"
-                    #detalleInput>
+                    placeholder="Detalle el subtrámite" maxlength="300" [(ngModel)]="payload.detalle" #detalleInput>
                 </textarea>
             </div>
             <div class="col-lg-12 col-12 mb-3">
-                <label class="form-label">Trámite</label>
-                <select class="form-select" name="opcion" id="exampleFormControlInput9" [(ngModel)]="payload.tramite"
-                  required #tramite="ngModel" #tramiteInput
-                  [class.is-invalid]="tramite.invalid && (tramite.dirty || tramite.touched)">
-                  <option value=""></option>
-                  <!--@for (direccion of arregloCP; track $index) {
-                  <option [ngValue]="direccion">{{direccion.colonia}}</option>
-                  }-->
+                <label class="form-label">Tipo de usuario</label>
+                <select class="form-select" multiple name="usuario" [(ngModel)]="payload.tipo_usuarios_restringidos"
+                    [class.is-invalid]="usuario.invalid && (usuario.dirty || usuario.touched)" required
+                    #usuario="ngModel" style="width: 80%;">
+                    <option *ngFor="let usu of catTipoU" [value]="usu.id">{{usu.descripcion}}</option>
                 </select>
+                <label>
+                    <h6>Presione la tecla ctrl y seleccione las opciones</h6>
+                </label>
+            </div>
+            <div class="col-lg-12 col-12 mb-3">
+                <label class="form-label">Trámite</label>
+                <select class="form-select" name="opcion" id="exampleFormControlInput9"
+                    [(ngModel)]="payload.ca_tramite_id" required #tramite="ngModel" #tramiteInput
+                    [class.is-invalid]="tramite.invalid && (tramite.dirty || tramite.touched)">
+                    <option value=""></option>
+                    <option *ngFor="let tram of catTramite" [value]="tram.id">{{tram.descripcion}}</option>
+                </select>
+            </div>
+            <div class="col-lg-12 col-12 mb-3">
+                <div class="custom-file-upload text-center" style="padding-top: 10px;">
+                    <label for="fileInput">📁 Subir archivo</label>
+                    <input id="fileInput" name="file" type="file" accept=".pdf"
+                        (change)="convertirArchivoBase64($event,'a')" />
+                    <small *ngIf="payload.fileb64" class="text-success">Archivo listo</small>
+                </div>
+                <div class="dz-message text-center">
+                    <span class="dropzone-msg-desc" style="font-size: 10px; color: gray; font-weight: 500;">Peso no
+                        mayor
+                        a 5 MB, sólo formato PDF</span>
+                </div>
+            </div>
+            <div class="col-lg-12 col-12 mb-3">
+                <div class="custom-file-upload text-center" style="padding-top: 10px;">
+                    <label for="fileInputb">📁 Subir archivo</label>
+                    <input id="fileInputb" name="fileb" type="file" accept=".pdf"
+                        (change)="convertirArchivoBase64($event,'b')" />
+                    <small *ngIf="payload.fileb641" class="text-success">Archivo listo</small>
+                </div>
+                <div class="dz-message text-center">
+                    <span class="dropzone-msg-desc" style="font-size: 10px; color: gray; font-weight: 500;">Peso no
+                        mayor
+                        a 5 MB, sólo formato PDF</span>
+                </div>
+            </div>
+            <div class="col-lg-12 col-12 mb-3">
+                <div class="custom-file-upload text-center" style="padding-top: 10px;">
+                    <label for="fileInputc">📁 Subir archivo</label>
+                    <input id="fileInputc" name="filec" type="file" accept=".pdf"
+                        (change)="convertirArchivoBase64($event,'c')" />
+                    <small *ngIf="payload.fileb642" class="text-success">Archivo listo</small>
+                </div>
+                <div class="dz-message text-center">
+                    <span class="dropzone-msg-desc" style="font-size: 10px; color: gray; font-weight: 500;">Peso no
+                        mayor
+                        a 5 MB, sólo formato PDF</span>
+                </div>
             </div>
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cerrar</button>
-        <button type="button" *ngIf="addEdit == 1" class="btn btn-aceptar" (click)="guardarsubTramite()">Aceptar</button>
-        <button type="button" *ngIf="addEdit == 2" class="btn btn-aceptar" (click)="actualizasubTramiteID()">Aceptar</button>
+        <button type="button" *ngIf="addEdit == 1" class="btn btn-aceptar"
+            (click)="guardarsubTramite()">Guardar</button>
+        <button type="button" *ngIf="addEdit == 2" class="btn btn-aceptar"
+            (click)="actualizasubTramiteID()">Actualizar</button>
     </div>
 </ng-template>

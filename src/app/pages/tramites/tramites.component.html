@@ -1,7 +1,7 @@
 <div class="card">
 
     <div class="col-12 text-left" style="margin-bottom: 2%;">
-        <button class="btn-tramite" (click)="muestraAviso(content,1)">
+        <button class="btn-tramite" (click)="muestraAviso(content,1,'')">
             <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -34,6 +34,7 @@
                 </tr>
             </thead>
             <tbody>
+                @if(data){
                 @for (tramite of data; track $index) {
                 <tr>
                     <td>{{tramite.descripcion}}</td>
@@ -41,11 +42,11 @@
                     <td>{{tramite.updated_at}}</td>
                     <td>
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" [checked]="tramite.estatus" (change)="actualizaTramiteEstatus($event,tramite)">
                         </div>
                     </td>
                     <td class="text-center">
-                        <button class="btn-tramite" (click)="muestraAviso(content,2)">
+                        <button class="btn-tramite" (click)="muestraAviso(content,2,tramite)">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                 class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
@@ -57,6 +58,7 @@
                         </button>
                     </td>
                     <td class="text-center">
+                        <button class="btn-tramite" (click)="borraTramiteID(tramite)">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
@@ -67,8 +69,10 @@
                             <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
                             <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                         </svg>
+                        </button>
                     </td>
                 </tr>
+                }
                 }
             </tbody>
         </table>
@@ -98,8 +102,8 @@
         <div class="row">
             <div class="col-lg-12 col-12 mb-3">
                 <label class="form-label">Trámite</label>
-                <input type="text" class="form-control" name="example-text-input" placeholder="Ingresa tu calle"
-                    placeholder="Ingrese el nombre del trámite" [(ngModel)]="payload.tramite" #tramiteInput />
+                <input type="text" class="form-control" name="example-text-input"
+                    placeholder="Ingrese el nombre del trámite" [(ngModel)]="payload.descripcion" #descripcionInput />
             </div>
             <div class="col-lg-12 col-12 mb-3">
                 <label class="form-label">Detalle</label>
@@ -107,11 +111,21 @@
                     placeholder="Detalle el trámite" maxlength="300" [(ngModel)]="payload.detalle"
                     #detalleInput></textarea>
             </div>
+            <div class="col-lg-12 col-12 mb-3">
+                <label class="form-label">Tipo de usuario</label>
+                <select class="form-select" multiple name="usuario" [(ngModel)]="payload.tipo_usuarios_restringidos"
+                    [class.is-invalid]="usuario.invalid && (usuario.dirty || usuario.touched)" required #usuario="ngModel"
+                    style="width: 80%;">
+                    <option *ngFor="let usu of catTipoU" [value]="usu.id">{{usu.descripcion}}</option>
+                </select>
+                <label><h6>Presione la tecla ctrl y seleccione las opciones</h6></label>
+            </div>
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cerrar</button>
-        <button type="button" *ngIf="addEdit == 1" class="btn btn-aceptar" (click)="guardarTramite()">Aceptar</button>
-        <button type="button" *ngIf="addEdit == 2" class="btn btn-aceptar" (click)="actualizaTramiteID()">Aceptar</button>
+        <button type="button" *ngIf="addEdit == 1" class="btn btn-aceptar" (click)="guardarTramite()">Guardar</button>
+        <button type="button" *ngIf="addEdit == 2" class="btn btn-aceptar"
+            (click)="actualizaTramiteID()"></button>
     </div>
 </ng-template>
