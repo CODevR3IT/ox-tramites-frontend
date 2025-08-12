@@ -11,6 +11,7 @@ import { TramitesService } from '../../shared/services/tramites.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 //import { Expediente } from './expedientes.interface';
 import Swal from 'sweetalert2';
+import { FormEditor } from '@bpmn-io/form-js';
 
 @Component({
   selector: 'app-subtramites',
@@ -37,6 +38,7 @@ export class SubtramitesComponent {
     orderBy: OrderBy.ASC,
     orderField: '',
   };
+  formEditor?: FormEditor;
   //public paginationData: PaginateLaravel<Expediente> = { total: 0, last_page: 0, data: [] };
   //para la paginación preguntar a Razo y Mario por cómo envían el back 
   constructor(
@@ -47,6 +49,7 @@ export class SubtramitesComponent {
 
   ngOnInit() {
     this.getsubTramite();
+    this.formEditor = new FormEditor({container:document.querySelector('#formEditor')});
   }
 
   getsubTramite() {
