@@ -1,9 +1,10 @@
 export const environment = {
     api: 'http://localhost:8000/api',
-    //ssoApi: 'http://localhost:8000',
     ssoApi: 'http://74.208.46.147/sso-services/api',
     clientKey: '',
-    appUuid: '0a6677b0-aa0f-498b-a883-9d1b80078a2a',
+    appUuid: '5d483bc5-a286-4052-9a2e-4a71379ed130',
     fileEndpoint: 'http://74.208.46.147/documental-services/api',
+    loginUrl: 'http://74.208.46.147/sso',
     clientOax: 'https://apisgco.odigroup.mx',
+    
 };

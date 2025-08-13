@@ -1,23 +1,16 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { ResponseLogin, User } from './interfaces/user.interface';
+import { ProfileImg, User } from './interfaces/user.interface';
 import { StorageService } from '../services/storage.service';
 import { tap } from 'rxjs';
 import { Router } from '@angular/router';
-import { RestorePasswordDto } from '../interfaces/restore-password.dto';
-import { ResponseMessage } from '../interfaces/response-message.interface';
-import { responseSuccess } from '../helpers/response.helper';
-import { ChangePasswordDto } from '../interfaces/change-password.dto';
-import { ForgotPasswordDto } from '../interfaces/forgot-password.dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  httpOptions: any;
-  payload: any = {};
-  private apiUrl = environment.api;
+  private apiUrl = environment.ssoApi;
   private readonly TOKEN_KEY = '_accessToken' + environment.clientKey;
   private readonly REFRESH_TOKEN_KEY = '_refreshToken' + environment.clientKey;
   private readonly USER_DATA_KEY = '_userData' + environment.clientKey;
@@ -25,24 +18,23 @@ export class AuthService {
   private redirectUrl: string | null = null;
   private accessToken: string | null = null;
   private refreshToken: string | null = null;
-  responseSuccess = responseSuccess();
+
   constructor(
     private readonly http: HttpClient,
     private readonly storageService: StorageService,
     private readonly router: Router
-  ) { }
+  ) {}
 
-  login(email: string, password: string) {
-    //this.setAccessToken(accessToken);
+  login(accessToken: string) {
+    this.setAccessToken(accessToken);
     return this.http
-      .post<ResponseLogin>(`${this.apiUrl}/login/login`, {
-        email,
-        password
+      .get<User>(`${this.apiUrl}/auth/profile`, {
+        headers: { authorization: `Bearer ${accessToken}` },
       })
       .pipe(
-        tap((res) => {
-          if (res.token) {
-            this.setSession(res);
+        tap((user) => {
+          if (user.access_token) {
+            this.setSession(user);
           }
         })
       );
@@ -51,31 +43,7 @@ export class AuthService {
   logout() {
     this.storageService.clearData();
     this.isAuthenticated = false;
-    this.router.navigate(['/login']);
-    /*this.httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        Authorization: 'Bearer '+this.payload.token,
-      })
-    };
-
-    /*return this.http
-      .post<User>(`${this.apiUrl}/login/logout`, {}, this.httpOptions)
-      .pipe(
-        tap((res:any) => {
-          if (res.message === "Sesión cerrada exitosamente") {
-            this.payload = {};
-            this.router.navigate(['/login']);
-          }
-        })
-      );*/
-    //window.location.href = `${environment.loginUrl}/login/${environment.appUuid}`;
-
-  }
-
-  getUser(): User {
-    const userData = this.storageService.getData(this.USER_DATA_KEY);
-    return JSON.parse(userData || '{}') as User;
+    window.location.href = `${environment.loginUrl}/login/${environment.appUuid}`;
   }
 
   isLoggedIn() {
@@ -90,24 +58,27 @@ export class AuthService {
     this.storageService.saveData(this.TOKEN_KEY, accessToken);
   }
 
-  /*getUser(): User {
-    
-  }*/
-  private setSession(response: ResponseLogin) {
-    this.storageService.saveData(this.TOKEN_KEY, response.token);
-    this.storageService.saveData(this.USER_DATA_KEY, JSON.stringify(response.user));
-    this.payload.token = response.token;
+  getUser(): User {
+    let { sub, email, full_name, role, rolekey, access_token } = JSON.parse(
+      this.storageService.getData(this.USER_DATA_KEY)
+    );
+    let user: User = {
+      sub,
+      email,
+      full_name,
+      access_token,
+      role,
+      rolekey,
+    };
+    return user;
+  }
+  private setSession(user: User) {
+    this.storageService.saveData(this.TOKEN_KEY, user.access_token);
+    this.storageService.saveData(this.USER_DATA_KEY, JSON.stringify(user));
     this.isAuthenticated = true;
-    this.router.navigate(['/']);
+    this.router.navigate(['/tramites']);
   }
-
-  forgotPassword(body: ForgotPasswordDto) {
-    return this.http.post<ResponseMessage>(`${this.apiUrl}/datosUser/olvidePasswordT`, body).pipe(tap((res) => this.responseSuccess(res).then(() => this.router.navigate(['/login']))));
-  }
-  restorePassword(body: RestorePasswordDto) {
-    return this.http.post<ResponseMessage>(`${this.apiUrl}/datosUser/cambiaPassword`, body).pipe(tap((res) => this.responseSuccess(res).then(() => this.router.navigate(['/login']))));
-  }
-  changePassword(body: ChangePasswordDto) {
-    return this.http.patch<ResponseMessage>(`${this.apiUrl}/auth/reset-password`, body).pipe(tap((res) => this.responseSuccess(res).then(() => this.router.navigate(['/login']))));
+  getProfileBase64() {
+    return this.http.get<ProfileImg>(`${this.apiUrl}/auth/profile-img`);
   }
 }

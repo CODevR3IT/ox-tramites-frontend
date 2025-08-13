@@ -58,18 +58,9 @@ export class SubtramitesComponent {
   ngOnInit() {
     this.getsubTramite();
   }
-  ngAfterViewInit() {
-    if (this.formContainerRef) {
-      this.formEditor = new FormPlayground({
-        container: this.formContainerRef.nativeElement,
-        schema: this.schema,
-        data: this.dataForm
-      });
-    }
-  }
-  saveForm(){
+  saveForm() {
     this.dataForm = this.formEditor.getSchema();
-    console.log("Datos del formulario guardados:", this.dataForm);  
+    console.log("Datos del formulario guardados:", this.dataForm);
   }
   getsubTramite() {
     this.tramitesservice.getsubTramite().subscribe(
@@ -324,14 +315,24 @@ export class SubtramitesComponent {
 
   muestraCamposSubtramite(content: TemplateRef<any>) {
     // this.spinner.show();
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'm', scrollable: true }).result.then(
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'xl', scrollable: true }).result.then(
       (result) => {
+
         this.closeResult.set(`Closed with: ${result}`);
       },
       (reason) => {
         this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
       },
     );
+    setTimeout(() => {
+    if (this.formContainerRef) {
+      this.formEditor = new FormPlayground({
+        container: this.formContainerRef.nativeElement,
+        schema: this.schema,
+        data: this.dataForm
+      });
+    }
+  }, 0);
   }
 
 

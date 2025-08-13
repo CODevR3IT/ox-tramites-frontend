@@ -28,4 +28,15 @@ export class MenuComponent {
      hasChildren: false
    },
   ];
+    closeDropdown(event: Event) {
+   
+    const target = event.target as HTMLElement;
+    const dropdown = target.closest('#parentDropdown');
+    if (dropdown) {
+      const dropdownToggle = dropdown.previousElementSibling as HTMLElement;
+      if (dropdownToggle && dropdownToggle.classList.contains('dropdown-toggle')) {
+        dropdownToggle.click(); // Simula un clic para cerrar el dropdown
+      }
+    }
+  }
 }

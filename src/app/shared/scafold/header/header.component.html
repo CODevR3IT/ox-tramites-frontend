@@ -17,17 +17,20 @@
       >
         <a routerLink="/">
           @if (app.logoLink) {
-          <img [src]="app.logoLink" width="120" class="img-fluid" />
+          <img
+            [src]="app.logoLink"
+            width="120"
+            class="img-fluid"
+          />
+          }@else{
+            <img
+            src="assets/imgs/logo.png"
+            width="120"
+            class="img-fluid"
+          />
           }
         </a>
       </h1>
-      <div class="navbar-nav flex-row">
-        <div class="nav-item d-none d-md-flex" style="padding-top: 4px">
-          <span style="font-size: medium" class="d-none d-lg-block"
-            >{{ app.tituloHeader }}, {{ app.date }}</span
-          >
-        </div>
-      </div>
       <div class="navbar-nav flex-row order-md-last">
         <div class="nav-item d-none d-md-flex me-3">
           <a
@@ -35,9 +38,7 @@
             (click)="toggleTheme()"
             class="nav-link px-0"
             title="Enable dark mode"
-            [ngbTooltip]="
-              theme == 'light' ? 'Activar modo obscuro' : 'Activar modo claro'
-            "
+            [ngbTooltip]="theme == 'light' ? 'Activar modo obscuro' : 'Activar modo claro'"
           >
             <i
               class="ti icon menu-icon"
@@ -48,8 +49,6 @@
             ></i>
           </a>
         </div>
-
-        @if(logedIn){
         <div class="nav-item dropdown">
           <a
             href="#"
@@ -57,132 +56,29 @@
             data-bs-toggle="dropdown"
             aria-label="Open user menu"
           >
-            <svg
-              width="100"
-              height="100"
+            <span
               class="avatar avatar-sm"
-              [data-jdenticon-value]="user.email"
-            ></svg>
-
+              [style.background-image]="img && 'url(' + img + ')'"
+            ></span>
             <div class="d-none d-xl-block ps-2">
-              <div style="font-size: medium">
-                {{ nombreCompleto }}
-              </div>
+              <div>{{ user.full_name }}</div>
               <div class="mt-1 small text-secondary">{{ user.email }}</div>
             </div>
           </a>
           <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-            @if(claveNotario !== ''){
-            <a href="javascript:void(0)" class="dropdown-item"
-              >Clave Notario: {{ claveNotario }}</a
-            >
-            <div class="dropdown-divider"></div>
-
-            }
             <!--<a href="#" class="dropdown-item">Status</a>
-              <a href="./profile.html" class="dropdown-item">Profile</a>
-              <a href="#" class="dropdown-item">Feedback</a>
-              <div class="dropdown-divider"></div>
-              <a href="./settings.html" class="dropdown-item">Settings</a>-->
+            <a href="./profile.html" class="dropdown-item">Profile</a>
+            <a href="#" class="dropdown-item">Feedback</a>
+            <div class="dropdown-divider"></div>
+            <a href="./settings.html" class="dropdown-item">Settings</a>-->
             <a
               href="javascript:void(0)"
               (click)="logout()"
               class="dropdown-item"
-              >Cerrar sesión</a
-            >
-            <a
-              href="javascript:void(0)"
-              class="dropdown-item"
-              routerLink="/cambio-pass"
-            >
-              Cambiar contraseña</a
+              >Cerrar Sesión</a
             >
           </div>
         </div>
-        <div class="nav-item dropdown d-none d-md-flex me-3">
-          <a
-            href="#"
-            class="nav-link px-0"
-            data-bs-toggle="dropdown"
-            tabindex="-1"
-            aria-label="Mostrar notificaciones"
-          >
-            <i class="ti ti-bell icon menu-icon-xl"></i>
-            @if (notificacionRes.length > 0) {
-            <span class="badge bg-red text-red-fg">{{
-              notificacionRes.length
-            }}</span>
-            }
-          </a>
-          <div
-            class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card"
-            style="min-width: 25rem"
-          >
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Notificaciones</h3>
-              </div>
-              <div class="list-group list-group-flush list-group-hoverable">
-                @if (notificacionRes.length == 0) {
-                <div class="list-group-item">
-                  <div class="row align-items-center">
-                    <div class="col">
-                      <div class="d-block text-muted text-truncate mt-n1">
-                        No tienes notificaciones
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <a href="#" class="list-group-item-actions"> </a>
-                    </div>
-                  </div>
-                </div>
-                } @for (notificacion of notificacionRes; track $index) {
-                <!-- <div class="list-group-item">
-                    <div class="row align-items-center">
-                      <div class="col-auto"><span class="status-dot d-block" [ngClass]="notificacion.badge"></span></div>
-                      <div class="col text-truncate">
-                        <a href="javascript:void(0)" class="text-body d-block">{{notificacion.titulo}}</a>
-                        <div class="d-block text-muted text-truncate mt-n1">
-                          {{notificacion.mensaje}}
-                        </div>
-                      </div>
-                      <div class="col-auto">
-                        <a href="#" class="list-group-item-actions">
-                    
-                        </a>
-                      </div>
-                    </div>
-                  </div> -->
-                <div
-                  class="list-group-item cursor-pointer"
-                  (click)="deleteNotifications(notificacion.id)"
-                >
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <span
-                        class="status-dot d-block"
-                        [ngClass]="notificacion.badge"
-                      ></span>
-                    </div>
-                    <div class="col text-truncate">
-                      <span class="text-body d-block">{{
-                        notificacion.data?.titulo
-                      }}</span>
-                      <div class="d-block text-muted text-truncate mt-n1">
-                        {{ notificacion.data.message }}
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <a href="#" class="list-group-item-actions"> </a>
-                    </div>
-                  </div>
-                </div>
-                }
-              </div>
-            </div>
-          </div>
-        </div>
-        }
       </div>
     </div>
   </header>

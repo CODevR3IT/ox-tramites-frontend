@@ -1,4 +1,3 @@
-@if(menus && menus.length > 0) {
 <header class="navbar-expand-md">
   <div class="collapse navbar-collapse" id="navbar-menu">
     <div class="navbar">
@@ -6,8 +5,12 @@
         <div class="row flex-fill align-items-center">
           <div class="col">
             <ul class="navbar-nav">
-              @for (menu of menus; track $index) {
-              <li class="nav-item" [routerLinkActive]="['active']">
+              @for (menu of menus; track $index) { @if (!menu.hasSubmenu) {
+              <li
+                class="nav-item"
+                [routerLinkActive]="['active']"
+                [routerLinkActiveOptions]="{ exact: true }"
+              >
                 <a class="nav-link" [routerLink]="menu.route">
                   <i class="icon menu-icon {{ menu.iconClass }}"></i>
                   <span class="nav-link-title">
@@ -15,7 +18,62 @@
                   </span>
                 </a>
               </li>
-              }
+              }@else if (menu.hasSubmenu) {
+              <li class="nav-item active dropdown" [routerLinkActive]="['active']"
+              [routerLinkActiveOptions]="{ exact: true }" >
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#navbar-base"
+                  data-bs-toggle="dropdown"
+                  data-bs-auto-close="true"
+                  role="button"
+                  aria-expanded="false"
+                >
+                  <span class="nav-link-icon d-md-none d-lg-inline-block"
+                    ><i class="icon menu-icon {{ menu.iconClass }}"></i>
+                  </span>
+                  <span class="nav-link-title">
+                    {{ menu.label }}
+                  </span>
+                </a>
+                <div class="dropdown-menu" id="parentDropdown">
+                  <div class="dropdown-menu-columns">
+                    <div class="dropdown-menu-column">
+                      @for (submenu of menu.submenu; track $index) {
+                      @if(submenu.hasSubmenu){
+                      <div class="dropend">
+                        <a
+                          class="dropdown-item dropdown-toggle"
+                          href="javascript:void(0)"
+                          data-bs-toggle="dropdown"
+                          role="button"
+                          aria-expanded="false"
+                        >
+                          {{ submenu.label }}
+                        </a>
+                        <div class="dropdown-menu">
+                          @for (submenuchild of submenu.submenu; track $index) {
+
+                          <a
+                            [routerLink]="submenuchild.route"
+                            class="dropdown-item"
+                            (click)="closeDropdown($event)"
+                          >
+                            {{ submenuchild.label }}
+                          </a>
+                          }
+                        </div>
+                      </div>
+                      }@else{
+                      <a class="dropdown-item" [routerLink]="submenu.route" (click)="closeDropdown($event)">
+                        {{ submenu.label }}
+                      </a>
+                      } }
+                    </div>
+                  </div>
+                </div>
+              </li>
+              } }
             </ul>
           </div>
         </div>
@@ -23,4 +81,3 @@
     </div>
   </div>
 </header>
-}
