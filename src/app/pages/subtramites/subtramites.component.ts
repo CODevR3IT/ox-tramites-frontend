@@ -1,4 +1,4 @@
-import { Component, inject, signal, TemplateRef, WritableSignal } from '@angular/core';
+import { Component, ElementRef, inject, signal, TemplateRef, ViewChild, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,7 +11,7 @@ import { TramitesService } from '../../shared/services/tramites.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 //import { Expediente } from './expedientes.interface';
 import Swal from 'sweetalert2';
-import { FormEditor } from '@bpmn-io/form-js';
+import { FormPlayground } from '@bpmn-io/form-js';
 
 @Component({
   selector: 'app-subtramites',
@@ -26,10 +26,18 @@ export class SubtramitesComponent {
   catTipoU: any;
   catTramite: any;
   myArray: any[] = [];
+  formEditor: FormPlayground = {} as FormPlayground;
+  @ViewChild('formContainer', { static: false }) formContainerRef!: ElementRef;
   private modalService = inject(NgbModal);
   closeResult: WritableSignal<string> = signal('');
   archivoBase64: string | null = null;
   archivoSeguro: SafeResourceUrl | null = null;
+  private schema = {
+    type: 'default',
+    components: [
+    ],
+  };
+  private dataForm = {};
   public paginationQuery: PaginateQuery = {
     page: 1,
     limit: 10,
@@ -38,7 +46,7 @@ export class SubtramitesComponent {
     orderBy: OrderBy.ASC,
     orderField: '',
   };
-  formEditor?: FormEditor;
+
   //public paginationData: PaginateLaravel<Expediente> = { total: 0, last_page: 0, data: [] };
   //para la paginación preguntar a Razo y Mario por cómo envían el back 
   constructor(
@@ -49,9 +57,20 @@ export class SubtramitesComponent {
 
   ngOnInit() {
     this.getsubTramite();
-    this.formEditor = new FormEditor({container:document.querySelector('#formEditor')});
   }
-
+  ngAfterViewInit() {
+    if (this.formContainerRef) {
+      this.formEditor = new FormPlayground({
+        container: this.formContainerRef.nativeElement,
+        schema: this.schema,
+        data: this.dataForm
+      });
+    }
+  }
+  saveForm(){
+    this.dataForm = this.formEditor.getSchema();
+    console.log("Datos del formulario guardados:", this.dataForm);  
+  }
   getsubTramite() {
     this.tramitesservice.getsubTramite().subscribe(
       {
