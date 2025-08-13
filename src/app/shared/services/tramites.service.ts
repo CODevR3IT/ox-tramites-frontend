@@ -119,4 +119,12 @@ export class TramitesService {
     getCatTipoUsuario(){
         return this.getQuery(`catalogo/tipoUsuario`);
     }
+
+    guardaCampos(payload: any){
+        return this.postQuery(`subtramite/campo/crea`, payload);
+    }
+
+    getCampoId(id: any){
+        return this.getQuery(`subtramite/campo/obten?ca_subtramite_id=${id}`);
+    }
 }

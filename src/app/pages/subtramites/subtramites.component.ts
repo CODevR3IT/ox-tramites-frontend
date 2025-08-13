@@ -32,12 +32,13 @@ export class SubtramitesComponent {
   closeResult: WritableSignal<string> = signal('');
   archivoBase64: string | null = null;
   archivoSeguro: SafeResourceUrl | null = null;
+  idTramite: any;
   private schema = {
     type: 'default',
     components: [
     ],
   };
-  private dataForm = {};
+  private dataForm: { [key: string]: any } = {};
   public paginationQuery: PaginateQuery = {
     page: 1,
     limit: 10,
@@ -58,10 +59,7 @@ export class SubtramitesComponent {
   ngOnInit() {
     this.getsubTramite();
   }
-  saveForm() {
-    this.dataForm = this.formEditor.getSchema();
-    console.log("Datos del formulario guardados:", this.dataForm);
-  }
+
   getsubTramite() {
     this.tramitesservice.getsubTramite().subscribe(
       {
@@ -311,10 +309,11 @@ export class SubtramitesComponent {
 
   }
 
-
-
-  muestraCamposSubtramite(content: TemplateRef<any>) {
+  /*********************************** CAMUNDA *********************************************/
+  muestraCamposSubtramite(content: TemplateRef<any>, arreglo: any) {
     // this.spinner.show();
+    this.getCampoId(arreglo.id);
+     this.idTramite = arreglo.id;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'xl', scrollable: true }).result.then(
       (result) => {
 
@@ -324,17 +323,54 @@ export class SubtramitesComponent {
         this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
       },
     );
-    setTimeout(() => {
-    if (this.formContainerRef) {
-      this.formEditor = new FormPlayground({
-        container: this.formContainerRef.nativeElement,
-        schema: this.schema,
-        data: this.dataForm
-      });
-    }
-  }, 0);
   }
 
+  saveForm() {
+    const payload = {
+      campos: this.formEditor.getSchema(),
+      ca_subtramite_id: this.idTramite
+    };
+    this.tramitesservice.guardaCampos(payload).subscribe(
+      {
+        next: (res: any) => {
+          console.log("GUARDAR!!!!!!!");
+          console.log(res);
+          this.modalService.dismissAll();
+          this.getsubTramite();
+        },
+      }
+    );
+  }
 
+  guardaCampos() {
+    this.tramitesservice.guardaCampos(this.dataForm).subscribe(
+      {
+        next: (res: any) => {
+          console.log("GUARDAR!!!!!!!");
+          console.log(res);
+          this.modalService.dismissAll();
+          this.getsubTramite();
+        },
+      }
+    );
+  }
 
+  getCampoId(id: any) {
+    this.payload = {};
+    this.tramitesservice.getCampoId(id).subscribe(
+      {
+        next: (res: any) => {
+          setTimeout(() => {
+            if (this.formContainerRef) {
+              this.formEditor = new FormPlayground({
+                container: this.formContainerRef.nativeElement,
+                schema:res.length ? res[0].campos : this.schema,
+                data: this.dataForm
+              });
+            }
+          }, 0);
+        },
+      }
+    );
+  }
 }
