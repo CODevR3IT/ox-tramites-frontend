@@ -32,6 +32,7 @@
     "ngx-dropzone": "^3.1.0",
     "ngx-jdenticon": "^2.0.0",
     "ngx-mask": "^19.0.6",
+    "ngx-sat-sign": "^0.0.2",
     "ngx-spinner": "^17.0.0",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.15.3",

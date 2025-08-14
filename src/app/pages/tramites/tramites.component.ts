@@ -52,6 +52,7 @@ export class TramitesComponent {
   }
 
   getTramite() {
+    this.spinner.show();
     this.payload = {};
     this.tramitesservice.getTramite().subscribe(
       {
@@ -59,6 +60,7 @@ export class TramitesComponent {
           console.log("TRAMITES!!!!!!!");
           this.data = res;
           console.log(this.data);
+          this.spinner.hide();
         },
       }
     );
@@ -132,6 +134,7 @@ export class TramitesComponent {
   }
 
   guardarTramite() {
+    this.spinner.show();
     this.payload.tipo_usuarios_restringidos = JSON.stringify(this.payload.tipo_usuarios_restringidos);
     console.log("this.payload");
     console.log(this.payload);
@@ -145,6 +148,7 @@ export class TramitesComponent {
           console.log("GUARDAR!!!!!!!");
           console.log(res);
           this.modalService.dismissAll();
+          this.spinner.hide();
           this.getTramite();
         },
       }
@@ -152,6 +156,7 @@ export class TramitesComponent {
   }
 
   actualizaTramiteID() {
+    this.spinner.show();
     this.payload.tipo_usuarios_restringidos = JSON.stringify(this.payload.tipo_usuarios_restringidos);
     this.tramitesservice.actualizaTramiteID(this.payload).subscribe(
       {
@@ -159,6 +164,7 @@ export class TramitesComponent {
           console.log("ACTUALIZADO!!!!!!!");
           console.log(res);
           this.modalService.dismissAll();
+          this.spinner.hide();
           this.getTramite();
         },
       }
@@ -166,6 +172,7 @@ export class TramitesComponent {
   }
 
   actualizaTramiteEstatus(event: Event, arreglo: any) {
+    this.spinner.show();
     const checked = (event.target as HTMLInputElement).checked;
     console.log(checked);
     console.log(arreglo);
@@ -178,6 +185,7 @@ export class TramitesComponent {
         next: (res: any) => {
           console.log("ACTULIZA ESTATUS!!!!!!!");
           console.log(res);
+          this.spinner.hide();
           //this.getTramite();
         },
       }
@@ -194,6 +202,7 @@ export class TramitesComponent {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
+        this.spinner.show();
         this.tramitesservice.borraTramiteID(arreglo.id, {}).subscribe(
           {
             next: (res: any) => {
@@ -204,6 +213,7 @@ export class TramitesComponent {
                 title: "¡EXITO!",
                 text: "Registro eliminado",
               });
+              this.spinner.hide();
               this.getTramite();
             },
           }

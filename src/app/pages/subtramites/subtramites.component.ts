@@ -12,10 +12,12 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 //import { Expediente } from './expedientes.interface';
 import Swal from 'sweetalert2';
 import { FormPlayground } from '@bpmn-io/form-js';
+import {NgxSatSign} from 'ngx-sat-sign';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-subtramites',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgxSatSign],
   templateUrl: './subtramites.component.html',
   styleUrl: './subtramites.component.scss'
 })
@@ -33,6 +35,7 @@ export class SubtramitesComponent {
   archivoBase64: string | null = null;
   archivoSeguro: SafeResourceUrl | null = null;
   idTramite: any;
+  url = environment.api + '/file/';
   private schema = {
     type: 'default',
     components: [
@@ -142,12 +145,17 @@ export class SubtramitesComponent {
             }
           }
           console.log(this.myArray);
+          
           // Ahora myArray contiene: ["value1", "value2", "value3"]
           this.payload.descripcion = res[0].descripcion;
           this.payload.detalle = res[0].detalle;
           this.payload.tipo_usuarios_restringidos = this.myArray;
           this.payload.id = res[0].id;
           this.payload.ca_tramite_id = res[0].ca_tramite_id;
+          this.payload.files = typeof res[0].files === 'string' ? JSON.parse(res[0].files) : res[0].files;
+          //this.payload.files = res[0].files[0];
+          console.log("res[0].files")
+          console.log(this.payload.files)
           this.spinner.hide();
         },
       }
@@ -369,6 +377,16 @@ export class SubtramitesComponent {
               });
             }
           }, 0);
+        },
+      }
+    );
+  }
+
+  getPDF(id: any) {
+    this.tramitesservice.getPDF(id).subscribe(
+      {
+        next: (res: any) => {
+          
         },
       }
     );

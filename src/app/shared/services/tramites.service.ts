@@ -127,4 +127,9 @@ export class TramitesService {
     getCampoId(id: any){
         return this.getQuery(`subtramite/campo/obten?ca_subtramite_id=${id}`);
     }
+
+    getPDF(payload: any) {
+        return this.getQuery(`file/helper-file/${payload.id}`);
+    }
+    
 }

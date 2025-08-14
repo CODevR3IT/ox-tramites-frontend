@@ -1,5 +1,5 @@
 <div class="card">
-
+<ngx-sat-sign></ngx-sat-sign>
     <div class="col-12 text-left" style="margin-bottom: 2%;">
         <button class="btn-tramite" (click)="muestraAviso(content,1,'')">
             <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -64,7 +64,14 @@
                     </td>
                     <td class="text-center">
                         <button class="btn-tramite" (click)="muestraCamposSubtramite(campos,subtramite)">
-                            <svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6h16" /><path d="M7 12h13" /><path d="M10 18h10" /></svg>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M4 6h16" />
+                                <path d="M7 12h13" />
+                                <path d="M10 18h10" />
+                            </svg>
                         </button>
                     </td>
                     <td class="text-center">
@@ -101,7 +108,7 @@
     </div>
     -->
 
-   
+
 
 </div>
 
@@ -191,12 +198,22 @@
             <div class="col-lg-12 col-12 mb-3">
                 <label class="form-label">Ver Archivos</label>
                 <ul class="list-group">
-                    <li class="list-group-item d-flex">
-                        <a href="#"><svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-paperclip"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5" /></svg><span> Nombre del Archivo 1</span></a>
-                    </li>
-                    <li class="list-group-item d-flex">
-                        <a href="#"><svg  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-paperclip"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5" /></svg><span> Nombre del Archivo 2</span></a>
-                    </li>
+                    <div *ngFor="let item of payload.files; let i = index">
+                        <li class="list-group-item d-flex">
+
+                            <a mat-button
+                                href="{{url}}{{item.url_file[0]}}/{{item.url_file[1]}}/{{item.nombre}}/{{item.url_file[3]}}"
+                                target="_blank">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-paperclip">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5" />
+                                </svg><span> Nombre del Archivo {{i + 1}}</span>
+                            </a>
+                        </li>
+                    </div>
                 </ul>
             </div>
         </div>
