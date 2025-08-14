@@ -35,6 +35,7 @@ export class SubtramitesComponent {
   archivoBase64: string | null = null;
   archivoSeguro: SafeResourceUrl | null = null;
   idTramite: any;
+  idCamposSubT: any;
   url = environment.api + '/file/';
   private schema = {
     type: 'default',
@@ -320,6 +321,8 @@ export class SubtramitesComponent {
   /*********************************** CAMUNDA *********************************************/
   muestraCamposSubtramite(content: TemplateRef<any>, arreglo: any) {
     // this.spinner.show();
+    console.log("arreglo");
+    console.log(arreglo);
     this.getCampoId(arreglo.id);
      this.idTramite = arreglo.id;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', scrollable: true, windowClass: 'modal-xxl' }).result.then(
@@ -353,7 +356,7 @@ export class SubtramitesComponent {
   updateForm() {
     const payload = {
       campos: this.formEditor.getSchema(),
-      id: this.idTramite
+      id: this.idCamposSubT
     };
     this.tramitesservice.updateForm(payload).subscribe(
       {
@@ -388,6 +391,9 @@ export class SubtramitesComponent {
           console.log("CAMPOS!!!!!!!");
           if(res.length > 0){console.log("GUARDA");}else{console.log("NUEVO");}
           this.addEdit = res.length > 0 ? 2 : 1;
+          this.idCamposSubT = res[0].id;
+          console.log("ID CAMPOS SUBT:");
+          console.log(this.idCamposSubT);
           setTimeout(() => {
             if (this.formContainerRef) {
               this.formEditor = new FormPlayground({
