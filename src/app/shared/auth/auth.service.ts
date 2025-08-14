@@ -5,6 +5,9 @@ import { ProfileImg, User } from './interfaces/user.interface';
 import { StorageService } from '../services/storage.service';
 import { tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { ResponseMessage } from '../interfaces/response-message.interface';
+import { ChangePasswordDto } from '../interfaces/change-password.dto';
+import { responseSuccess } from '../helpers/response.helper';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +21,7 @@ export class AuthService {
   private redirectUrl: string | null = null;
   private accessToken: string | null = null;
   private refreshToken: string | null = null;
-
+  responseSuccess = responseSuccess();
   constructor(
     private readonly http: HttpClient,
     private readonly storageService: StorageService,
@@ -80,5 +83,8 @@ export class AuthService {
   }
   getProfileBase64() {
     return this.http.get<ProfileImg>(`${this.apiUrl}/auth/profile-img`);
+  }
+   changePassword(body: ChangePasswordDto){
+    return this.http.patch<ResponseMessage>(`${this.apiUrl}/auth/reset-password`, body).pipe(tap((res) => this.responseSuccess(res).then(() => {} )));
   }
 }
