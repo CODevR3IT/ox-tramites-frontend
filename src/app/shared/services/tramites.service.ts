@@ -136,4 +136,12 @@ export class TramitesService {
         return this.patchQuery(`subtramite/campo/actualiza`, payload);
     }
     
+    getCatalogos() {
+        return this.getQuery(`catalogo/catalogos`);
+    }
+
+    getOneCatalogo(payload: any){
+        return this.getQuery(`catalogo/obtenCatalogoComoCampo?ca_catalogo_id=${payload.id}`);
+    }
+    
 }

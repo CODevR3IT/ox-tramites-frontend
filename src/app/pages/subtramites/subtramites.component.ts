@@ -12,12 +12,12 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 //import { Expediente } from './expedientes.interface';
 import Swal from 'sweetalert2';
 import { FormPlayground } from '@bpmn-io/form-js';
-import {NgxSatSign} from 'ngx-sat-sign';
+import { NgxSatSign } from 'ngx-sat-sign';
 import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-subtramites',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './subtramites.component.html',
   styleUrl: './subtramites.component.scss'
 })
@@ -27,6 +27,9 @@ export class SubtramitesComponent {
   addEdit: number = 0;
   catTipoU: any;
   catTramite: any;
+  catCatalogos: any;
+  catUnCatalogo: any;
+  catCampoUnCatalogo: any;
   myArray: any[] = [];
   formEditor: FormPlayground = {} as FormPlayground;
   @ViewChild('formContainer', { static: false }) formContainerRef!: ElementRef;
@@ -37,7 +40,7 @@ export class SubtramitesComponent {
   idTramite: any;
   idCamposSubT: any;
   url = environment.api + '/file/';
-  private schema = {
+  schema: any = {
     type: 'default',
     components: [
     ],
@@ -146,7 +149,7 @@ export class SubtramitesComponent {
             }
           }
           console.log(this.myArray);
-          
+
           // Ahora myArray contiene: ["value1", "value2", "value3"]
           this.payload.descripcion = res[0].descripcion;
           this.payload.detalle = res[0].detalle;
@@ -324,7 +327,8 @@ export class SubtramitesComponent {
     console.log("arreglo");
     console.log(arreglo);
     this.getCampoId(arreglo.id);
-     this.idTramite = arreglo.id;
+    this.getCatalogos();
+    this.idTramite = arreglo.id;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', scrollable: true, windowClass: 'modal-xxl' }).result.then(
       (result) => {
 
@@ -389,16 +393,20 @@ export class SubtramitesComponent {
       {
         next: (res: any) => {
           console.log("CAMPOS!!!!!!!");
-          if(res.length > 0){console.log("GUARDA");}else{console.log("NUEVO");}
+          if (res.length > 0) { console.log("GUARDA"); } else { console.log("NUEVO"); }
           this.addEdit = res.length > 0 ? 2 : 1;
-          this.idCamposSubT = res[0].id;
-          console.log("ID CAMPOS SUBT:");
-          console.log(this.idCamposSubT);
+          if (this.addEdit == 2) {
+            this.idCamposSubT = res[0].id;
+            console.log("ID CAMPOS SUBT:");
+            console.log(this.idCamposSubT);
+          }
+
           setTimeout(() => {
             if (this.formContainerRef) {
+              this.schema = res.length ? res[0].campos : this.schema,
               this.formEditor = new FormPlayground({
                 container: this.formContainerRef.nativeElement,
-                schema:res.length ? res[0].campos : this.schema,
+                schema: this.schema,
                 data: this.dataForm
               });
             }
@@ -408,11 +416,59 @@ export class SubtramitesComponent {
     );
   }
 
-  getPDF(id: any) {
-    this.tramitesservice.getPDF(id).subscribe(
+  getCatalogos() {
+    this.tramitesservice.getCatalogos().subscribe(
       {
         next: (res: any) => {
+          console.log("CAMPOS!!!!!!!");
+          this.catCatalogos = res;
+        },
+      }
+    );
+  }
+
+  addCatalogo() {
+
+    //this.catUnCatalogo = this.payload.catalogoMayor;
+
+  }
+
+  async getOneCatalogo() {
+    console.log(this.catUnCatalogo);
+    this.tramitesservice.getOneCatalogo(this.catUnCatalogo).subscribe(
+      {
+        next: (res: any) => {
+          console.log(res);
           
+          this.catCampoUnCatalogo = res;
+          const jsonCampo = {
+            "label": this.catUnCatalogo.detalle,
+              "values": res.map((item: any) => ({
+                "label": item.label,
+                "value": "cat|"+item.label+"|"+item.id+"|"+this.catUnCatalogo.id,
+              })),
+                "type": "select",
+                "layout": {
+                "row": null,
+                "columns": null
+            },
+            "id": this.catUnCatalogo.descripcion,
+            "key": this.catUnCatalogo.descripcion
+          }
+
+          this.schema.components.push(jsonCampo);
+          console.log("JSON CAMPO");
+          console.log(this.schema);
+          this.formEditor.destroy();
+          setTimeout(() => {
+            if (this.formContainerRef) {
+              this.formEditor = new FormPlayground({
+                container: this.formContainerRef.nativeElement,
+                schema: this.schema,
+                data: this.dataForm
+              });
+            }
+          }, 0);
         },
       }
     );
