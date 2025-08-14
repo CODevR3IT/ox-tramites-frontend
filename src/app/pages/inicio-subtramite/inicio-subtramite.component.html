@@ -1,8 +1,10 @@
 <div class="card">
   <div class="card-status-top bg-primary"></div>
   <div class="row">
-    <div class="col">
-      <label class="form-label">Ver Archivos</label>
+    <div class="col-12" style="padding-left: 3%; padding-top: 15px">
+      <h2>Ver Archivos</h2>
+    </div>
+    <div class="col-12" *ngIf="doctos.files && doctos.files.length > 0">
       <ul class="list-group">
         <div *ngFor="let item of doctos.files; let i = index">
           <li class="list-group-item d-flex">
@@ -20,6 +22,9 @@
           </li>
         </div>
       </ul>
+    </div>
+    <div class="col-12" style="padding-left: 3%; padding-top: 15px" *ngIf="!doctos.files || doctos.files.length === 0">
+      <h5>Sin archivos</h5>
     </div>
   </div>
   <div class="card-body">
