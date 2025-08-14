@@ -378,7 +378,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 // Tablas
 
 .table thead th {
-  background-color: #012D54; /* azul oscuro */
+  background-color: #6a1c32; /* azul oscuro */
   color: #ffffff;            /* letras blancas */
   font-weight: 600;
   font-size: 14px;
@@ -391,7 +391,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   background: none;
   border: none;
   color: #ffffff;  /* texto blanco para botones */
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   padding: 0;

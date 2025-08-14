@@ -16,15 +16,15 @@ export class MenuComponent {
      hasChildren: false
    },
    {
-     label: 'Trámite', iconClass: 'ti ti-home', route: '/tramites', hasSubmenu: false,
+     label: 'Trámite', iconClass: 'ti ti-folder', route: '/tramites', hasSubmenu: false,
      hasChildren: false
    },
    {
-     label: 'Subtramite', iconClass: 'ti ti-home', route: '/subtramites', hasSubmenu: false,
+     label: 'Subtramite', iconClass: 'ti ti-folders', route: '/subtramites', hasSubmenu: false,
      hasChildren: false
    },
    {
-     label: 'Tramite del ciudadano', iconClass: 'ti ti-home', route: '/contribuyente-tramite', hasSubmenu: false,
+     label: 'Tramite del ciudadano', iconClass: 'ti ti-users', route: '/contribuyente-tramite', hasSubmenu: false,
      hasChildren: false
    },
   ];
