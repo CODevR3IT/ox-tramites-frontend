@@ -128,6 +128,10 @@ export class TramitesService {
         return this.getQuery(`subtramite/campo/obten?ca_subtramite_id=${id}`);
     }
 
+    getCampoSubtramiteId(payload: any) {
+        return this.getQuery(`subtramite/campo/obten?ca_subtramite_id=${payload}`);
+    }
+
     getPDF(payload: any) {
         return this.getQuery(`file/helper-file/${payload.id}`);
     }
@@ -142,6 +146,10 @@ export class TramitesService {
 
     getOneCatalogo(payload: any){
         return this.getQuery(`catalogo/obtenCatalogoComoCampo?ca_catalogo_id=${payload.id}`);
+    }
+
+    getTramitesSubtramites() {
+        return this.getQuery(`tramite/obtenTramitesSubtramites?estatus=true`);
     }
     
 }

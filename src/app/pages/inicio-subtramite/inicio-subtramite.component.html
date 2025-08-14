@@ -1,0 +1,13 @@
+<div class="card">
+  <div class="card-status-top bg-primary"></div>
+  <div class="card-body">
+    
+    @if (components.length > 0) {
+    <app-camunda-form
+      [components]="components"
+      [payLoad]="payload"
+      (onSubmitForm)="onSubmit($event)"
+    ></app-camunda-form>
+    }
+  </div>
+</div>

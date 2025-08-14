@@ -5,7 +5,6 @@ import { AuthComponent } from './shared/auth/auth.component';
 import { ValidacionComponent } from './pages/validacion/validacion.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { MisTramitesComponent } from './pages/mis-tramites/mis-tramites.component';
-import { InicioTramiteComponent } from './pages/mis-tramites/components/inicio-tramite/inicio-tramite.component';
 import { TramitesMarkdownComponent } from './pages/tramites-markdown/tramites-markdown.component';
 import { authGuard } from './shared/auth/auth.guard';
 import { ExpedienteViewComponent } from './pages/mis-expedientes/expediente-view/expediente-view.component';
@@ -16,6 +15,8 @@ import { CompleteTaskComponent } from './pages/complete-task/complete-task.compo
 import { TramitesComponent } from './pages/tramites/tramites.component';
 import { SubtramitesComponent } from './pages/subtramites/subtramites.component';
 import { ContribuyenteTramiteComponent } from './pages/contribuyente-tramite/contribuyente-tramite.component';
+import { InicioTramiteComponent } from './pages/inicio-tramite/inicio-tramite.component';
+import { InicioSubtramiteComponent } from './pages/inicio-subtramite/inicio-subtramite.component';
 
 export const routes: Routes = [
   { path: 'auth', component: AuthComponent },
@@ -74,10 +75,10 @@ export const routes: Routes = [
         canActivate: [authGuard],
       },
       {
-        path: 'inicio-tramite/:id', component: InicioTramiteComponent, data: { breadcrumb: 'Alta trámite' },
+        path: 'inicio-tramite', component: InicioTramiteComponent, data: { breadcrumb: 'Alta trámite' },
       },
       {
-        path: 'tramite/info/:id', component: TramitesMarkdownComponent,data: { breadcrumb: 'Información trámite' },
+        path: 'inicio-subtramite/:id', component: InicioSubtramiteComponent,data: { breadcrumb: 'Subtrámite' },
       }
     ],
   },

@@ -12,19 +12,15 @@ import { Menu } from '../../interfaces/menu.interface';
 export class MenuComponent {
   public menus: Menu[] = [
    {
-     label: 'Home', iconClass: 'ti ti-home', route: '/', hasSubmenu: false,
+     label: 'Inicio', iconClass: 'ti ti-users', route: '/inicio-tramite', hasSubmenu: false,
      hasChildren: false
    },
    {
-     label: 'Trámite', iconClass: 'ti ti-folder', route: '/tramites', hasSubmenu: false,
+     label: 'Trámites', iconClass: 'ti ti-folder', route: '/tramites', hasSubmenu: false,
      hasChildren: false
    },
    {
-     label: 'Subtramite', iconClass: 'ti ti-folders', route: '/subtramites', hasSubmenu: false,
-     hasChildren: false
-   },
-   {
-     label: 'Tramite del ciudadano', iconClass: 'ti ti-users', route: '/contribuyente-tramite', hasSubmenu: false,
+     label: 'Subtramites', iconClass: 'ti ti-folders', route: '/subtramites', hasSubmenu: false,
      hasChildren: false
    },
   ];

@@ -428,9 +428,7 @@ export class SubtramitesComponent {
   }
 
   addCatalogo() {
-
     //this.catUnCatalogo = this.payload.catalogoMayor;
-
   }
 
   async getOneCatalogo() {
