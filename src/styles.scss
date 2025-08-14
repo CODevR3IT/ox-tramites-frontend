@@ -446,6 +446,11 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   background-color: transparent;
 }
 
+.modal-xxl .modal-dialog {
+  max-width: 75% !important; /* casi toda la pantalla */
+  width: 75% !important;
+}
+
 .btn-aceptar {
   background-color: #6a1c32; /* verde sólido */
   color: white;

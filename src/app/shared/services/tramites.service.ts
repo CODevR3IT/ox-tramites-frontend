@@ -131,5 +131,9 @@ export class TramitesService {
     getPDF(payload: any) {
         return this.getQuery(`file/helper-file/${payload.id}`);
     }
+
+    updateForm(payload: any){
+        return this.patchQuery(`subtramite/campo/actualiza`, payload);
+    }
     
 }

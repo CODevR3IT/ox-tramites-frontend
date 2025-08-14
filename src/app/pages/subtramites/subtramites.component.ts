@@ -17,7 +17,7 @@ import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-subtramites',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgxSatSign],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule ],
   templateUrl: './subtramites.component.html',
   styleUrl: './subtramites.component.scss'
 })
@@ -322,7 +322,7 @@ export class SubtramitesComponent {
     // this.spinner.show();
     this.getCampoId(arreglo.id);
      this.idTramite = arreglo.id;
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'xl', scrollable: true }).result.then(
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', scrollable: true, windowClass: 'modal-xxl' }).result.then(
       (result) => {
 
         this.closeResult.set(`Closed with: ${result}`);
@@ -350,6 +350,23 @@ export class SubtramitesComponent {
     );
   }
 
+  updateForm() {
+    const payload = {
+      campos: this.formEditor.getSchema(),
+      id: this.idTramite
+    };
+    this.tramitesservice.updateForm(payload).subscribe(
+      {
+        next: (res: any) => {
+          console.log("ACTUALIZA!!!!!!!");
+          console.log(res);
+          this.modalService.dismissAll();
+          this.getsubTramite();
+        },
+      }
+    );
+  }
+
   guardaCampos() {
     this.tramitesservice.guardaCampos(this.dataForm).subscribe(
       {
@@ -368,6 +385,9 @@ export class SubtramitesComponent {
     this.tramitesservice.getCampoId(id).subscribe(
       {
         next: (res: any) => {
+          console.log("CAMPOS!!!!!!!");
+          if(res.length > 0){console.log("GUARDA");}else{console.log("NUEVO");}
+          this.addEdit = res.length > 0 ? 2 : 1;
           setTimeout(() => {
             if (this.formContainerRef) {
               this.formEditor = new FormPlayground({

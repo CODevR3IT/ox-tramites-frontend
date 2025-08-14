@@ -38,8 +38,8 @@
                 @for (tramite of data; track $index) {
                 <tr>
                     <td>{{tramite.descripcion}}</td>
-                    <td>{{tramite.created_at}}</td>
-                    <td>{{tramite.updated_at}}</td>
+                    <td>{{tramite.created_at  | date:'dd-MM-yyyy H:mm:ss'}}</td>
+                    <td>{{tramite.updated_at  | date:'dd-MM-yyyy H:mm:ss'}}</td>
                     <td>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" [checked]="tramite.estatus" (change)="actualizaTramiteEstatus($event,tramite)">
@@ -125,7 +125,6 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cerrar</button>
         <button type="button" *ngIf="addEdit == 1" class="btn btn-aceptar" (click)="guardarTramite()">Guardar</button>
-        <button type="button" *ngIf="addEdit == 2" class="btn btn-aceptar"
-            (click)="actualizaTramiteID()"></button>
+        <button type="button" *ngIf="addEdit == 2" class="btn btn-aceptar" (click)="actualizaTramiteID()">Editar</button>
     </div>
 </ng-template>
