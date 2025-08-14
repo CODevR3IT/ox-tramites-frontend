@@ -31,6 +31,7 @@ export class SubtramitesComponent {
   catUnCatalogo: any;
   catCampoUnCatalogo: any;
   myArray: any[] = [];
+  camposEstatus: boolean = false;
   formEditor: FormPlayground = {} as FormPlayground;
   @ViewChild('formContainer', { static: false }) formContainerRef!: ElementRef;
   private modalService = inject(NgbModal);
@@ -84,6 +85,11 @@ export class SubtramitesComponent {
     this.getCatTipoUsuario();
     this.getTramiteEstatus();
     this.addEdit = (tipo == 2 ? 2 : 1);
+    if (tipo == 2) {
+      this.payload = {};
+      this.spinner.show();
+      this.getsubTramiteID(arreglo);
+    }
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'm', scrollable: true }).result.then(
       (result) => {
         this.closeResult.set(`Closed with: ${result}`);
@@ -92,11 +98,7 @@ export class SubtramitesComponent {
         this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
       },
     );
-    if (tipo == 2) {
-      this.payload = {};
-      this.spinner.show();
-      this.getsubTramiteID(arreglo);
-    }
+    
   }
 
   private getDismissReason(reason: any): string {
@@ -324,6 +326,7 @@ export class SubtramitesComponent {
   /*********************************** CAMUNDA *********************************************/
   muestraCamposSubtramite(content: TemplateRef<any>, arreglo: any) {
     // this.spinner.show();
+    this.schema = {type: 'default',components: [],};
     console.log("arreglo");
     console.log(arreglo);
     this.getCampoId(arreglo.id);
@@ -467,6 +470,24 @@ export class SubtramitesComponent {
               });
             }
           }, 0);
+        },
+      }
+    );
+  }
+
+  actualizaCamposEstatus(event: Event) {
+    const checked = (event.target as HTMLInputElement).checked;
+    console.log(checked);
+    const query = {
+      "id": this.catUnCatalogo.id,
+      "estatus": checked,
+    }
+    this.tramitesservice.actualizasubTramiteID(query).subscribe(
+      {
+        next: (res: any) => {
+          console.log("ACTULIZA ESTATUS!!!!!!!");
+          console.log(res);
+          //this.getTramite();
         },
       }
     );

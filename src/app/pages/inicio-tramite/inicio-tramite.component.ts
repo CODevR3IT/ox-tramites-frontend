@@ -41,11 +41,11 @@ export class InicioTramiteComponent {
     return this.tramites
       .map(cat => ({
         ...cat,
-        subtramites: cat.subtramites.filter((subtramite: any) =>
+        subtramites: cat.subtramites?cat.subtramites.filter((subtramite: any) =>
           quitarAcentos(subtramite.descripcion).includes(filtro)
-        )
+        ):[]
       }))
-      .filter(cat => cat.subtramite.length > 0);
+      .filter(cat => cat.subtramites.length > 0);
   }
 
   getTramitesSubtramites() {

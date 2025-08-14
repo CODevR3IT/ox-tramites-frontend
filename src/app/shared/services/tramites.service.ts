@@ -152,4 +152,7 @@ export class TramitesService {
         return this.getQuery(`tramite/obtenTramitesSubtramites?estatus=true`);
     }
     
+    guardaCamposRegistro(payload: any){
+        return this.postQuery(`tramite/usuario/crea`, payload);
+    }
 }

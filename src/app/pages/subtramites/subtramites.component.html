@@ -155,7 +155,7 @@
                     <option *ngFor="let tram of catTramite" [value]="tram.id">{{tram.descripcion}}</option>
                 </select>
             </div>
-            <div class="col-lg-12 col-12 mb-3">
+            <div class="col-lg-12 col-12 mb-3" *ngIf="addEdit == 2">
                 <label class="form-label">Cargar Archivos</label>
                 <div class="custom-file-upload text-center" style="padding-top: 10px;">
                     <label for="fileInput">📁 Subir archivo</label>
@@ -169,7 +169,7 @@
                         a 5 MB, sólo formato PDF</span>
                 </div>
             </div>
-            <div class="col-lg-12 col-12 mb-3">
+            <div class="col-lg-12 col-12 mb-3" *ngIf="addEdit == 2">
                 <div class="custom-file-upload text-center" style="padding-top: 10px;">
                     <label for="fileInputb">📁 Subir archivo</label>
                     <input id="fileInputb" name="fileb" type="file" accept=".pdf"
@@ -182,7 +182,7 @@
                         a 5 MB, sólo formato PDF</span>
                 </div>
             </div>
-            <div class="col-lg-12 col-12 mb-3">
+            <div class="col-lg-12 col-12 mb-3" *ngIf="addEdit == 2">
                 <div class="custom-file-upload text-center" style="padding-top: 10px;">
                     <label for="fileInputc">📁 Subir archivo</label>
                     <input id="fileInputc" name="filec" type="file" accept=".pdf"
@@ -195,7 +195,7 @@
                         a 5 MB, sólo formato PDF</span>
                 </div>
             </div>
-            <div class="col-lg-12 col-12 mb-3">
+            <div class="col-lg-12 col-12 mb-3" *ngIf="addEdit == 2">
                 <label class="form-label">Ver Archivos</label>
                 <ul class="list-group">
                     <div *ngFor="let item of payload.files; let i = index">
@@ -237,8 +237,8 @@
         <div class="row">
             <div class="col-lg-4 col-4 mb-3">
                 <label class="form-label">Cátalogo de catálogos</label>
-                <select class="form-select" name="catalogoMayor" id="catalogoMayor" [(ngModel)]="catUnCatalogo"
-                    required #catalogoMayor="ngModel" #catalogoMayorInput
+                <select class="form-select" name="catalogoMayor" id="catalogoMayor" [(ngModel)]="catUnCatalogo" required
+                    #catalogoMayor="ngModel" #catalogoMayorInput
                     [class.is-invalid]="catalogoMayor.invalid && (catalogoMayor.dirty || catalogoMayor.touched)">
 
                     <option value=""></option>
@@ -251,6 +251,12 @@
                 <button type="button" class="btn btn-primary" aria-label="agrega" (click)="getOneCatalogo()">Agregar
                     catálogo</button>
             </div>
+            <!--<div class="col-lg-4 col-4 mb-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="estatusCampo"
+                        [checked]="camposEstatus" (change)="actualizaCamposEstatus($event)">
+                </div>
+            </div>-->
         </div>
         <!--<div class="row">
             <div class="col-lg-12 col-12 mb-3">
