@@ -19,7 +19,7 @@ import { environment } from '../../../environments/environment';
 })
 export class InicioSubtramiteComponent {
   payload: any = {};
-  doctos: any = { files: [] };
+  doctos: any = { files: [], tramite_descripcion: '', descripcion: '' };
   components: CamundaComponent[] = [];
   camundaVariables: CamundaVariable[] = [];
   ca_subtramite_id: any;
@@ -96,6 +96,8 @@ export class InicioSubtramiteComponent {
           console.log("TRAMITES 1 a 1!!!!!!!");
           console.log(res);
           this.doctos.files = typeof res[0].files === 'string' ? JSON.parse(res[0].files) : res[0].files;
+          this.doctos.tramite_descripcion = res[0].tramite_descripcion;
+          this.doctos.descripcion = res[0].descripcion;
           //this.payload.files = res[0].files[0];
           console.log("res[0].files")
           console.log(this.doctos.files)
