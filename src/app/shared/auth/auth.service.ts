@@ -83,7 +83,7 @@ export class AuthService {
     this.storageService.saveData(this.USER_DATA_KEY, JSON.stringify(user));
     this.isAuthenticated = true;
     if(user.roleKey == 'ADMIN') {
-      this.router.navigate(['/tramites']);
+      this.router.navigate(['/categorias']);
     }
     this.router.navigate(['/tramites-servicios']);
     

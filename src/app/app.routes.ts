@@ -23,10 +23,10 @@ export const routes: Routes = [
       },*/
 
       {
-        path: 'tramites', component: TramitesComponent,canActivate: [adminGuard],
+        path: 'categorias', component: TramitesComponent,canActivate: [adminGuard],
       },
       {
-        path: 'subtramites', component: SubtramitesComponent,canActivate: [adminGuard],
+        path: 'alta-tramites-servicios', component: SubtramitesComponent,canActivate: [adminGuard],
       },
       /*{
         path: 'contribuyente-tramite', component: ContribuyenteTramiteComponent,

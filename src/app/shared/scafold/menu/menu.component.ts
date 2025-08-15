@@ -21,11 +21,11 @@ export class MenuComponent {
   ngOnInit() {
     if (this.authService.getUser().roleKey === 'ADMIN') {
       this.menus = [...this.menus, {
-        label: 'Trámites', iconClass: 'ti ti-folder', route: '/tramites', hasSubmenu: false,
+        label: 'Categorias', iconClass: 'ti ti-folder', route: '/categorias', hasSubmenu: false,
         hasChildren: false
       },
       {
-        label: 'Subtramites', iconClass: 'ti ti-folders', route: '/subtramites', hasSubmenu: false,
+        label: 'Alta tramites/servicios', iconClass: 'ti ti-folders', route: '/alta-tramites-servicios', hasSubmenu: false,
         hasChildren: false
       }];
     }
