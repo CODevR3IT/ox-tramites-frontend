@@ -38,6 +38,7 @@ export class InicioSubtramiteComponent {
   ngOnInit() {
     this.ca_subtramite_id = this.route.snapshot.paramMap.get('id') || '';
     this.getCampoSubtramiteId();
+    this.getsubTramiteID();
   }
 
   getCampoSubtramiteId() {
@@ -48,9 +49,9 @@ export class InicioSubtramiteComponent {
           console.log("SUBTRAMITES!!!!!!!");
           this.components = res[0].campos.components;
           console.log(this.components);
-          this.ca_subtramite_id = res[0].ca_subtramite_id;
+          //this.ca_subtramite_id = res[0].ca_subtramite_id;
           this.spinner.hide();
-          this.getsubTramiteID();
+          //this.getsubTramiteID();
         },
       }
     );
