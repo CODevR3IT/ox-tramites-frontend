@@ -19,13 +19,13 @@ import { environment } from '../../../environments/environment';
 })
 export class InicioSubtramiteComponent {
   payload: any = {};
-  doctos: any = {files:[]};
+  doctos: any = { files: [] };
   components: CamundaComponent[] = [];
   camundaVariables: CamundaVariable[] = [];
   ca_subtramite_id: any;
   tipoPersona: string = '';
   url = environment.api + '/file/';
-  
+
   constructor(
     private tramitesservice: TramitesService,
     private spinner: NgxSpinnerService,
@@ -41,7 +41,7 @@ export class InicioSubtramiteComponent {
   }
 
   getCampoSubtramiteId() {
-     this.spinner.show();
+    this.spinner.show();
     this.tramitesservice.getCampoSubtramiteId(this.ca_subtramite_id).subscribe(
       {
         next: (res: any) => {
@@ -49,7 +49,7 @@ export class InicioSubtramiteComponent {
           this.components = res[0].campos.components;
           console.log(this.components);
           this.ca_subtramite_id = res[0].ca_subtramite_id;
-           this.spinner.hide();
+          this.spinner.hide();
           this.getsubTramiteID();
         },
       }
@@ -72,9 +72,16 @@ export class InicioSubtramiteComponent {
           window.open(res.url, '_blank');
           this.spinner.hide();
           console.log("GUARDA CAMUNDA!!!!!!!");
-          this.router.navigate(['/inicio-tramite'])
-          console.log(this.components);
-
+          Swal.fire({
+            icon: "success",
+            title: "Se ha registrado con exito",
+            confirmButtonText: "Aceptar",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.router.navigate(['/tramites-servicios'])
+              console.log(this.components);
+            }
+          });
         },
       }
     );
@@ -82,7 +89,7 @@ export class InicioSubtramiteComponent {
 
   getsubTramiteID() {
     this.spinner.show();
-    this.tramitesservice.getsubTramiteID({id: this.ca_subtramite_id}).subscribe(
+    this.tramitesservice.getsubTramiteID({ id: this.ca_subtramite_id }).subscribe(
       {
         next: (res: any) => {
           console.log("TRAMITES 1 a 1!!!!!!!");

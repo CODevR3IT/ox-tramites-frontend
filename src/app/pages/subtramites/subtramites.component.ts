@@ -326,6 +326,7 @@ export class SubtramitesComponent {
   /*********************************** CAMUNDA *********************************************/
   muestraCamposSubtramite(content: TemplateRef<any>, arreglo: any) {
     // this.spinner.show();
+    this.payload = {};
     this.schema = {type: 'default',components: [],};
     console.log("arreglo");
     console.log(arreglo);

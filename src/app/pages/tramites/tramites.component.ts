@@ -67,6 +67,7 @@ export class TramitesComponent {
   }
 
   muestraAviso(content: TemplateRef<any>, tipo: number, arreglo: any) {
+    this.payload = {};
     this.spinner.show();
     this.getCatTipoUsuario();
     this.addEdit = (tipo == 2 ? 2 : 1);
@@ -125,12 +126,17 @@ export class TramitesComponent {
           // Ahora myArray contiene: ["value1", "value2", "value3"]
           this.payload.descripcion = res[0].descripcion;
           this.payload.detalle = res[0].detalle;
+          this.payload.is_service = res[0].is_service;
           this.payload.tipo_usuarios_restringidos = this.myArray;
           this.payload.id = res[0].id;
           this.spinner.hide();
         },
       }
     );
+  }
+
+  is_service(event: Event){
+    this.payload.is_service = (event.target as HTMLInputElement).checked;
   }
 
   guardarTramite() {

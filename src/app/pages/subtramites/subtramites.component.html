@@ -3,7 +3,7 @@
     <div class="row align-items-center">
       <div class="col">
         <div class="page-pretitle"></div>
-        <h2 class="page-title">Sub trámites</h2>
+        <h2 class="page-title">Trámites</h2>
       </div>
       <div class="col-auto ms-auto">
         <div class="btn-list">
@@ -15,7 +15,7 @@
                 <path d="M16 19h6" />
                 <path d="M19 16v6" />
             </svg>
-            <span>Agregar subtrámite</span>
+            <span>Trámite</span>
         </button>
         </div>
       </div>
@@ -33,7 +33,7 @@
                         <button class="table-sort" (click)="sort('')">Descripción</button>
                     </th>
                     <th>
-                        <button class="table-sort" (click)="sort('')">Subtramite</button>
+                        <button class="table-sort" (click)="sort('')">Trámite</button>
                     </th>
                     <th>
                         <button class="table-sort" (click)="sort('')">Fecha Creación</button>
@@ -130,25 +130,26 @@
 
 <ng-template #content let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Agregar subtrámite</h4>
+        <h4 class="modal-title" id="modal-basic-title">Agregar trámite</h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body" style="text-align: justify;">
         <div class="row">
             <div class="col-lg-12 col-12 mb-3">
-                <label class="form-label">Subtrámite</label>
+                <label class="form-label">Trámite</label>
                 <input type="text" class="form-control" name="example-text-input"
-                    placeholder="Ingrese el nombre del subtrámite" [(ngModel)]="payload.descripcion"
+                    placeholder="Ingrese el nombre del trámite" [(ngModel)]="payload.descripcion"
                     #descripcionInput />
             </div>
             <div class="col-lg-12 col-12 mb-3">
                 <label class="form-label">Detalle</label>
                 <textarea type="text" rows="5" class="form-control" name="example-text-input"
-                    placeholder="Detalle el subtrámite" maxlength="300" [(ngModel)]="payload.detalle" #detalleInput>
+                    placeholder="Detalle el trámite" maxlength="300" [(ngModel)]="payload.detalle" #detalleInput>
                 </textarea>
             </div>
             <div class="col-lg-12 col-12 mb-3">
-                <label class="form-label">Tipo de usuario</label>
+                <label class="form-label">No mostrar a usuario</label>
+                <label><h6>Los usuarios que se seleccionen no pordrán ver el trámite</h6></label>
                 <select class="form-select" multiple name="usuario" [(ngModel)]="payload.tipo_usuarios_restringidos"
                     [class.is-invalid]="usuario.invalid && (usuario.dirty || usuario.touched)" required
                     #usuario="ngModel" style="width: 100%;">
@@ -241,7 +242,7 @@
 
 <ng-template #campos let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Campos subtrámite</h4>
+        <h4 class="modal-title" id="modal-basic-title">Campos trámite</h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
 
