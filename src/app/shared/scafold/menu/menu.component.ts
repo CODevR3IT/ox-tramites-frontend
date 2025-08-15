@@ -14,7 +14,7 @@ export class MenuComponent {
   authService = inject(AuthService);
   public menus: Menu[] = [
     {
-      label: 'Inicio', iconClass: 'ti ti-users', route: '/inicio-tramite', hasSubmenu: false,
+      label: 'Inicio', iconClass: 'ti ti-users', route: '/tramites-servicios', hasSubmenu: false,
       hasChildren: false
     },
   ];

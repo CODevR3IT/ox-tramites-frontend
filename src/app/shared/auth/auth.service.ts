@@ -85,7 +85,7 @@ export class AuthService {
     if(user.roleKey == 'ADMIN') {
       this.router.navigate(['/tramites']);
     }
-    this.router.navigate(['/inicio-tramite']);
+    this.router.navigate(['/tramites-servicios']);
     
   }
   getProfileBase64() {

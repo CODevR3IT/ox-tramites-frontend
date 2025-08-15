@@ -9,7 +9,7 @@ export const adminGuard: CanActivateFn = (route, state) => {
   if(user.roleKey == 'ADMIN'){
     return true;
   } else {
-    router.navigate(['/inicio-tramite']);
+    router.navigate(['/tramites-servicios']);
     return false;
   } 
 };

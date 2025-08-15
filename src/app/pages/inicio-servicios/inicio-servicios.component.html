@@ -28,7 +28,7 @@
   </div>
 </div>
 <div ngbAccordion [closeOthers]="true">
-  @for (tramite of tramitesFiltrados; track $index; let first = $first) {
+  @for (tramite of serviciosFiltrados; track $index; let first = $first) {
   <div ngbAccordionItem [collapsed]="!first">
     <h2 ngbAccordionHeader>
       <button ngbAccordionButton class="text-primary">
