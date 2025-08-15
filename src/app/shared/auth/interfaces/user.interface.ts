@@ -3,7 +3,7 @@ export interface User {
     email: string;
     full_name: string;    
     role: string;
-    rolekey: string;
+    roleKey: string;
     access_token: string;
 }
 

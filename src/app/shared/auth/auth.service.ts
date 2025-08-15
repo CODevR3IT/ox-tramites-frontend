@@ -62,7 +62,10 @@ export class AuthService {
   }
 
   getUser(): User {
-    let { sub, email, full_name, role, rolekey, access_token } = JSON.parse(
+    if(!this.storageService.getData(this.USER_DATA_KEY)){
+      return {} as User;
+    }
+    let { sub, email, full_name, role, roleKey, access_token } = JSON.parse(
       this.storageService.getData(this.USER_DATA_KEY)
     );
     let user: User = {
@@ -71,7 +74,7 @@ export class AuthService {
       full_name,
       access_token,
       role,
-      rolekey,
+      roleKey,
     };
     return user;
   }
@@ -79,7 +82,11 @@ export class AuthService {
     this.storageService.saveData(this.TOKEN_KEY, user.access_token);
     this.storageService.saveData(this.USER_DATA_KEY, JSON.stringify(user));
     this.isAuthenticated = true;
-    this.router.navigate(['/tramites']);
+    if(user.roleKey == 'ADMIN') {
+      this.router.navigate(['/tramites']);
+    }
+    this.router.navigate(['/inicio-tramite']);
+    
   }
   getProfileBase64() {
     return this.http.get<ProfileImg>(`${this.apiUrl}/auth/profile-img`);

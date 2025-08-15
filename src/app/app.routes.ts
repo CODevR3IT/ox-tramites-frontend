@@ -17,6 +17,7 @@ import { SubtramitesComponent } from './pages/subtramites/subtramites.component'
 import { ContribuyenteTramiteComponent } from './pages/contribuyente-tramite/contribuyente-tramite.component';
 import { InicioTramiteComponent } from './pages/inicio-tramite/inicio-tramite.component';
 import { InicioSubtramiteComponent } from './pages/inicio-subtramite/inicio-subtramite.component';
+import { adminGuard } from './shared/auth/admin.guard';
 
 export const routes: Routes = [
   { path: 'auth', component: AuthComponent },
@@ -24,29 +25,25 @@ export const routes: Routes = [
     path: '',
     canActivate: [authGuard],
     component: MainComponent,
-    
     children: [
-      {
+      /*{
         path: 'registro', component: LandingComponent,
       },
       {
         path: 'validacion', component: ValidacionComponent,
-      },
+      },*/
 
       {
-        path: 'tramites', component: TramitesComponent,
+        path: 'tramites', component: TramitesComponent,canActivate: [adminGuard],
       },
       {
-        path: 'subtramites', component: SubtramitesComponent,
+        path: 'subtramites', component: SubtramitesComponent,canActivate: [adminGuard],
       },
-      {
+      /*{
         path: 'contribuyente-tramite', component: ContribuyenteTramiteComponent,
-      },
-      {
-        path: '', component: InicioComponent, canActivate: [authGuard],
-         
-      },
-      {
+      },*/
+      
+      /*{
         path: 'expediente/:id',
         component: ExpedienteViewComponent,
         children: [
@@ -68,17 +65,17 @@ export const routes: Routes = [
           { path: '', redirectTo: 'general', pathMatch: 'full' },
         ],
       },
-       {
+      {
         path: 'tarea/:id',
         component: CompleteTaskComponent,
         data: { breadcrumb: 'Tarea' },
         canActivate: [authGuard],
+      },*/
+      {
+        path: 'inicio-tramite', component: InicioTramiteComponent,
       },
       {
-        path: 'inicio-tramite', component: InicioTramiteComponent, data: { breadcrumb: 'Alta trámite' },
-      },
-      {
-        path: 'inicio-subtramite/:id', component: InicioSubtramiteComponent,data: { breadcrumb: 'Subtrámite' },
+        path: 'inicio-subtramite/:id', component: InicioSubtramiteComponent,
       }
     ],
   },
