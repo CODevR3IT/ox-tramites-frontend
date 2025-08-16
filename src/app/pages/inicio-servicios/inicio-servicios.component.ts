@@ -59,29 +59,29 @@ export class InicioServiciosComponent {
     this.tramitesservice.getTramitesServicios({ is_service: true }).subscribe(
       {
         next: (res: any) => {
-          console.log("TRAMITES!!!!!!!");
+          //console.log("TRAMITES!!!!!!!");
           this.servicios = res;
-          console.log(this.servicios);
+          //console.log(this.servicios);
         },
       }
     );
   }
 
   onSubmit(formData: any) {
-      console.log(formData);
+      //console.log(formData);
       
       const payload = {
         datos_tramite: formData,
         ca_subtramite_id: this.ca_subtramite_id,
         ca_estatus_id: 1
       }
-      console.log(payload);
+      //console.log(payload);
       this.tramitesservice.guardaCamposRegistro(payload).subscribe(
         {
           next: (res: any) => {
             window.open(res.url, '_blank');
             
-            console.log("GUARDA CAMUNDA!!!!!!!");
+            //console.log("GUARDA CAMUNDA!!!!!!!");
             Swal.fire({
               icon: "success",
               title: "Se ha registrado con exito",
@@ -89,7 +89,7 @@ export class InicioServiciosComponent {
             }).then((result) => {
               if (result.isConfirmed) {
                 this.router.navigate(['/tramites-servicios'])
-                console.log(this.components);
+                //console.log(this.components);
               }
             });
           },

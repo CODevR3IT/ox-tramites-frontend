@@ -46,9 +46,9 @@ export class InicioSubtramiteComponent {
     this.tramitesservice.getCampoSubtramiteId(this.ca_subtramite_id).subscribe(
       {
         next: (res: any) => {
-          console.log("SUBTRAMITES!!!!!!!");
+          //console.log("SUBTRAMITES!!!!!!!");
           this.components = res[0].campos.components;
-          console.log(this.components);
+          //console.log(this.components);
           //this.ca_subtramite_id = res[0].ca_subtramite_id;
           this.spinner.hide();
           //this.getsubTramiteID();
@@ -59,20 +59,20 @@ export class InicioSubtramiteComponent {
 
 
   onSubmit(formData: any) {
-    console.log(formData);
+    //console.log(formData);
     this.spinner.show();
     const payload = {
       datos_tramite: formData,
       ca_subtramite_id: this.ca_subtramite_id,
       ca_estatus_id: 1
     }
-    console.log(payload);
+    //console.log(payload);
     this.tramitesservice.guardaCamposRegistro(payload).subscribe(
       {
         next: (res: any) => {
           window.open(res.url, '_blank');
           this.spinner.hide();
-          console.log("GUARDA CAMUNDA!!!!!!!");
+          //console.log("GUARDA CAMUNDA!!!!!!!");
           Swal.fire({
             icon: "success",
             title: "Se ha registrado con exito",
@@ -80,7 +80,7 @@ export class InicioSubtramiteComponent {
           }).then((result) => {
             if (result.isConfirmed) {
               this.router.navigate(['/tramites-servicios'])
-              console.log(this.components);
+              //console.log(this.components);
             }
           });
         },
@@ -93,14 +93,14 @@ export class InicioSubtramiteComponent {
     this.tramitesservice.getsubTramiteID({ id: this.ca_subtramite_id }).subscribe(
       {
         next: (res: any) => {
-          console.log("TRAMITES 1 a 1!!!!!!!");
-          console.log(res);
+          //console.log("TRAMITES 1 a 1!!!!!!!");
+          //console.log(res);
           this.doctos.files = typeof res[0].files === 'string' ? JSON.parse(res[0].files) : res[0].files;
           this.doctos.tramite_descripcion = res[0].tramite_descripcion;
           this.doctos.descripcion = res[0].descripcion;
           //this.payload.files = res[0].files[0];
-          console.log("res[0].files")
-          console.log(this.doctos.files)
+          //console.log("res[0].files")
+          //console.log(this.doctos.files)
           this.spinner.hide();
         },
       }

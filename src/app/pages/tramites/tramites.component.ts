@@ -6,9 +6,10 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule } 
 import { PaginateQuery, OrderBy } from '../../shared/interfaces/paginate-query.interface';
 import { Paginate } from '../../shared/interfaces/paginate.interface';
 import { PaginationService } from '../../shared/services/pagination.service';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { PaginateLaravel } from '../../shared/interfaces/laravel.paginate.interface';
 import { TramitesService } from '../../shared/services/tramites.service';
-//import { Expediente } from './expedientes.interface';
+import { Tramite } from './tramites.interface';
 import Swal from 'sweetalert2';
 export interface dataToken {
   access_token: any,
@@ -18,13 +19,14 @@ export interface dataToken {
 
 @Component({
   selector: 'app-tramites',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbPaginationModule],
   templateUrl: './tramites.component.html',
 })
 export class TramitesComponent {
+  [x: string]: any;
   payload: any = {}
   tokenData: dataToken = {} as dataToken;
-  data: any;
+  data: PaginateLaravel<Tramite> = {} as PaginateLaravel<Tramite>;
   estatus: boolean = false;
   addEdit: number = 0;
   catTipoU: any;
@@ -40,17 +42,23 @@ export class TramitesComponent {
     orderBy: OrderBy.ASC,
     orderField: '',
   };
-  //public paginationData: PaginateLaravel<Expediente> = { total: 0, last_page: 0, data: [] };
+  public paginationData: PaginateLaravel<Tramite> = { total: 0, last_page: 0, data: [] };
   //para la paginación preguntar a Razo y Mario por cómo envían el back 
   constructor(
     private spinner: NgxSpinnerService,
     private tramitesservice: TramitesService,
+    private readonly paginationService: PaginationService,
   ) { }
 
   ngOnInit() {
-    this.getTramite();
+    this.getData();
   }
 
+  getData() {
+    this.paginationService
+      .findAll<Tramite>('/tramite', this.paginationQuery)
+      .subscribe((data) => (this.data = data));
+  }
   getTramite() {
     this.spinner.show();
     this.payload = {};
@@ -58,7 +66,7 @@ export class TramitesComponent {
       {
         next: (res: any) => {
           console.log("TRAMITES!!!!!!!");
-          this.data = res;
+          this.data = res.data;
           console.log(this.data);
           this.spinner.hide();
         },
@@ -116,7 +124,7 @@ export class TramitesComponent {
         next: (res: any) => {
           console.log("TRAMITES 1 a 1!!!!!!!");
           console.log(res);
-          const jsonObject = JSON.parse(res[0].tipo_usuarios_restringidos);
+          const jsonObject = JSON.parse(res.data[0].tipo_usuarios_restringidos);
           for (const key in jsonObject) {
             if (jsonObject.hasOwnProperty(key)) {
               this.myArray.push(jsonObject[key]);
@@ -124,11 +132,11 @@ export class TramitesComponent {
           }
           console.log(this.myArray);
           // Ahora myArray contiene: ["value1", "value2", "value3"]
-          this.payload.descripcion = res[0].descripcion;
-          this.payload.detalle = res[0].detalle;
-          this.payload.is_service = res[0].is_service;
+          this.payload.descripcion = res.data[0].descripcion;
+          this.payload.detalle = res.data[0].detalle;
+          this.payload.is_service = res.data[0].is_service;
           this.payload.tipo_usuarios_restringidos = this.myArray;
-          this.payload.id = res[0].id;
+          this.payload.id = res.data[0].id;
           this.spinner.hide();
         },
       }
@@ -155,7 +163,7 @@ export class TramitesComponent {
           console.log(res);
           this.modalService.dismissAll();
           this.spinner.hide();
-          this.getTramite();
+          this.getData();
         },
       }
     );
@@ -171,7 +179,7 @@ export class TramitesComponent {
           console.log(res);
           this.modalService.dismissAll();
           this.spinner.hide();
-          this.getTramite();
+          this.getData();
         },
       }
     );
@@ -220,7 +228,7 @@ export class TramitesComponent {
                 text: "Registro eliminado",
               });
               this.spinner.hide();
-              this.getTramite();
+              this.getData();
             },
           }
         );

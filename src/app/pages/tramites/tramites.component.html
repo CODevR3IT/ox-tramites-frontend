@@ -54,7 +54,7 @@
             </tr>
           </thead>
           <tbody>
-            @if(data){ @for (tramite of data; track $index) {
+            @for (tramite of data.data; track $index) {
             <tr>
               <td>{{ tramite.descripcion }}</td>
               <td>{{ tramite.created_at | date : "dd-MM-yyyy H:mm:ss" }}</td>
@@ -92,24 +92,24 @@
                 </button>
               </td>
             </tr>
-            } }
+             }
           </tbody>
         </table>
       </div>
-      <!--
-    <div class="card-body">
+
+      <div class="card-body">
         <p class="m-0 text-secondary">
-            Mostrando <span> {{ paginationQuery.page }}</span> -
-            <span> {{ paginationData.last_page }} </span> de
-            <span> {{ paginationData.total }} </span> entradas
+          Mostrando <span> {{ paginationQuery.page }}</span> -
+          <span> {{ data.last_page }} </span> de
+          <span> {{ data.total }} </span> entradas
         </p>
-    </div>
-    <div class="card-footer">
+      </div>
+      <div class="card-footer">
         <ngb-pagination class="m-0 ms-auto" [(page)]="paginationQuery.page" (pageChange)="getData()"
-            [pageSize]="paginationQuery.limit || 10" [boundaryLinks]="true" [collectionSize]="paginationData.total"
-            [ellipses]="false" [rotate]="true" [maxSize]="5" />
-    </div>
-    -->
+          [pageSize]="paginationQuery.limit || 10" [boundaryLinks]="true" [collectionSize]="data.total"
+          [ellipses]="false" [rotate]="true" [maxSize]="5" />
+      </div>
+
     </div>
   </div>
 </div>
@@ -132,7 +132,7 @@
       </div>
       <div class="col-lg-12 col-12 mb-3">
         <label class="form-label">No mostrar a usuario</label>
-         <h6>Los usuarios que se seleccionen no podrán ver el registro</h6>
+        <h6>Los usuarios que se seleccionen no podrán ver el registro</h6>
         <select class="form-select" multiple name="usuario" [(ngModel)]="payload.tipo_usuarios_restringidos"
           [class.is-invalid]="
             usuario.invalid && (usuario.dirty || usuario.touched)
@@ -147,7 +147,8 @@
       </div>
       <div class="col-lg-12 col-12 mb-3 form-check form-switch">
         <label class="form-label">¿Es un servicio?</label>
-        <input class="form-check-input" type="checkbox" id="isService" [(ngModel)]="payload.is_service" (change)="is_service($event)" />
+        <input class="form-check-input" type="checkbox" id="isService" [(ngModel)]="payload.is_service"
+          (change)="is_service($event)" />
         <h6>{{payload.is_service ? 'Este registro es un servicio' : 'Este registro no es un servicio'}}</h6>
       </div>
     </div>

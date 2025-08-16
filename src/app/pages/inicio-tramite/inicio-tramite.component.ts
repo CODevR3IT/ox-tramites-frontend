@@ -27,7 +27,7 @@ export class InicioTramiteComponent {
 
   ngOnInit() {
     this.getTramitesServicios();
-    console.log("11111111111");
+    //console.log("11111111111");
   }
 
   get tramitesFiltrados(): any[] {
@@ -53,9 +53,9 @@ export class InicioTramiteComponent {
     this.tramitesservice.getTramitesServicios({ is_service: false }).subscribe(
       {
         next: (res: any) => {
-          console.log("TRAMITES!!!!!!!");
+          //console.log("TRAMITES!!!!!!!");
           this.tramites = res;
-          console.log(this.tramites);
+          //console.log(this.tramites);
         },
       }
     );

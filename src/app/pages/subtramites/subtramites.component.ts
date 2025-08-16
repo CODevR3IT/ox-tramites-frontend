@@ -6,6 +6,7 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule } 
 import { PaginateQuery, OrderBy } from '../../shared/interfaces/paginate-query.interface';
 import { Paginate } from '../../shared/interfaces/paginate.interface';
 import { PaginationService } from '../../shared/services/pagination.service';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { PaginateLaravel } from '../../shared/interfaces/laravel.paginate.interface';
 import { TramitesService } from '../../shared/services/tramites.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -14,16 +15,17 @@ import Swal from 'sweetalert2';
 import { FormPlayground } from '@bpmn-io/form-js';
 import { NgxSatSign } from 'ngx-sat-sign';
 import { environment } from '../../../environments/environment';
+import { Subtramite } from './subtramite.interface';
 
 @Component({
   selector: 'app-subtramites',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbPaginationModule],
   templateUrl: './subtramites.component.html',
   styleUrl: './subtramites.component.scss'
 })
 export class SubtramitesComponent {
   payload: any = {}
-  data: any;
+  data: PaginateLaravel<Subtramite> = {} as PaginateLaravel<Subtramite>;
   addEdit: number = 0;
   catTipoU: any;
   catTramite: any;
@@ -55,26 +57,31 @@ export class SubtramitesComponent {
     orderBy: OrderBy.ASC,
     orderField: '',
   };
-
-  //public paginationData: PaginateLaravel<Expediente> = { total: 0, last_page: 0, data: [] };
+  public paginationData: PaginateLaravel<Subtramite> = { total: 0, last_page: 0, data: [] };
   //para la paginación preguntar a Razo y Mario por cómo envían el back 
   constructor(
     private spinner: NgxSpinnerService,
     private tramitesservice: TramitesService,
     private sanitizer: DomSanitizer,
+    private readonly paginationService: PaginationService,
   ) { }
 
   ngOnInit() {
-    this.getsubTramite();
+    this.getData();
   }
 
+  getData() {
+    this.paginationService
+      .findAll<Subtramite>('/subtramite', this.paginationQuery)
+      .subscribe((data) => (this.data = data));
+  }
   getsubTramite() {
     this.tramitesservice.getsubTramite().subscribe(
       {
         next: (res: any) => {
-          console.log("TRAMITES!!!!!!!");
+          //console.log("TRAMITES!!!!!!!");
           this.data = res;
-          console.log(this.data);
+          //console.log(this.data);
         },
       }
     );
@@ -98,7 +105,7 @@ export class SubtramitesComponent {
         this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
       },
     );
-    
+
   }
 
   private getDismissReason(reason: any): string {
@@ -116,9 +123,9 @@ export class SubtramitesComponent {
     this.tramitesservice.getCatTipoUsuario().subscribe(
       {
         next: (res: any) => {
-          console.log("TRAMITES!!!!!!!");
+          //console.log("TRAMITES!!!!!!!");
           this.catTipoU = res;
-          console.log(this.catTipoU);
+          //console.log(this.catTipoU);
           this.spinner.hide();
         },
       }
@@ -130,9 +137,9 @@ export class SubtramitesComponent {
     this.tramitesservice.getTramiteEstatus().subscribe(
       {
         next: (res: any) => {
-          console.log("TRAMITES!!!!!!!");
-          this.catTramite = res;
-          console.log(this.catTramite);
+          //console.log("TRAMITES!!!!!!!");
+          this.catTramite = res.data;
+          //console.log(this.catTramite);
         },
       }
     );
@@ -142,26 +149,26 @@ export class SubtramitesComponent {
     this.tramitesservice.getsubTramiteID(arreglo).subscribe(
       {
         next: (res: any) => {
-          console.log("TRAMITES 1 a 1!!!!!!!");
-          console.log(res);
-          const jsonObject = JSON.parse(res[0].tipo_usuarios_restringidos);
+          //console.log("TRAMITES 1 a 1!!!!!!!");
+          //console.log(res);
+          const jsonObject = JSON.parse(res.data[0].tipo_usuarios_restringidos);
           for (const key in jsonObject) {
             if (jsonObject.hasOwnProperty(key)) {
               this.myArray.push(jsonObject[key]);
             }
           }
-          console.log(this.myArray);
+          //console.log(this.myArray);
 
           // Ahora myArray contiene: ["value1", "value2", "value3"]
-          this.payload.descripcion = res[0].descripcion;
-          this.payload.detalle = res[0].detalle;
+          this.payload.descripcion = res.data[0].descripcion;
+          this.payload.detalle = res.data[0].detalle;
           this.payload.tipo_usuarios_restringidos = this.myArray;
-          this.payload.id = res[0].id;
-          this.payload.ca_tramite_id = res[0].ca_tramite_id;
-          this.payload.files = typeof res[0].files === 'string' ? JSON.parse(res[0].files) : res[0].files;
-          //this.payload.files = res[0].files[0];
-          console.log("res[0].files")
-          console.log(this.payload.files)
+          this.payload.id = res.data[0].id;
+          this.payload.ca_tramite_id = res.data[0].ca_tramite_id;
+          this.payload.files = typeof res.data[0].files === 'string' ? JSON.parse(res.data[0].files) : res.data[0].files;
+          //this.payload.files = res.data[0].files[0];
+          //console.log("res.data[0].files")
+          //console.log(this.payload.files)
           this.spinner.hide();
         },
       }
@@ -170,15 +177,15 @@ export class SubtramitesComponent {
 
   guardarsubTramite() {
     this.payload.tipo_usuarios_restringidos = JSON.stringify(this.payload.tipo_usuarios_restringidos);
-    console.log("this.payload");
-    console.log(this.payload);
+    //console.log("this.payload");
+    //console.log(this.payload);
     this.tramitesservice.guardarsubTramite(this.payload).subscribe(
       {
         next: (res: any) => {
-          console.log("GUARDAR!!!!!!!");
-          console.log(res);
+          //console.log("GUARDAR!!!!!!!");
+          //console.log(res);
           this.modalService.dismissAll();
-          this.getsubTramite();
+          this.getData();
         },
       }
     );
@@ -196,14 +203,14 @@ export class SubtramitesComponent {
       "ext1": "pdf",
       "nombre1": "PDF2"
     }
-    console.log(this.payload);
+    //console.log(this.payload);
     this.tramitesservice.actualizasubTramiteID(this.payload).subscribe(
       {
         next: (res: any) => {
-          console.log("ACTUALIZADO!!!!!!!");
-          console.log(res);
+          //console.log("ACTUALIZADO!!!!!!!");
+          //console.log(res);
           this.modalService.dismissAll();
-          this.getsubTramite();
+          this.getData();
         },
       }
     );
@@ -211,8 +218,8 @@ export class SubtramitesComponent {
 
   actualizasubTramiteEstatus(event: Event, arreglo: any) {
     const checked = (event.target as HTMLInputElement).checked;
-    console.log(checked);
-    console.log(arreglo);
+    //console.log(checked);
+    //console.log(arreglo);
     const query = {
       "id": arreglo.id,
       "estatus": checked,
@@ -220,8 +227,8 @@ export class SubtramitesComponent {
     this.tramitesservice.actualizasubTramiteID(query).subscribe(
       {
         next: (res: any) => {
-          console.log("ACTULIZA ESTATUS!!!!!!!");
-          console.log(res);
+          //console.log("ACTULIZA ESTATUS!!!!!!!");
+          //console.log(res);
           //this.getTramite();
         },
       }
@@ -241,14 +248,14 @@ export class SubtramitesComponent {
         this.tramitesservice.borrasubTramiteID(arreglo.id, {}).subscribe(
           {
             next: (res: any) => {
-              console.log("BORRAR!!!!!!!");
-              console.log(res);
+              //console.log("BORRAR!!!!!!!");
+              //console.log(res);
               Swal.fire({
                 icon: "success",
                 title: "¡EXITO!",
                 text: "Registro eliminado",
               });
-              this.getsubTramite();
+              this.getData();
             },
           }
         );
@@ -259,8 +266,8 @@ export class SubtramitesComponent {
   }
 
   convertirArchivoBase64(event: any, opcion: any): void {
-    console.log("DATO LETRA");
-    console.log(opcion);
+    //console.log("DATO LETRA");
+    //console.log(opcion);
     const archivo: File = event.target.files[0];
     if (!archivo) return;
 
@@ -291,8 +298,8 @@ export class SubtramitesComponent {
             break;
         }
         //this.payload.archivoV = base64;
-        console.log("this.payload");
-        console.log(this.payload);
+        //console.log("this.payload");
+        //console.log(this.payload);
         this.archivoSeguro = this.sanitizer.bypassSecurityTrustResourceUrl(base64);
       };
 
@@ -327,9 +334,9 @@ export class SubtramitesComponent {
   muestraCamposSubtramite(content: TemplateRef<any>, arreglo: any) {
     // this.spinner.show();
     this.payload = {};
-    this.schema = {type: 'default',components: [],};
-    console.log("arreglo");
-    console.log(arreglo);
+    this.schema = { type: 'default', components: [], };
+    //console.log("arreglo");
+    //console.log(arreglo);
     this.getCampoId(arreglo.id);
     this.getCatalogos();
     this.idTramite = arreglo.id;
@@ -352,10 +359,10 @@ export class SubtramitesComponent {
     this.tramitesservice.guardaCampos(payload).subscribe(
       {
         next: (res: any) => {
-          console.log("GUARDAR!!!!!!!");
-          console.log(res);
+          //console.log("GUARDAR!!!!!!!");
+          //console.log(res);
           this.modalService.dismissAll();
-          this.getsubTramite();
+          this.getData();
         },
       }
     );
@@ -369,10 +376,10 @@ export class SubtramitesComponent {
     this.tramitesservice.updateForm(payload).subscribe(
       {
         next: (res: any) => {
-          console.log("ACTUALIZA!!!!!!!");
-          console.log(res);
+          //console.log("ACTUALIZA!!!!!!!");
+          //console.log(res);
           this.modalService.dismissAll();
-          this.getsubTramite();
+          this.getData();
         },
       }
     );
@@ -382,10 +389,10 @@ export class SubtramitesComponent {
     this.tramitesservice.guardaCampos(this.dataForm).subscribe(
       {
         next: (res: any) => {
-          console.log("GUARDAR!!!!!!!");
-          console.log(res);
+          //console.log("GUARDAR!!!!!!!");
+          //console.log(res);
           this.modalService.dismissAll();
-          this.getsubTramite();
+          this.getData();
         },
       }
     );
@@ -396,23 +403,23 @@ export class SubtramitesComponent {
     this.tramitesservice.getCampoId(id).subscribe(
       {
         next: (res: any) => {
-          console.log("CAMPOS!!!!!!!");
-          if (res.length > 0) { console.log("GUARDA"); } else { console.log("NUEVO"); }
+          //console.log("CAMPOS!!!!!!!");
+          //if (res.length > 0) { //console.log("GUARDA"); } else { //console.log("NUEVO"); }
           this.addEdit = res.length > 0 ? 2 : 1;
           if (this.addEdit == 2) {
             this.idCamposSubT = res[0].id;
-            console.log("ID CAMPOS SUBT:");
-            console.log(this.idCamposSubT);
+            //console.log("ID CAMPOS SUBT:");
+            //console.log(this.idCamposSubT);
           }
 
           setTimeout(() => {
             if (this.formContainerRef) {
               this.schema = res.length ? res[0].campos : this.schema,
-              this.formEditor = new FormPlayground({
-                container: this.formContainerRef.nativeElement,
-                schema: this.schema,
-                data: this.dataForm
-              });
+                this.formEditor = new FormPlayground({
+                  container: this.formContainerRef.nativeElement,
+                  schema: this.schema,
+                  data: this.dataForm
+                });
             }
           }, 0);
         },
@@ -424,7 +431,7 @@ export class SubtramitesComponent {
     this.tramitesservice.getCatalogos().subscribe(
       {
         next: (res: any) => {
-          console.log("CAMPOS!!!!!!!");
+          //console.log("CAMPOS!!!!!!!");
           this.catCatalogos = res;
         },
       }
@@ -436,31 +443,31 @@ export class SubtramitesComponent {
   }
 
   async getOneCatalogo() {
-    console.log(this.catUnCatalogo);
+    //console.log(this.catUnCatalogo);
     this.tramitesservice.getOneCatalogo(this.catUnCatalogo).subscribe(
       {
         next: (res: any) => {
-          console.log(res);
-          
+          //console.log(res);
+
           this.catCampoUnCatalogo = res;
           const jsonCampo = {
             "label": this.catUnCatalogo.detalle,
-              "values": res.map((item: any) => ({
-                "label": item.label,
-                "value": "cat|"+item.label+"|"+item.id+"|"+this.catUnCatalogo.id,
-              })),
-                "type": "select",
-                "layout": {
-                "row": null,
-                "columns": null
+            "values": res.map((item: any) => ({
+              "label": item.label,
+              "value": "cat|" + item.label + "|" + item.id + "|" + this.catUnCatalogo.id,
+            })),
+            "type": "select",
+            "layout": {
+              "row": null,
+              "columns": null
             },
             "id": this.catUnCatalogo.descripcion,
             "key": this.catUnCatalogo.descripcion
           }
 
           this.schema.components.push(jsonCampo);
-          console.log("JSON CAMPO");
-          console.log(this.schema);
+          //console.log("JSON CAMPO");
+          //console.log(this.schema);
           this.formEditor.destroy();
           setTimeout(() => {
             if (this.formContainerRef) {
@@ -478,7 +485,7 @@ export class SubtramitesComponent {
 
   actualizaCamposEstatus(event: Event) {
     const checked = (event.target as HTMLInputElement).checked;
-    console.log(checked);
+    //console.log(checked);
     const query = {
       "id": this.catUnCatalogo.id,
       "estatus": checked,
@@ -486,8 +493,8 @@ export class SubtramitesComponent {
     this.tramitesservice.actualizasubTramiteID(query).subscribe(
       {
         next: (res: any) => {
-          console.log("ACTULIZA ESTATUS!!!!!!!");
-          console.log(res);
+          //console.log("ACTULIZA ESTATUS!!!!!!!");
+          //console.log(res);
           //this.getTramite();
         },
       }

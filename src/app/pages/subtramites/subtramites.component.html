@@ -50,7 +50,7 @@
                 </tr>
             </thead>
             <tbody>
-                @for (subtramite of data; track $index) {
+                @for (subtramite of data.data; track $index) {
                 <tr>
                     <td>{{subtramite.descripcion}}</td>
                     <td>{{subtramite.descripcion}}</td>
@@ -105,20 +105,20 @@
             </tbody>
         </table>
     </div>
-    <!--
+
     <div class="card-body">
         <p class="m-0 text-secondary">
             Mostrando <span> {{ paginationQuery.page }}</span> -
-            <span> {{ paginationData.last_page }} </span> de
-            <span> {{ paginationData.total }} </span> entradas
+            <span> {{ data.last_page }} </span> de
+            <span> {{ data.total }} </span> entradas
         </p>
     </div>
     <div class="card-footer">
         <ngb-pagination class="m-0 ms-auto" [(page)]="paginationQuery.page" (pageChange)="getData()"
-            [pageSize]="paginationQuery.limit || 10" [boundaryLinks]="true" [collectionSize]="paginationData.total"
+            [pageSize]="paginationQuery.limit || 10" [boundaryLinks]="true" [collectionSize]="data.total"
             [ellipses]="false" [rotate]="true" [maxSize]="5" />
     </div>
-    -->
+
 
 
 
