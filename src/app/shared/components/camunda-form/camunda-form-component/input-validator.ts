@@ -10,7 +10,12 @@ export function isValidControlClass(inputAbstract: AbstractControl<string | null
     return '';
 }
 
+export function isValidControlBoolean(inputAbstract: AbstractControl<string | null, string | null> | null): boolean {
+    return !!inputAbstract && inputAbstract.valid && (inputAbstract.dirty || inputAbstract.touched);
+}
+
 export function getMessageError(errors: ValidationErrors | null | undefined, campo: string, patternMessage: string = ''): string{
+ 
     if(errors && errors['required']) {
         return `El campo ${campo} es requerido.`;
     }
@@ -22,6 +27,9 @@ export function getMessageError(errors: ValidationErrors | null | undefined, cam
     }
     if(errors && errors['email']) {
         return `Debe de ser un correo electrónico valido.`;
+    }
+    if(errors && errors['ngbDate']) {
+        return `La fecha seleccionada no es válida.`;
     }
 
     return '';

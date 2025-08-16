@@ -1,12 +1,14 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="form">
-  @for (component of components; track component; let idx = $index) {
+  @for (rowGroup of groupedComponents; track $index) {
   <div class="mb-3 row">
-    <div>
+    @for (component of rowGroup.components; track component; let idx = $index) {
+    <div [ngClass]="columnClass(component.layout.columns)">
       <app-camunda-form-component
         [component]="component"
         [form]="form"
       ></app-camunda-form-component>
     </div>
+    }
   </div>
   }
   <div class="mb-3">

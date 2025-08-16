@@ -8,7 +8,7 @@ import { NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerI18n, NgbDatepicke
 import { CamundaFormService } from '../camunda-form.service';
 import { environment } from '../../../../../environments/environment';
 import { SimpleDateAdapter, SimpleDateParserFormatter } from './simple-date.adapter';
-import { getMessageError, isValidControlClass } from './input-validator';
+import { getMessageError, isValidControlClass, isValidControlBoolean } from './input-validator';
 import { NgbDatepickerEsI18n } from '../../../i18n/ngb-datepicker-es';
 
 
@@ -29,12 +29,14 @@ export class CamundaFormComponentComponent {
   @Input() form!: FormGroup;
   file: File | null = null;
   isFileUploaded: boolean = false;
+  fileInputClassValidator:string = '';
+  selectInputClassValidator:string = '';
 
   constructor(private readonly cfs: CamundaFormService) {
   }
 
   get componentError() {
-    if (this.component.type === 'filepicker') {
+    if (this.component.type === 'filepicker' &&  (this.form.controls[this.component.key!].dirty || this.form.controls[this.component.key!].touched)) {
       return this.isFileUploaded && this.form.controls[this.component.key!].valid ? 'is-valid' : 'is-invalid';
     }
     return isValidControlClass(this.form.controls[this.component.key!]);
@@ -62,6 +64,7 @@ export class CamundaFormComponentComponent {
   }
 
   protected onFileSelected(event: Event) {
+    const control = this.form.get(this.component.key);
     const element = event.currentTarget as HTMLInputElement;
     let fileList: FileList | null = element.files;
     if (fileList) {

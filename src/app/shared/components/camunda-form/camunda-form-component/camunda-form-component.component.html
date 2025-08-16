@@ -7,7 +7,7 @@
     >{{ component.label || component.dateLabel }}</label
   >
   } @switch (component.type) { @case ('text') {
-    <div [innerHTML]="textComponent"></div>
+  <div [innerHTML]="textComponent"></div>
   } @case ('textfield') {
   <input
     class="form-control"
@@ -17,7 +17,7 @@
     [ngClass]="componentError"
     type="text"
   />
-  <div class="invalid-feedback">{{ messageError }} </div>
+  <div class="invalid-feedback">{{ messageError }}</div>
   } @case ('number') {
   <input
     class="form-control"
@@ -28,7 +28,7 @@
     type="text"
     mask="0*"
   />
-  <div class="invalid-feedback">{{ messageError }} </div>
+  <div class="invalid-feedback">{{ messageError }}</div>
   } @case ('datetime') {
   <div class="input-icon">
     <span class="input-icon-addon">
@@ -45,8 +45,11 @@
       (click)="d.toggle()"
     />
   </div>
-  <div class="invalid-feedback">{{ messageError }} </div>
-  } @case ('textarea') {
+  @if(componentError == 'is-invalid'){
+  <div class="invalid-feedback d-block" role="alert">
+    {{ messageError }}
+  </div>
+  } } @case ('textarea') {
   <textarea
     [id]="component.key"
     [formControlName]="component.key"
@@ -54,7 +57,7 @@
     [ngClass]="componentError"
     class="form-control"
   ></textarea>
-  <div class="invalid-feedback">{{ messageError }} </div>
+  <div class="invalid-feedback">{{ messageError }}</div>
   } @case ('spacer') {
   <span [ngStyle]="{ height: component.height, width: '100%' }">&nbsp;</span>
   } @case ('select') {
@@ -70,7 +73,7 @@
     </option>
     }
   </select>
-  <div class="invalid-feedback">{{ messageError }} </div>
+  <div class="invalid-feedback">{{ messageError }}</div>
   } @case ('separator') {
   <hr />
   } @case ('checkbox') {
@@ -85,7 +88,7 @@
     />
     <span class="form-check-label">{{ component.label }}</span>
   </label>
-  <div class="invalid-feedback">{{ messageError }} </div>
+  <div class="invalid-feedback">{{ messageError }}</div>
   } @case ('checklist') { @for (checks of component.values; track $index) {
   <label class="form-check">
     <input
@@ -99,23 +102,20 @@
     />
     <span class="form-check-label">{{ checks.label }}</span>
   </label>
-  <div class="invalid-feedback">{{ messageError }} </div>
+  <div class="invalid-feedback">{{ messageError }}</div>
   } } @case ('filepicker') { @if(component.readonly){}@else{
   <div class="row g-2">
     <div class="col">
       <input
-      [id]="component.key"
-      [formControlName]="component.key"
-      type="hidden"
-    />
-      <input
         class="form-control"
+        [id]="component.key"
+        [formControlName]="component.key"
         [accept]="component.accept"
         [ngClass]="componentError"
         (change)="onFileSelected($event)"
         type="file"
       />
-      <div class="invalid-feedback">{{ messageError }} </div>
+      <div class="invalid-feedback">{{ messageError }}</div>
     </div>
     <div class="col-auto">
       <button
@@ -139,7 +139,6 @@
     <span class="form-check-label">{{ item.label }}</span>
   </label>
   }
-  <div class="invalid-feedback">{{ messageError }} </div>
- } 
-} 
+  <div class="invalid-feedback">{{ messageError }}</div>
+  } }
 </div>
