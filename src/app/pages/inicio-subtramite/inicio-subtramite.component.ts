@@ -95,11 +95,11 @@ export class InicioSubtramiteComponent {
         next: (res: any) => {
           //console.log("TRAMITES 1 a 1!!!!!!!");
           //console.log(res);
-          this.doctos.files = typeof res[0].files === 'string' ? JSON.parse(res[0].files) : res[0].files;
-          this.doctos.tramite_descripcion = res[0].tramite_descripcion;
-          this.doctos.descripcion = res[0].descripcion;
-          //this.payload.files = res[0].files[0];
-          //console.log("res[0].files")
+          this.doctos.files = typeof res.data[0].files === 'string' ? JSON.parse(res.data[0].files) : res.data[0].files;
+          this.doctos.tramite_descripcion = res.data[0].tramite_descripcion;
+          this.doctos.descripcion = res.data[0].descripcion;
+          //this.payload.files = res.data[0].files[0];
+          //console.log("res.data[0].files")
           //console.log(this.doctos.files)
           this.spinner.hide();
         },
